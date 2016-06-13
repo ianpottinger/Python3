@@ -1,0 +1,893 @@
+#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+# _*_ coding: UTF-8 _*_		#Enable unicode encoding
+
+__author__ = "Ian Pottinger"
+__date__ = "20/12/2012"
+__contact__ = "ianpottinger@me.com"
+__version__ = "1.3.5.7.9 even avoidance"
+__credits__ = "Commonly known as Potts"
+__copyright__ = "Copyleft for balance"
+__license__ = "Whatever Potts Decides"
+__metadata__ = [__author__, __date__, __contact__, __version__,
+                __credits__, __copyright__, __license__]
+
+import builtins, keyword, os, sys, time
+import queue, collections, threading, pickle, concurrent
+import numbers, operator, math, cmath, decimal, fractions, random, itertools
+import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib
+import doctest, unittest, cProfile, timeit, logging, traceback, datetime
+import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
+import argparse, calendar, pprint, struct, copy, pdb
+import ipaddress, tkinter, dateutil  # , numpy, scipy, pygame, matplotlib
+
+DEBUG_MODE = False
+if DEBUG_MODE:
+    pdb.set_trace()
+
+RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
+            "global", "or", "with", "assert", "else", "if", "pass",
+            "yield", "break", "except", "import", "print", "class",
+            "exec", "in", "raise", "continue", "finally", "is",
+            "return", "def", "for", "lambda", "try"]
+
+import maths, vectors, moreadt
+
+
+
+class Matrix():
+    legal = True
+    status = r'Empty'
+    dimensions = tuple()
+    elements = float()
+    rows = 0
+    columns = 0
+
+    def __init__(self, matrix):
+        if type(matrix) == tuple:
+            self.content = Matrix.zero(*matrix).content
+        elif type(matrix) == Matrix:
+            self.content = matrix.content
+        else:
+            self.content = matrix
+        self.update()
+        self.verify()
+
+    def __str__(self):
+        formatted = r""
+        for row in self.content:
+            formatted += str(row) + "\n"
+        
+        return formatted[:-1]
+
+    def __eq__(self, other):
+        if type(self) == Matrix and type(other) == Matrix:
+            return self.content == other.content
+        else:
+            return False
+
+    def __del__(self):
+        return ()
+
+    def measure(self):
+        """
+        Returns the rows by columns of a self.content
+        """
+        if self.content == [] or self.content == [[]]:
+            return 0, 0
+        else:
+            # print(type(self), type(self.content))
+            rows = len(self.content)
+            if rows >= 1:
+                columns = max({len(row) for row in self.content})
+            else:
+                columns = len(self.content[0])
+            return rows, columns
+
+    def verify(self):
+        """
+        >>> print(Matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]).verify())
+        True
+        >>> print(Matrix([[0, 0, 0], [0, 0], [0, 0, 0]]).verify())
+        False
+        """
+        if ((self.rows >= 1)
+            and
+                (False not in [type(element) in [int, float, complex]
+                               for row in self.content
+                               for element in row] )
+            and
+                (False not in [len(self.content[row]) ==
+                               len(self.content[row - 1])
+                               for row in range(0, self.rows)] ) ):
+            self.legal = True
+        else:
+            self.legal = False
+        return self.legal
+
+    def update(self):
+        self.rows, self.columns = self.size = self.measure()
+        self.legal = self.verify()
+
+    def show(self, title=""):
+        """
+        print(Matrix.fill(10, 10, 6))
+        print(Matrix.zero(10, 10))
+        >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
+        (None, 'Size mismatch')
+        >>> print(Matrix([[1,0,0],[0,1,0],[0,0,1]]).mul(Matrix([[1],[3],[2]])))
+        [1]
+        [3]
+        [2]
+
+        >>> print(Matrix([[1,3], [2,4], [0,5]]).mul(Matrix([[1,0,7], [2,3,6]])))
+        [7, 9, 25]
+        [10, 12, 38]
+        [10, 15, 30]
+
+        >>> print(Matrix([[16,34], [22,45], [80,51]]).mul(Matrix([[1,0], [2,3]])))
+        [84, 102]
+        [112, 135]
+        [182, 153]
+
+        >>> print(Matrix([[16,34], [22,45], [80,51]]).mul(Matrix([[12,40], [27,34]])))
+        [1110, 1796]
+        [1479, 2410]
+        [2337, 4934]
+
+        >>> print(Matrix([[1,2,-2], [3,0,-1]]).mul(Matrix([[5], [3], [2]])))
+        [7]
+        [13]
+
+        """
+        if self.content is None:
+            print(r"Invalid output")
+        if not title == "":
+            print(title, "\n")
+            return
+        for row in self.content:
+            print(row)
+
+    def array(self):
+        return self.content
+
+    def line(self, row):
+        if self.rows >= row:
+            return Matrix([self.content[row]])
+        else:
+            return None
+
+    def vector(self, column):
+        """
+        >>> Matrix([[0, -1, -2], [1, 0, -1], [2, 1, 0], [3, 2, 1]]).vector(1).show()
+        [-1]
+        [0]
+        [1]
+        [2]
+
+        """
+        if self.columns >= column:
+            return vectors.Vector([[row[column]] for row in self.content])
+        else:
+            return None
+
+    def element(self, row, column, segment = 1):
+        if column + segment > self.columns:
+            return None
+        if (self.rows >= row) and (self.columns >= column):
+            return [self.content[row][column + count]
+                    for count in range(0, segment)]
+        else:
+            return None
+
+    def set(self, row, column, value):
+        if ((value in [int, float, complex]) and
+                (not self.element(row, column) is None )):
+            self.content[row][column] = value
+            return True
+        else:
+            return False
+
+    def get(self, row, column):
+        if (self.rows >= row) and (self.columns >= column):
+            return self.content[row][column]
+        else:
+            return None
+
+    def transpose(self):
+        """
+        >>> Matrix([[9,8,7,6,5], [4,3,2,1,0], [0,1,2,3,4], [5,6,7,8,9]]).transpose().show()
+        [9, 4, 0, 5]
+        [8, 3, 1, 6]
+        [7, 2, 2, 7]
+        [6, 1, 3, 8]
+        [5, 0, 4, 9]
+
+        """
+        ##        return Matrix([[row[item]
+        ##                        for row in self.content]
+        ##                       for item in range(len(self.content[0]) ) ] )
+
+        ##        return Matrix([[column[row]
+        ##                        for column in self.content]
+        ##                       for row in range(self.columns)])
+
+        return Matrix([list(element)
+                       for element in zip(*self.content)])  # Clever method
+
+    def inner(self, other):
+        return
+
+    def outer(self, other):
+        return
+
+    def diff(self, other):
+        """
+        >>> m=Matrix([[9,8,7,6,5], [4,3,2,1,0]])
+        >>> n=Matrix([[0,1,2,3,4], [5,6,7,8,9]])
+        >>> m.diff(n).show()
+        [9, 7, 5, 3, 1]
+        [1, 3, 5, 7, 9]
+
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([[max(self.content[row][column],
+                                other.content[row][column]) -
+                            min(self.content[row][column],
+                                other.content[row][column])
+                            for column in range(self.columns)]
+                           for row in range(self.rows)])
+
+    """
+    result = []
+    for row in range(rows):
+        result.append([])
+        for column in range(columns):
+            result[row].append(mat[row][column] 'function' rix[row][column])
+
+    return Matrix([[mat[row][column] 'function' rix[row][column]
+            for column in range(columns)]
+            for row in range(rows)]
+    """
+
+    def pow(self, other):
+        """
+        >>> m=Matrix([[9,8,7,6,5], [4,3,2,1,0]])
+        >>> n=Matrix([[0,1,2,3,4], [5,6,7,8,9]])
+        >>> m.pow(n).show()
+        [1, 8, 49, 216, 625]
+        [1024, 729, 128, 1, 0]
+
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([[base ** exponent
+                            for base, exponent in
+                            zip(self.content[row],
+                                other.content[row])]
+                           for row in range(self.rows)])
+
+    def mul(self, other):
+        """
+        >>> print(Matrix([[1,3,2], [4,0,1]]).mul(Matrix([[1,3], [0,1], [5,2]])))
+        [11, 10]
+        [9, 14]
+
+        >>> print(Matrix([[1,3], [2,4], [0,5]]).mul(Matrix([[1,0], [2,3]])))
+        [7, 9]
+        [10, 12]
+        [10, 15]
+
+        >>> print(Matrix([[1,0,0],[0,1,0],[0,0,1]]).mul(Matrix([[1],[3],[2]])))
+        [1]
+        [3]
+        [2]
+
+        >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
+        (None, 'Size mismatch')
+        >>> print(Matrix([[2,1],[3,4],[5,6]]).mul(Matrix([[1,3,6],[2,4,5]])))
+        [4, 10, 17]
+        [11, 25, 38]
+        [17, 39, 60]
+
+        >>> print(Matrix([[2,-2],[5,3]]).mul(Matrix([[-1,4],[7,-6]])))
+        [-16, 20]
+        [16, 2]
+
+        >>> print(Matrix([[0,3,5],[5,5,2]]).mul(Matrix([[3,4],[3,-2],[4,-2]])))
+        [29, -16]
+        [38, 6]
+
+        >>> print(Matrix([[-1,-2],[-2,-1]]).mul(Matrix([[2,0],[2,-1]])))
+        [-6, 2]
+        [-6, 1]
+
+        >>> print(Matrix([[1,2],[-2,3]]).mul(Matrix([[0,-1,5],[3,2,1]])))
+        [6, 3, 7]
+        [9, 8, -7]
+
+        >>> print(Matrix([[4,-1],[2,-1]]).mul(Matrix([[3,1,0],[2,1,-2]])))
+        [10, 3, 2]
+        [4, 1, 2]
+
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.columns, self.rows, other)
+        if not self.columns == other.rows:
+            return None, 'Size mismatch'
+
+        return Matrix([[vectors.Vector(Matrix([self.content[row]]).transpose()
+                                       .content).dot(other.vector(column))
+                        for row in range(self.rows)]
+                       for column in range(other.columns)]).transpose()
+
+##        return Matrix([[mattor_dot([mat[row]], column(rix, column) )
+##                                  for row in range(mat_size[0]) ]
+##                                 for column in range(rix_size[1]) ] ).transpose()
+
+##        return Matrix([[self.content[row][column] * other.content[column][row]
+##                       for row in range(self.rows)]
+##                       for column in range(other.columns)])
+
+    def add(self, other):
+        """
+        >>> Matrix([[2, 2], [3, 3]]).add(Matrix([[2, 3], [2, 3]])).show()
+        [4, 5]
+        [5, 6]
+
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([[self.content[row][column] +
+                            other.content[row][column]
+                            for column in range(self.columns)]
+                           for row in range(self.rows)])
+
+    def sub(self, other):
+        """
+        >>> Matrix([[2, 2], [3, 3]]).sub(Matrix([[2, 3], [2, 3]])).show()
+        [0, -1]
+        [1, 0]
+        
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([[self.content[row][column] -
+                            other.content[row][column]
+                            for column in range(self.columns)]
+                           for row in range(self.rows)])
+
+    def div(self, other):
+        """
+        >>> Matrix([[2, 2], [3, 3]]).div(Matrix([[2, 3], [2, 3]])).show()
+        [1.0, 0.6666666666666666]
+        [1.5, 1.0]
+
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([[self.content[row][column] /
+                            other.content[row][column]
+                            if not (other.content[row][column]) == 0 else float("inf")
+                            for column in range(self.columns)]
+                           for row in range(self.rows)])
+
+    def sum(self):
+        """
+        >>> print(Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).sum())
+        45
+        """
+        return sum([self.content[row][column]
+                    for column in range(self.columns)
+                    for row in range(self.rows)])
+
+    def sum_corners(self):
+        """
+        >>> print(Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).sum_corners())
+        20
+        """
+        if (self.rows > 1) and (self.columns > 1):
+            corners = [self.get(0, 0),
+                       self.get(0, self.columns -1),
+                       self.get(self.rows -1, 0),
+                       self.get(self.rows -1, self.columns -1) ]
+            return sum(corners)
+        else:
+            return None
+
+    def root(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).root().show()
+        [1.0, 1.414213562373095, 1.7320508075688772]
+        [2.0, 2.23606797749979, 2.449489742783178]
+        [2.6457513110645907, 2.82842712474619, 3.0]
+
+        """
+        return Matrix([[maths.sqrt(abs(self.content[row][column]))
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def log(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).log().show()
+        [0.0, 0.6931471805599453, 1.0986122886681098]
+        [1.3862943611198906, 1.6094379124341003, 1.791759469228055]
+        [1.9459101490553132, 2.0794415416798357, 2.1972245773362196]
+
+        """
+        return Matrix([[math.log(abs(self.content[row][column]))
+                        if not (self.content[row][column]) == 0 else float("NaN")
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def sqrt_inverse(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).sqrt_inverse().show()
+        [1.0, 0.7071067811865476, 0.5773502691896258]
+        [0.5, 0.4472135954999579, 0.4082482904638631]
+        [0.3779644730092272, 0.3535533905932738, 0.3333333333333333]
+
+        """
+        return Matrix([[1.0 / maths.sqrt(abs(self.content[row][column]))
+                        if not (self.content[row][column]) == 0 else float("inf")
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+        # return Matrix([vectors.vector_inverse(column(self, column))
+        # for column in range(self.columns)] )
+
+    def invert(self):
+        """
+        Bad function, not to be used
+        """
+        return self.mul(Matrix.eye(self.rows))
+
+    def fraction(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).fraction().show()
+        [1.0, 0.5, 0.3333333333333333]
+        [0.25, 0.2, 0.16666666666666666]
+        [0.14285714285714285, 0.125, 0.1111111111111111]
+
+        """
+        if not self.rows == self.columns:
+            return None
+        return Matrix([[1.0 / (abs(self.content[row][column]))  # pow((abs(matrix[row][column]), -1)
+                        if not (self.content[row][column]) == 0 else float("inf")
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def exp(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).exp().show()
+        [2.718281828459045, 7.38905609893065, 20.085536923187668]
+        [54.598150033144236, 148.4131591025766, 403.4287934927351]
+        [1096.6331584284585, 2980.9579870417283, 8103.083927575384]
+
+        """
+        return Matrix([[math.exp(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def abs(self):
+        """
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).abs().show()
+        [1, 2, 3]
+        [4, 5, 6]
+        [7, 8, 9]
+
+        """
+        return Matrix([[abs(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def neg(self):
+        """
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).neg().show()
+        [1, -2, 3]
+        [-4, 5, -6]
+        [7, 8, 9]
+
+        """
+        return Matrix([[-(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def max(self):
+        """
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).max())
+        6
+        """
+        return max([(self.content[row][column])
+                    for column in range(self.columns)
+                    for row in range(self.rows)])
+
+    def min(self):
+        """
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).min())
+        -9
+        """
+        return min([(self.content[row][column])
+                    for column in range(self.columns)
+                    for row in range(self.rows)])
+
+    def more(self, target):
+        """
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).more(5))
+        [False, False, False]
+        [False, False, True]
+        [False, False, False]
+
+        """
+        return Matrix([[(self.content[row][column]) > target
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def less(self, target):
+        """
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).less(5).show()
+        [True, True, True]
+        [True, True, False]
+        [True, True, True]
+
+        """
+        return Matrix([[(self.content[row][column]) < target
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def equal(self, target):
+        """
+        >>> Matrix([[-1, 2, -3], [4, 5, 6], [-7, -8, -9]]).equal(5).show()
+        [False, False, False]
+        [False, True, False]
+        [False, False, False]
+
+        """
+        return Matrix([[(self.content[row][column]) == target
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def find(self, target):
+        """
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).less(5)).find(True))
+        [(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (0, 2), (2, 2)]
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).more(5)).find(True))
+        [(2, 1), (1, 2)]
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, 5, 6], [-7, 8-3, -9]]).equal(5)).find(True))
+        [(1, 1), (2, 1)]
+        >>> print(Matrix(Matrix.slide(10, 10)).find([5, -5]))
+        [(5, 0), (6, 1), (7, 2), (8, 3), (9, 4), (0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
+        """
+        if not type(target) == list:
+            target = [target]
+        return ([(row, column)
+                 for column in range(self.columns)
+                 for row in range(self.rows)
+                 if self.content[row][column] in target])
+
+    def dot(self, other):
+        """
+        >>> print(Matrix([[1,2],[3,4],[5,6]]).dot(Matrix([[11,12],[13,14],[15,16]])))
+        301
+        """
+        if type(other) in [int, float, complex]:
+            other = Matrix.fill(self.rows, self.columns, other)
+        if not self.size == other.size:
+            return None, 'Size mismatch'
+        else:
+            return sum([self.vector(column).dot(other.vector(column))
+                        for column in range(self.columns)])
+
+    def fill(rows, columns, value):
+        """
+        >>> Matrix.fill(3, 3, 9).show()
+        [9, 9, 9]
+        [9, 9, 9]
+        [9, 9, 9]
+
+        """
+        return Matrix([[value for column in range(columns)]
+                       for row in range(rows)])
+
+    def zero(rows, columns):
+        """
+        >>> Matrix.zero(2, 5).show()
+        [0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0]
+        """
+        return Matrix.fill(rows, columns, 0)
+
+    def one(rows, columns):
+        """
+        >>> print(Matrix.one(5, 2))
+        [1, 1]
+        [1, 1]
+        [1, 1]
+        [1, 1]
+        [1, 1]
+        """
+        return Matrix.fill(rows, columns, 1)
+
+    def eye(rows):
+        """
+        >>> Matrix.eye(4).show()
+        [1, 0, 0, 0]
+        [0, 1, 0, 0]
+        [0, 0, 1, 0]
+        [0, 0, 0, 1]
+
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).mul(Matrix.eye(3) ).show()
+        [-1, 2, -3]
+        [4, -5, 6]
+        [-7, -8, -9]
+
+        >>> Matrix.eye(3).mul(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]] ) ).show()
+        [-1, 2, -3]
+        [4, -5, 6]
+        [-7, -8, -9]
+        """
+        identity = Matrix.zero(rows, rows)
+        for eye in range(rows):
+            identity.content[eye][eye] = 1
+        return identity
+
+    def identity(self):
+        """
+        >>> Matrix([[1,2],[3,4],[5,6], [11,12],[13,14],[15,16]]).identity().show()
+        [5, 11, 17, 35, 41, 47]
+        [11, 25, 39, 81, 95, 109]
+        [17, 39, 61, 127, 149, 171]
+        [35, 81, 127, 265, 311, 357]
+        [41, 95, 149, 311, 365, 419]
+        [47, 109, 171, 357, 419, 481]
+
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).identity().show()
+        [14, -32, 18]
+        [-32, 77, -42]
+        [18, -42, 194]
+
+        """
+        return self.mul(self.transpose())
+
+    def slide(rows, columns):
+        """
+        >>> Matrix.slide(4,3).show()
+        [0, -1, -2]
+        [1, 0, -1]
+        [2, 1, 0]
+        [3, 2, 1]
+        """
+        return Matrix([[row - column
+                        for column in range(columns)]
+                       for row in range(rows)])
+
+    def random_float(rows, columns, lowest = 0, highest = 1):
+        lowest, highest = (min(lowest, highest), max(lowest, highest) )
+        return Matrix([[lowest + random.random() * (highest - lowest)
+                        for column in range(columns)]
+                       for row in range(rows)])
+
+    def random_whole(rows, columns, lowest = 0, highest = 100):
+        lowest, highest = (min(lowest, highest), max(lowest, highest) )
+        return Matrix([[random.randint(lowest, highest)
+                        for column in range(columns)]
+                       for row in range(rows)])
+
+    def random_binary(rows, columns):
+        return Matrix.random_int(rows, columns, 0, 1)
+
+    def random_percent(rows, columns):
+        return Matrix.random_int(rows, columns, 0, 100)
+
+    def histogram(self):
+        values = {}
+        for row in range(self.rows):
+            for column in range(self.columns):
+##                values[self.get(row, column)] = values[self.get(row, column)] + 1
+                sample = self.get(row, column)
+                if not sample in values:
+                    values[sample] = 1
+                else:
+                    values[sample] = values[sample] + 1
+        return values
+
+    def join(self, other):
+        """
+        print(join(one(11,1), zero(11,11) ) )
+        """
+        if not self.rows == other.rows:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([self.content[row] + other.content[row]
+                           for row in range(self.rows)])
+
+    def insert_col(self, other, at):
+        """
+        print(insert_col(slide(11,11), zero(11,2), 7) )
+        """
+        if not self.rows == other.rows:
+            return None, 'Size mismatch'
+        else:
+            return Matrix([self.content[row][:at] +
+                           other.content[row] +
+                           self.content[row][at:]
+                           for row in range(self.rows)])
+
+    def remove_col(self, at, cut=1):
+        """
+        print(remove_col(slide(11,11), 4, 3) ) )
+        """
+        if not ((self.columns >= at) and (self.columns >= at + cut)):
+            return None, 'Size mismatch'
+        else:
+            return Matrix([self.content[row][0:at] +
+                           self.content[row][at + cut:]
+                           for row in range(self.rows)])
+
+    def insert_row(self, other, at):
+        """
+        print(insert_row(slide(11,11), zero(2,11), 7) ) )
+        """
+        if not self.columns == other.columns:
+            return None, 'Size mismatch'
+        else:
+            return Matrix(self.content[0:at] +
+                          other.content +
+                          self.content[at:])
+
+    def remove_row(self, at, num=1):
+        """
+        print(remove_row(slide(11,11), 4, 3) ) )
+        """
+        if not ((self.rows >= at) and (self.rows >= at + num)):
+            return None, 'Size mismatch'
+        else:
+            return Matrix(self.content[0:at] +
+                          self.content[at + num:])
+
+    def sort(self, backwards=False):
+        self.content = [sorted(row, key=None, reverse=backwards)
+                        for row in self.content]
+        self.content = self.transpose().content
+        self.content = [sorted(row, key=None, reverse=backwards)
+                        for row in self.content]
+        return self.transpose()
+
+    def rotate(self, clockwise=True):
+        """
+        rotate(join(one(11,1), zero(11,11)),False)
+        """
+        if clockwise:
+            return Matrix([list(element)
+                           for element in
+                           zip(*self.content[::-1])])
+        else:
+            return Matrix([list(element)
+                           for element in
+                           zip(*self.content[::-1])]).flipped().mirror()
+
+    def shift(self, shift=1):
+        if (shift % self.columns) == 0:
+            return self
+        return Matrix([self.content[row][shift % -self.columns:] +
+                       self.content[row][:shift % self.columns]
+                       for row in range(self.rows)])
+
+    def cycle(self, cycle=1):
+        return Matrix([self.content[row]
+                       for row in range((cycle % -self.rows),
+                                        (cycle % self.rows), 1)])
+
+    def mirror(self):
+        # mirror = zero(rows, columns)
+        # for row in range(rows):
+        # for column in range(columns):
+        #        mirror[row][column - 1] = self.content[row][-column]
+        return Matrix([self.content[row][::-1]
+                       for row in range(self.rows)])
+
+    def flipped(self):
+        # return Matrix([self.content[-row -1] for row in range(self.rows)] )
+        return Matrix(self.content[::-1])  # Clever method
+
+    def flatten(self, vector = False):
+        flat = []
+        ##        for row in range(self.rows):
+        ##            for column in range(self.columns):
+        ##                flat.append(self.content[row][column])
+        for row in range(self.rows):
+            flat += self.content[row]
+        if vector == True:
+            return vectors.Vector([flat])
+        else:
+            return Matrix([flat])
+
+    def stacked(self, vector = False):
+        stack = []
+        for column in range(self.columns):
+            line = self.vector(column).content
+            for row in range(self.rows):
+                stack.append(line[row])
+        if vector == True:
+            return vectors.Vector(stack)
+        else:
+            return Matrix(stack)
+
+    def reshape(self, newrows, newcols):
+        """
+        >>> Matrix([[9,8,7,6,5], [4,3,2,1,0], [0,1,2,3,4], [5,6,7,8,9]]).reshape(5,4).show()
+        [9, 8, 7, 6]
+        [5, 4, 3, 2]
+        [1, 0, 0, 1]
+        [2, 3, 4, 5]
+        [6, 7, 8, 9]
+        """
+        feed = self.flatten()
+        if not feed.columns == newrows * newcols:
+            return self
+        return Matrix([feed.element(0, segment * newcols, newcols)
+                       for segment in range(newrows) ] )
+        
+
+    def capital(self):
+        # rows, columns = measure(self)
+        return self.join(Matrix.one(self.rows, 1))
+
+    def inverse(self):
+        """
+        """
+        ##        if not self.rows == self.columns:
+        ##            return (None, 'Size mismatch')
+        inverted = self.mirror().flipped()
+        #print("inverting1\n", inverted)
+        inverted = inverted.mul(Matrix.eye(self.rows))
+        #print("inverting2\n", inverted)
+        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
+                        if not inverted.content[row][column] == 0 else float("inf")
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def normal_equation(self, vector):
+        """
+        Matrix([ [2104,5,1,45], [1416,3,2,40], [1534,3,2,30], [852,2,1,36] ]).normal_equation(Matrix([[460],[232],[315],[178]])).show()
+        [[1546.0105920616172], [1.0042033011153086], [455.787369777668], [1022.3385392981896], [40.504531960323575]]
+        [[9050.792414860909], [200993.18212597613], [105262.89762818097], [226.03941933340082], [333667.8460714147]]
+        """
+        if not self.rows == vector.rows:
+            return None, 'Size mismatch'
+        capital = self.capital()
+        #print("capital\n", capital)
+        transpose = capital.transpose()
+        #print("transpose\n", transpose)
+        inversed = self.inverse()
+        #print("inversed1\n", inversed)
+        inversed = inversed.mul(capital)
+        #print("inversed2\n", inversed)
+        predictions = inversed.mul(transpose)
+        #print("predictions\n", predictions)
+        return predictions.mul(vector if type(vector) == Matrix
+                               else Matrix(vector.content))
+
+transform_clockwise = Matrix([[0, 1], [-1, 0]])
+transform_counterclockwise = Matrix([[0, -1], [1, 0]])
+
+
+
+if __name__ == '__main__':
+    doctest.testmod()
+    unittest.main(exit=False)
+
