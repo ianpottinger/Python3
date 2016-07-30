@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, dateutil#, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -68,6 +68,8 @@ LARGE_PAN_DIGITAL = 9814072356
 SQRT_PAN_DIGITAL = 99066
 LIGHT_SPEED = 299792458
 SOUND_SPEED = 340.29
+WATER_BOILING = 99.974
+WATER_FREEZING = -0.0001
 ABSOLUTE_ZERO = 273.15
 LTUAE = 42
 NINE9S = 99.9999999

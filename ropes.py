@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, dateutil#, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -256,7 +256,7 @@ def input_int(prompt, low = 0, high = 0):
     """
     valid = False
     if not low == high:
-        limits = str("(Between ", low, " and ", high, ")")
+        limits = str("(Between " +  str(low) + " and " + str(high) + "): " )
     else:
         limits = ""
     while not valid:
@@ -268,13 +268,14 @@ def input_int(prompt, low = 0, high = 0):
         except SyntaxError:
             continue
         else:
-            valid = integer in range(low, high)
+            if (integer >= low) and (integer <= high):
+                valid = True
     return integer
 
 def input_float(prompt, low = 0, high = 0):
     valid = False
     if not low == high:
-        limits = str("(Between ", low, " and ", high, ")")
+        limits = str("(Between " +  str(low) + " and " + str(high) + "): " )
     else:
         limits = ""
     while not valid:
@@ -286,7 +287,8 @@ def input_float(prompt, low = 0, high = 0):
         except SyntaxError:
             continue
         else:
-            valid = real in range(low, high)
+            if (real >= low) and (real <= high):
+                valid = True
     return real
 
 def input_string(prompt, low = 0, high = 0):

@@ -18,7 +18,7 @@ import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb
-import ipaddress, tkinter, dateutil  # , numpy, scipy, pygame, matplotlib
+import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib
 
 DEBUG_MODE = False
 if DEBUG_MODE:

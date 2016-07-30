@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, dateutil#, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE == True:
@@ -150,6 +150,12 @@ def directory_exists(directory_path):
 def list_directory(directory_path):
     if directory_exists(directory_path):
         return os.listdir(directory_path)  
+    else:
+        return -1
+  
+def scan_directory(directory_path):
+    if directory_exists(directory_path):
+        return [item.name for item in os.scandir(directory_path)]
     else:
         return -1
   
