@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -29,6 +29,8 @@ RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "yield", "break","except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
+KEYWORDS = keyword.kwlist
+
 
 
 from decimal import Decimal, getcontext
@@ -181,6 +183,8 @@ Equal = lambda term, compare: term == compare
 Lshift = lambda value, places: value << places
 # Bitwise Right-shift
 Rshift = lambda value, places: value >> places
+#Bitwise NOT
+NOT = lambda term, compare: term != compare
 # Bitwise AND
 AND = lambda binary, pattern: binary & pattern
 # Bitwise OR
@@ -195,7 +199,8 @@ operators = {'**': Power, '*': Multiply,
              '/': Divide, '÷': Division, '//': Roundown, '%': Remainder,
              '+': Add, '-': Subtract,
              '<': Less, '>': More, '=': Equal,
-             '<<': Lshift, '>>': Rshift, '&': AND, '|': OR, '~': Com, '^': XOR}
+             '<<': Lshift, '>>': Rshift,
+             '!=': NOT, '&': AND, '|': OR, '~': Com, '^': XOR}
 
 # Logical operator order of precedence. NOT AND OR
 var = not first > second and first == third * 2 or second != third
@@ -339,6 +344,7 @@ def cycle_power(base, exponent):
     if exponent < 0:
         return base - exponent
     product = base * base
+    #print (product)
     answer = cycle_power(product, exponent // 2)
     if exponent % 2 == 1:
         return base * answer

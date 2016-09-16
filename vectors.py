@@ -12,13 +12,13 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import builtins, keyword, os, sys, time
-import queue, collections, threading, pickle, concurrent
+import queue, heapq, collections, threading, pickle, concurrent
 import numbers, operator, math, cmath, decimal, fractions, random, itertools
-import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib
+import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
-import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
-import argparse, calendar, pprint, struct, copy, pdb
-import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib
+import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
+import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
+import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -29,6 +29,9 @@ RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "yield", "break","except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
+KEYWORDS = keyword.kwlist
+
+
 
 import maths, matrices, moreadt
 
@@ -79,8 +82,10 @@ class Vector():
         """
         >>> print(Vector([[1],[2.0],[3j]]).verify())
         True
+        
         >>> print(Vector([[1],[2],['0']]).verify())
         False
+        
         >>> print(Vector([[1],[2,3],[4,5,6]]).verify())
         False
         """
@@ -119,7 +124,8 @@ class Vector():
             return
         for row in self.content:
             print (row)
-    
+
+
 
     def pow(self, other):
         """

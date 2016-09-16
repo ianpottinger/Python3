@@ -12,13 +12,13 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import builtins, keyword, os, sys, time
-import queue, collections, threading, pickle, concurrent
+import queue, heapq, collections, threading, pickle, concurrent
 import numbers, operator, math, cmath, decimal, fractions, random, itertools
-import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib
+import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
-import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
-import argparse, calendar, pprint, struct, copy, pdb
-import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib
+import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
+import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
+import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -26,9 +26,12 @@ if DEBUG_MODE:
 
 RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
+            "yield", "break","except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
+KEYWORDS = keyword.kwlist
+
+
 
 import maths, vectors, moreadt
 
@@ -56,7 +59,6 @@ class Matrix():
         formatted = r""
         for row in self.content:
             formatted += str(row) + "\n"
-        
         return formatted[:-1]
 
     def __eq__(self, other):
@@ -70,7 +72,7 @@ class Matrix():
 
     def measure(self):
         """
-        Returns the rows by columns of a self.content
+        Returns the rows by columns of self.content
         """
         if self.content == [] or self.content == [[]]:
             return 0, 0
@@ -87,7 +89,11 @@ class Matrix():
         """
         >>> print(Matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]).verify())
         True
-        >>> print(Matrix([[0, 0, 0], [0, 0], [0, 0, 0]]).verify())
+        
+        >>> print(Matrix([[0, 0, 0], [1, 1], [0, 0, 0]]).verify())
+        False
+
+        >>> print(Matrix([[0, 0, 0], [1, 1, 1, 1], [0, 0, 0]]).verify())
         False
         """
         if ((self.rows >= 1)
@@ -114,6 +120,7 @@ class Matrix():
         print(Matrix.zero(10, 10))
         >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
         (None, 'Size mismatch')
+        
         >>> print(Matrix([[1,0,0],[0,1,0],[0,0,1]]).mul(Matrix([[1],[3],[2]])))
         [1]
         [3]
@@ -179,7 +186,7 @@ class Matrix():
         else:
             return None
 
-    def set(self, row, column, value):
+    def fix(self, row, column, value):
         if ((value in [int, float, complex]) and
                 (not self.element(row, column) is None )):
             self.content[row][column] = value
@@ -203,16 +210,16 @@ class Matrix():
         [5, 0, 4, 9]
 
         """
-        ##        return Matrix([[row[item]
-        ##                        for row in self.content]
-        ##                       for item in range(len(self.content[0]) ) ] )
-
-        ##        return Matrix([[column[row]
-        ##                        for column in self.content]
-        ##                       for row in range(self.columns)])
+##        return Matrix([[row[column]
+##                        for row in self.content]
+##                       for column in range(self.columns) ] )
+##
+##        return Matrix([[column[row]
+##                        for column in self.content]
+##                       for row in range(self.columns) ] )
 
         return Matrix([list(element)
-                       for element in zip(*self.content)])  # Clever method
+                       for element in zip(*self.content) ] )  # Clever method
 
     def inner(self, other):
         return
@@ -275,6 +282,7 @@ class Matrix():
 
     def mul(self, other):
         """
+        Associative, but not commutative.
         >>> print(Matrix([[1,3,2], [4,0,1]]).mul(Matrix([[1,3], [0,1], [5,2]])))
         [11, 10]
         [9, 14]
@@ -291,6 +299,7 @@ class Matrix():
 
         >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
         (None, 'Size mismatch')
+        
         >>> print(Matrix([[2,1],[3,4],[5,6]]).mul(Matrix([[1,3,6],[2,4,5]])))
         [4, 10, 17]
         [11, 25, 38]
@@ -315,10 +324,57 @@ class Matrix():
         >>> print(Matrix([[4,-1],[2,-1]]).mul(Matrix([[3,1,0],[2,1,-2]])))
         [10, 3, 2]
         [4, 1, 2]
+        
+        >>> import matrices, vectors
+        >>> mat=matrices.Matrix([[1,2,1,5],[0,3,0,4],[-1,-2,0,0]])
+        >>> vec=vectors.Vector([[1],[3],[2],[1]])
+        >>> mat.mul(vec).show()
+        [14]
+        [13]
+        [-7]
 
+        >>> mat=matrices.Matrix([[1,0,3],[2,1,5],[3,1,2]])
+        >>> vec=vectors.Vector([[1],[6],[2]])
+        >>> mat.mul(vec).show()
+        [7]
+        [18]
+        [13]
+
+        >>> import matrices, vectors
+        >>> mat=matrices.Matrix([[1,2104],[1,1416],[1,1534],[1,852]])
+        >>> vec=vectors.Vector([[-40],[0.25]])
+        >>> mat.mul(vec).show()
+        [486.0]
+        [314.0]
+        [343.5]
+        [173.0]
+
+        >>> import matrices
+        >>> mat=matrices.Matrix([[1,3],[2,4],[0,5]])
+        >>> rix=matrices.Matrix([[1,0],[2,3]])
+        >>> mat.mul(rix).show()
+        [7, 9]
+        [10, 12]
+        [10, 15]
+
+        >>> import matrices
+        >>> mat=matrices.Matrix([[1,2104],[1,1416],[1,1534],[1,852]])
+        >>> rix=matrices.Matrix([[-40,200,-150],[0.25,0.1,0.4]])
+        >>> mat.mul(rix).show()
+        [486.0, 410.4, 691.6]
+        [314.0, 341.6, 416.4]
+        [343.5, 353.4, 463.6]
+        [173.0, 285.2, 190.8]
+
+        >>> Matrix.eye(3).mul(Matrix([[1],[3],[2]])).show()
+        [1]
+        [3]
+        [2]
         """
         if type(other) in [int, float, complex]:
             other = Matrix.fill(self.columns, self.rows, other)
+        if type(other) == vectors.Vector:
+            other = Matrix(other.content)
         if not self.columns == other.rows:
             return None, 'Size mismatch'
 
@@ -326,11 +382,11 @@ class Matrix():
                                        .content).dot(other.vector(column))
                         for row in range(self.rows)]
                        for column in range(other.columns)]).transpose()
-
+##
 ##        return Matrix([[mattor_dot([mat[row]], column(rix, column) )
 ##                                  for row in range(mat_size[0]) ]
 ##                                 for column in range(rix_size[1]) ] ).transpose()
-
+##
 ##        return Matrix([[self.content[row][column] * other.content[column][row]
 ##                       for row in range(self.rows)]
 ##                       for column in range(other.columns)])
@@ -507,27 +563,27 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
-    def max(self):
+    def maximum(self):
         """
-        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).max())
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).maximum())
         6
         """
         return max([(self.content[row][column])
                     for column in range(self.columns)
                     for row in range(self.rows)])
 
-    def min(self):
+    def minimum(self):
         """
-        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).min())
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).minimum())
         -9
         """
         return min([(self.content[row][column])
                     for column in range(self.columns)
                     for row in range(self.rows)])
 
-    def more(self, target):
+    def morethan(self, target):
         """
-        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).more(5))
+        >>> print(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).morethan(5))
         [False, False, False]
         [False, False, True]
         [False, False, False]
@@ -537,9 +593,9 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
-    def less(self, target):
+    def lessthan(self, target):
         """
-        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).less(5).show()
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).lessthan(5).show()
         [True, True, True]
         [True, True, False]
         [True, True, True]
@@ -563,12 +619,15 @@ class Matrix():
 
     def find(self, target):
         """
-        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).less(5)).find(True))
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).lessthan(5)).find(True))
         [(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (0, 2), (2, 2)]
-        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).more(5)).find(True))
+        
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).morethan(5)).find(True))
         [(2, 1), (1, 2)]
+
         >>> print(Matrix(Matrix([[-1, 2, -3], [4, 5, 6], [-7, 8-3, -9]]).equal(5)).find(True))
         [(1, 1), (2, 1)]
+
         >>> print(Matrix(Matrix.slide(10, 10)).find([5, -5]))
         [(5, 0), (6, 1), (7, 2), (8, 3), (9, 4), (0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
         """
@@ -850,9 +909,9 @@ class Matrix():
     def inverse(self):
         """
         """
-        ##        if not self.rows == self.columns:
-        ##            return (None, 'Size mismatch')
-        inverted = self.mirror().flipped()
+        if not self.rows == self.columns:
+            return (None, 'Size mismatch')
+        inverted = self.mirror().flipped().transpose()
         #print("inverting1\n", inverted)
         inverted = inverted.mul(Matrix.eye(self.rows))
         #print("inverting2\n", inverted)

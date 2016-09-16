@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE == True:
@@ -29,6 +29,8 @@ RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "yield", "break","except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
+KEYWORDS = keyword.kwlist
+
 
 
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -137,9 +139,86 @@ web_colours = {"Aqua": Aqua,
                "White": White,
                "Yellow": Yellow}
 
-RGB_light = ["Red", "Green", "Blue", "White",]
-CMY_kemet = ["Cyan", "Magenta", "Yellow", "Black"]
+
+
+text_fore = {"Black": 30,
+             "Red": 31,
+             "Green": 32,
+             "Yellow": 33,
+             "Blue": 34,
+             "Purple": 35,
+             "Cyan": 36,
+             "White": 37}
+
+text_back = {"Black": 40,
+             "Red": 41,
+             "Green": 42,
+             "Yellow": 43,
+             "Blue": 44,
+             "Purple": 45,
+             "Cyan": 46,
+             "White": 47}
+
+text_style = {"Normal": 0,
+              "Bright": 1,
+              "Underline": 2,
+              "Negative1": 3,
+              "Negative2": 5}
+
+def colour_print(string, fore = "Black", back = "White", style = "Normal"):
+    if type(fore) == str:
+        fore = text_fore[fore]
+    if type(back) == str:
+        back = text_back[back]
+    if type(style) == str:
+        style = text_style[style]
+    output = "\033[" + str(style) + ";" + str(fore) + ";" + str(back) + "m "
+    print (output + string)
+    
+
+##def print_format_table():
+##    """
+##    prints table of formatted text format options
+##    """
+##    for style in range(8):
+##        for fg in range(30,38):
+##            s1 = ''
+##            for bg in range(40,48):
+##                format = ';'.join([str(style), str(fg), str(bg)])
+##                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
+##            print(s1)
+##        print('\n')
+##
+##print_format_table()
+
+##from colorama import Fore, Style
+##import sys
+##
+##class Highlight:
+##  def __init__(self, clazz, color):
+##    self.color = color
+##    self.clazz = clazz
+##  def __enter__(self):
+##    print(self.color, end="")
+##  def __exit__(self, type, value, traceback):
+##    if self.clazz == Fore:
+##      print(Fore.RESET, end="")
+##    else:
+##      assert self.clazz == Style
+##      print(Style.RESET_ALL, end="")
+##    sys.stdout.flush()
+##
+##with Highlight(Fore, Fore.GREEN):
+##  print("this is highlighted")
+##print("this is not")
+
+
+
+RGB_light = ("Red", "Green", "Blue", "White")
+CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
 colours = RGB_light + CMY_kemet
+
+DNA = {'A': Yellow, 'C': Red, 'G': Blue, 'T': Green}
 
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 #Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
@@ -296,6 +375,35 @@ def day_of_week(year, month, day, origin = 0):
 #  y -= m < 3;
 #  return (y + y/4 - y/100 + y/400 + t[m-1] + d + c) % 7;
 #}
+
+def current_day():
+    currentDate = datetime.datetime.today().date()
+    return day_of_week(currentDate.year, currentDate.month, currentDate.day)
+
+def full_datetime_now():
+    """http://strftime.org/"""
+    currentDate = datetime.datetime.today().date()
+    print ("Today is day {0:s} in week {1:s}, which is"
+           .format(currentDate.strftime('%j'), currentDate.strftime('%U') ) )
+    print (current_day(), currentDate.strftime('the %d of %B in the year %Y') )
+    currentTime = datetime.datetime.now().time()
+    print (currentTime.strftime("And the time a moment ago was %H:%M:%S.%f") )
+
+def time_to_minutes(time_str):  
+    try:  
+        hours, minutes, seconds = time_str.split(':')  
+    except ValueError:  
+        return -1  
+    return int(hours)*60 + int(minutes) + int(seconds)/60.0
+
+def time_to_seconds(time_str):  
+    try:  
+        hours, minutes, seconds = time_str.split(':')  
+    except ValueError:  
+        return -1  
+    return int(hours)*3600 + int(minutes)*60 + int(seconds)
+
+
 
 #outcomes = set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 outcomes = set(["Red", "Green", "Blue"])

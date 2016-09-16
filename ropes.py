@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -29,8 +29,10 @@ RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "yield", "break","except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
-
 KEYWORDS = keyword.kwlist
+
+
+
 GLOBAL_SONG = r"Supercalifragilisticexpialidocious"
 GLOBAL_LONG_WORD_FEAR = r"hippopotomonstrosesquippedaliophobia"
 GLOBAL_PANGRAM = r"The quick brown fox jumps over the lazy dog"
@@ -67,6 +69,7 @@ ALPHABET_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" # ASCII 65 - 90
 ASCII_CHARACTERS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~""" # note the space at the front
 REGEX_DIGITS = "\D"
 REGEX_LETTERS = "[^A-Za-z]"
+UNICODE_STRING = u"UniCode string"
 KEY_MAP = {'back space': 8, 'tab': 9,
            'enter': 13, 'shift': 16, 'ctrl': 17,
            'break': 19, 'caps': 20, 'escape': 27,
@@ -225,6 +228,9 @@ GREEK_ALPHABET = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta",
                   "ρ": "rho", "σ": "sigma", "τ": "tau", "υ": "upsilon",
                   "φ": "phi", "χ": "chi", "ψ": "psi", "ω": "omega"}
 
+
+
+
 backslash = '\\'
 backspace = '\b'
 newline = '\n'
@@ -256,13 +262,13 @@ def input_int(prompt, low = 0, high = 0):
     """
     valid = False
     if not low == high:
-        limits = str("(Between " +  str(low) + " and " + str(high) + "): " )
+        low, high = (min(low, high), max(low, high))
+        limits = str("(Between {0:d} and {1:d}): ".format(low, high) )
     else:
         limits = ""
     while not valid:
-        integer = input(prompt + limits)
         try:
-            integer = int(integer)
+            integer = int(input(prompt + limits))
         except ValueError:
             continue
         except SyntaxError:
@@ -275,13 +281,13 @@ def input_int(prompt, low = 0, high = 0):
 def input_float(prompt, low = 0, high = 0):
     valid = False
     if not low == high:
-        limits = str("(Between " +  str(low) + " and " + str(high) + "): " )
+        low, high = (min(low, high), max(low, high))
+        limits = str("(Between {0:d} and {1:d}): ".format(low, high) )
     else:
         limits = ""
     while not valid:
-        real = input(prompt + limits)
         try:
-            real = float(real)
+            real = float(input(prompt + limits) )
         except ValueError:
             continue
         except SyntaxError:
@@ -293,24 +299,47 @@ def input_float(prompt, low = 0, high = 0):
 
 def input_string(prompt, low = 0, high = 0):
     """
-    password = input_string('Enter a password(Must be between 3 and 8 characters) : ', 3, 8)
+    password = input_string('Enter a password: ', 3, 8)
     """
     valid = False
     if not low == high:
-        limits = str("(Between ", low, " and ", high, " characters)")
+        low, high = (min(low, high), max(low, high))
+        limits = str("(Must be between {0:d} and {1:d} characters in length): "
+                     .format(low, high) )
     else:
         limits = ""
     while not valid:
-        string = input(prompt + limits)
         try:
-            string = str(string)
+            string = input(str(prompt + limits) )
         except ValueError:
             continue
         except SyntaxError:
             continue
         else:
-            valid = len(string) in range(low, high)
+            valid = len(string) in range(low, high + 1)
     return string
+
+def input_datetime(prompt, example, expect):
+    """
+    birthday = input_datetime('Enter date of birth ', 'YYYY/MM/DD', '%Y/%m/%d')
+    """
+    valid = False
+    while not valid:
+        enteredate = input(prompt + '(' + example + '): ')
+        try:
+            datentered = datetime.datetime.strptime(enteredate, expect)
+            #print (enteredate, datentered)
+        except ValueError:
+            #print('ValueError')
+            print('A valid date needs to be entered in the expected format')
+            continue
+        except SyntaxError:
+            #print('SyntaxError')
+            print('Date needs to be entered in expected format')
+            continue            
+        else:
+            valid = True
+    return datentered.strftime(expect)
 
 def input_choice(prompt, strings, fails = False):
     """
@@ -322,7 +351,6 @@ def input_choice(prompt, strings, fails = False):
     valid = False
     invalids = []
     strings = [str(option).strip().lower() for option in strings]
-    
     while not valid:
         choice = input(prompt).strip().lower()
         try:
@@ -338,14 +366,6 @@ def input_choice(prompt, strings, fails = False):
         return choice, invalids
     else:
         return choice
-
-
-def time_to_minutes(time_str):  
-    try:  
-        hours, minutes, seconds = time_str.split(':')  
-    except ValueError:  
-        return -1  
-    return int(hours)*60 + int(minutes) + int(seconds)/60.0
 
 
 
