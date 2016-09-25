@@ -114,7 +114,7 @@ class Matrix():
         self.rows, self.columns = self.size = self.measure()
         self.legal = self.verify()
 
-    def show(self, title=""):
+    def show(self, title="", precision = 0):
         """
         print(Matrix.fill(10, 10, 6))
         print(Matrix.zero(10, 10))
@@ -437,8 +437,8 @@ class Matrix():
         if not self.size == other.size:
             return None, 'Size mismatch'
         else:
-            return Matrix([[self.content[row][column] /
-                            other.content[row][column]
+            return Matrix([[round(self.content[row][column] /
+                                  other.content[row][column], 16)
                             if not (other.content[row][column]) == 0 else float("inf")
                             for column in range(self.columns)]
                            for row in range(self.rows)])
@@ -498,6 +498,17 @@ class Matrix():
         [0.7539022543432953, -0.14550003380860246, -0.911130261884586]
         """
         return Matrix([[maths.cosine(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def tangent(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).tangent().show()
+        [1.5574077246549023, -2.185039863261519, -0.1425465430742778]
+        [1.1578212823495777, -3.380515006246586, -0.29100619138474915]
+        [0.8714479827243188, -6.799711455220379, -0.45231565944180985]
+        """
+        return Matrix([[math.tan(self.content[row][column])
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
@@ -686,24 +697,46 @@ class Matrix():
                        for row in range(rows)])
 
     def sequence(start, stop, gap = 1):
+        """
+        >>> x=Matrix.sequence(2,3,.25).stacked()
+        >>> y=Matrix.sequence(-3,-4,-.3)
+        >>> z=Matrix.mul(x,y).show()
+        [-6.0, -6.6, -7.2, -7.8]
+        [-6.75, -7.425, -8.1, -8.775]
+        [-7.5, -8.25, -9.0, -9.75]
+        [-8.25, -9.075, -9.9, -10.725]
+        [-9.0, -9.899999999999999, -10.8, -11.7]
+        >>> PiTau=Matrix.sequence(maths.GLOBAL_PI,maths.GLOBAL_TAU,math.pi).show()
+        [3.141592653589793, 6.283185307179586]
+        >>> PiTau=Matrix.sequence(maths.GLOBAL_PI,maths.GLOBAL_TAU,math.pi).mirror().show()
+        [6.283185307179586, 3.141592653589793]
+        >>> PiTau=Matrix.sequence(maths.GLOBAL_PI,maths.GLOBAL_TAU,math.pi).mirror().stacked().show()
+        [6.283185307179586]
+        [3.141592653589793]
+        >>> PiTau=Matrix.sequence(maths.GLOBAL_PI,maths.GLOBAL_TAU,math.pi).mirror().stacked().flipped().show()
+        [3.141592653589793]
+        [6.283185307179586]
+        >>> PiTau=Matrix.sequence(maths.GLOBAL_PI,maths.GLOBAL_TAU,math.pi).mirror().stacked().flipped().flatten().show()
+        [3.141592653589793, 6.283185307179586]
+        """
         if gap == 0.0:
-            return Matrix([start, stop])
+            return Matrix([[start, stop]])
         if start == stop:
-            return Matrix([start, stop])
+            return Matrix([[start, stop]])
         if gap < 0.0:
             start, stop = float(max(start, stop) ), float(min(start, stop) )
             seq = list([start])
-            point = start + gap
+            point = round(start + gap, 15)
             while not point < stop:
                 seq.append(point)
-                point = point + gap
+                point = round(point + gap, 15)
         else:
             start, stop = float(min(start, stop) ), float(max(start, stop) )
             seq = list([start])
-            point = start + gap
+            point = round(start + gap, 15)
             while not point > stop:
                 seq.append(point)
-                point = point + gap
+                point = round(point + gap, 15)
         return Matrix([seq])
     
 
