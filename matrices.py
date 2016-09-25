@@ -478,6 +478,29 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
+    def sine(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).sine().show()
+        [0.8414709848078965, 0.9092974268256817, 0.1411200080598671]
+        [-0.7568024953079275, -0.9589242746631357, -0.27941549819892936]
+        [0.656986598718787, 0.9893582466234029, 0.41211848524190764]
+
+        """
+        return Matrix([[maths.sine(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
+    def cosine(self):
+        """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).cosine().show()
+        [0.5403023058681397, -0.41614683654714246, -0.9899924966004455]
+        [-0.6536436208636125, 0.28366218546322675, 0.9601702866503709]
+        [0.7539022543432953, -0.14550003380860246, -0.911130261884586]
+        """
+        return Matrix([[maths.cosine(self.content[row][column])
+                        for column in range(self.columns)]
+                       for row in range(self.rows)])
+
     def log(self):
         """
         >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).log().show()
@@ -662,6 +685,28 @@ class Matrix():
         return Matrix([[value for column in range(columns)]
                        for row in range(rows)])
 
+    def sequence(start, stop, gap = 1):
+        if gap == 0.0:
+            return Matrix([start, stop])
+        if start == stop:
+            return Matrix([start, stop])
+        if gap < 0.0:
+            start, stop = float(max(start, stop) ), float(min(start, stop) )
+            seq = list([start])
+            point = start + gap
+            while not point < stop:
+                seq.append(point)
+                point = point + gap
+        else:
+            start, stop = float(min(start, stop) ), float(max(start, stop) )
+            seq = list([start])
+            point = start + gap
+            while not point > stop:
+                seq.append(point)
+                point = point + gap
+        return Matrix([seq])
+    
+
     def zero(rows, columns):
         """
         >>> Matrix.zero(2, 5).show()
@@ -702,6 +747,30 @@ class Matrix():
         identity = Matrix.zero(rows, rows)
         for eye in range(rows):
             identity.content[eye][eye] = 1
+        return identity
+
+    def diagional(values):
+        """
+        >>> Matrix.eye(4).show()
+        [1, 0, 0, 0]
+        [0, 1, 0, 0]
+        [0, 0, 1, 0]
+        [0, 0, 0, 1]
+
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).mul(Matrix.eye(3) ).show()
+        [-1, 2, -3]
+        [4, -5, 6]
+        [-7, -8, -9]
+
+        >>> Matrix.eye(3).mul(Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]] ) ).show()
+        [-1, 2, -3]
+        [4, -5, 6]
+        [-7, -8, -9]
+        """
+        rows = len(values)
+        identity = Matrix.zero(rows, rows)
+        for eye in range(rows):
+            identity.content[eye][eye] = values[eye]
         return identity
 
     def identity(self):

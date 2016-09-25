@@ -124,6 +124,28 @@ class Vector():
             return
         for row in self.content:
             print (row)
+            
+    def sequence(start, stop, gap = 1):
+        if gap == 0.0:
+            return Vector([start, stop])
+        if start == stop:
+            return Vector([start, stop])
+        if gap < 0.0:
+            start, stop = float(max(start, stop) ), float(min(start, stop) )
+            seq = list([start])
+            point = start + gap
+            while not point < stop:
+                seq.append(point)
+                point = point + gap
+        else:
+            start, stop = float(min(start, stop) ), float(max(start, stop) )
+            seq = list([start])
+            point = start + gap
+            while not point > stop:
+                seq.append(point)
+                point = point + gap
+        return Vector([seq])
+
 
 
 
@@ -204,29 +226,29 @@ class Vector():
                        if not loga[0] == 0 else [float("NaN")]
                        for loga in self.content] )
 
-    def exp(self):
+    def exponent(self):
         """
         Returns a list of e raised to the power of the number in vector
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).exp().content)
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).exponent().content)
         [[1.0], [2.7182818284590455], [7.389056098930649], [20.08553692318766], [54.598150033144265], [148.41315910257657], [403.4287934927351], [1096.6331584284578], [2980.957987041728], [8103.083927575384]]
         """
         #math.exp([vector[pos]) for pos in range(len(self))]
         return Vector([[maths.exponent(expo[0] ) ]
                        for expo in self.content] )
 
-    def abs(self):
+    def absolute(self):
         """
         Returns a list of absolutes from the number in vector
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).abs().content)
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).absolute().content)
         [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]
         """
         return Vector([[maths.absolute(positive[0] ) ]
                        for positive in self.content] )
 
-    def neg(self):
+    def negate(self):
         """
         Returns a list of negatives from the number in vector
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).neg().content)
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).negate().content)
         [[0], [-1], [-2], [-3], [-4], [-5], [-6], [-7], [-8], [-9]]
         """
         return Vector([[-(maths.absolute(negative[0]) ) ]
@@ -253,50 +275,49 @@ class Vector():
         return sum([multiplicand[0] * multiplier[0]
                     for (multiplicand, multiplier) in zip(self.content, other.content)])
 
-    def max(self, other):
+    def maximum(self, other):
         """
         Returns a list of differences from the subtraction of
         minuends in vec and subtrahends in tor
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).max(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).maximum(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[9], [8], [7], [6], [5], [5], [6], [7], [8], [9]]
         """
         #max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return Vector([max(diffe, rence)
                        for (diffe, rence) in zip(self.content, other.content)] )
 
-    def min(self, other):
+    def minimum(self, other):
         """
         Returns a list of differences from the subtraction of
         minuends in vec and subtrahends in tor
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).min(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).minimum(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[0], [1], [2], [3], [4], [4], [3], [2], [1], [0]]
         """
         #min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return Vector([min(diffe, rence)
                        for (diffe, rence) in zip(self.content, other.content)] )
 
-    def more(self, other):
+    def morethan(self, other):
         """
         Returns a list of differences from the subtraction of
         minuends in vec and subtrahends in tor
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).more(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).morethan(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
         [False, False, False, False, False, True, True, True, True, True]
         """
         #max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return [diffe > rence
                 for (diffe, rence) in zip(self.content, other.content)]
 
-    def less(self, other):
+    def lessthan(self, other):
         """
         Returns a list of differences from the subtraction of
         minuends in vec and subtrahends in tor
-        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).less(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
+        >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).lessthan(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
         [True, True, True, True, True, False, False, False, False, False]
         """
         #min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return [diffe < rence
                 for (diffe, rence) in zip(self.content, other.content)]
-
 
 
 
