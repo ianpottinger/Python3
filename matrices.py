@@ -382,7 +382,7 @@ class Matrix():
                                        .content).dot(other.vector(column))
                         for row in range(self.rows)]
                        for column in range(other.columns)]).transpose()
-##
+
 ##        return Matrix([[mattor_dot([mat[row]], column(rix, column) )
 ##                                  for row in range(mat_size[0]) ]
 ##                                 for column in range(rix_size[1]) ] ).transpose()
@@ -573,9 +573,9 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
-    def abs(self):
+    def absolute(self):
         """
-        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).abs().show()
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).absolute().show()
         [1, 2, 3]
         [4, 5, 6]
         [7, 8, 9]
@@ -585,9 +585,9 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
-    def neg(self):
+    def opposite(self):
         """
-        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).neg().show()
+        >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).opposite().show()
         [1, -2, 3]
         [-4, 5, -6]
         [7, 8, 9]
@@ -780,7 +780,7 @@ class Matrix():
         identity = Matrix.zero(rows, rows)
         for eye in range(rows):
             identity.content[eye][eye] = 1
-        return identity
+        return Matrix(identity.content)
 
     def diagional(values):
         """
@@ -822,7 +822,7 @@ class Matrix():
         [18, -42, 194]
 
         """
-        return self.mul(self.transpose())
+        return self.mul(self.inverse() )
 
     def slide(rows, columns):
         """
@@ -1008,19 +1008,36 @@ class Matrix():
         # rows, columns = measure(self)
         return self.join(Matrix.one(self.rows, 1))
 
+    def determinant(self):
+        """
+        """
+##        print("|", self.content[0][0], self.content[0][1], "|")
+##        print("|", self.content[1][0], self.content[1][1], "|")
+##        print(self.content[0][0] * self.content[1][1])
+##        print(self.content[0][1] * self.content[1][0])
+        return ((self.content[0][0] * self.content[1][1]) -
+                (self.content[0][1] * self.content[1][0]) )
+
+    def reverse(self):
+        """
+        """
+        #
+        return self.mirror().flipped().transpose()
+
     def inverse(self):
         """
         """
         if not self.rows == self.columns:
             return (None, 'Size mismatch')
-        inverted = self.mirror().flipped().transpose()
-        #print("inverting1\n", inverted)
-        inverted = inverted.mul(Matrix.eye(self.rows))
-        #print("inverting2\n", inverted)
-        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
-                        if not inverted.content[row][column] == 0 else float("inf")
-                        for column in range(self.columns)]
-                       for row in range(self.rows)])
+        opposite = self.opposite()
+        reverse = self.reverse()
+        for eye in range(self.rows):
+            opposite.content[eye][eye] = reverse.content[eye][eye]
+        return opposite
+##        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
+##                        if not inverted.content[row][column] == 0 else float("inf")
+##                        for column in range(self.columns)]
+##                       for row in range(self.rows)])
 
     def normal_equation(self, vector):
         """
