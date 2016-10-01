@@ -639,9 +639,9 @@ class Matrix():
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
-    def equal(self, target):
+    def equalto(self, target):
         """
-        >>> Matrix([[-1, 2, -3], [4, 5, 6], [-7, -8, -9]]).equal(5).show()
+        >>> Matrix([[-1, 2, -3], [4, 5, 6], [-7, -8, -9]]).equalto(5).show()
         [False, False, False]
         [False, True, False]
         [False, False, False]
