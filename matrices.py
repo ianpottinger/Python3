@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -26,15 +26,12 @@ if DEBUG_MODE:
 
 RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break","except", "import", "print", "class",
+            "yield", "break", "except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
 KEYWORDS = keyword.kwlist
 
-
-
 import maths, vectors, moreadt
-
 
 
 class Matrix():
@@ -100,11 +97,11 @@ class Matrix():
             and
                 (False not in [type(element) in [int, float, complex]
                                for row in self.content
-                               for element in row] )
+                               for element in row])
             and
                 (False not in [len(self.content[row]) ==
-                               len(self.content[row - 1])
-                               for row in range(0, self.rows)] ) ):
+                                   len(self.content[row - 1])
+                               for row in range(0, self.rows)])):
             self.legal = True
         else:
             self.legal = False
@@ -114,7 +111,7 @@ class Matrix():
         self.rows, self.columns = self.size = self.measure()
         self.legal = self.verify()
 
-    def show(self, title="", precision = 0):
+    def show(self, title="", precision=0):
         """
         print(Matrix.fill(10, 10, 6))
         print(Matrix.zero(10, 10))
@@ -177,7 +174,7 @@ class Matrix():
         else:
             return None
 
-    def element(self, row, column, segment = 1):
+    def element(self, row, column, segment=1):
         if column + segment > self.columns:
             return None
         if (self.rows >= row) and (self.columns >= column):
@@ -188,7 +185,7 @@ class Matrix():
 
     def fix(self, row, column, value):
         if ((value in [int, float, complex]) and
-                (not self.element(row, column) is None )):
+                (not self.element(row, column) is None)):
             self.content[row][column] = value
             return True
         else:
@@ -210,16 +207,16 @@ class Matrix():
         [5, 0, 4, 9]
 
         """
-##        return Matrix([[row[column]
-##                        for row in self.content]
-##                       for column in range(self.columns) ] )
-##
-##        return Matrix([[column[row]
-##                        for column in self.content]
-##                       for row in range(self.columns) ] )
+        ##        return Matrix([[row[column]
+        ##                        for row in self.content]
+        ##                       for column in range(self.columns) ] )
+        ##
+        ##        return Matrix([[column[row]
+        ##                        for column in self.content]
+        ##                       for row in range(self.columns) ] )
 
         return Matrix([list(element)
-                       for element in zip(*self.content) ] )  # Clever method
+                       for element in zip(*self.content)])  # Clever method
 
     def inner(self, other):
         return
@@ -383,13 +380,13 @@ class Matrix():
                         for row in range(self.rows)]
                        for column in range(other.columns)]).transpose()
 
-##        return Matrix([[mattor_dot([mat[row]], column(rix, column) )
-##                                  for row in range(mat_size[0]) ]
-##                                 for column in range(rix_size[1]) ] ).transpose()
-##
-##        return Matrix([[self.content[row][column] * other.content[column][row]
-##                       for row in range(self.rows)]
-##                       for column in range(other.columns)])
+    ##        return Matrix([[mattor_dot([mat[row]], column(rix, column) )
+    ##                                  for row in range(mat_size[0]) ]
+    ##                                 for column in range(rix_size[1]) ] ).transpose()
+    ##
+    ##        return Matrix([[self.content[row][column] * other.content[column][row]
+    ##                       for row in range(self.rows)]
+    ##                       for column in range(other.columns)])
 
     def add(self, other):
         """
@@ -459,9 +456,9 @@ class Matrix():
         """
         if (self.rows > 1) and (self.columns > 1):
             corners = [self.get(0, 0),
-                       self.get(0, self.columns -1),
-                       self.get(self.rows -1, 0),
-                       self.get(self.rows -1, self.columns -1) ]
+                       self.get(0, self.columns - 1),
+                       self.get(self.rows - 1, 0),
+                       self.get(self.rows - 1, self.columns - 1)]
             return sum(corners)
         else:
             return None
@@ -659,7 +656,7 @@ class Matrix():
         >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).morethan(5)).find(True))
         [(2, 1), (1, 2)]
 
-        >>> print(Matrix(Matrix([[-1, 2, -3], [4, 5, 6], [-7, 8-3, -9]]).equal(5)).find(True))
+        >>> print(Matrix(Matrix([[-1, 2, -3], [4, 5, 6], [-7, 8-3, -9]]).equalto(5)).find(True))
         [(1, 1), (2, 1)]
 
         >>> print(Matrix(Matrix.slide(10, 10)).find([5, -5]))
@@ -696,7 +693,7 @@ class Matrix():
         return Matrix([[value for column in range(columns)]
                        for row in range(rows)])
 
-    def sequence(start, stop, gap = 1):
+    def sequence(start, stop, gap=1):
         """
         >>> x=Matrix.sequence(2,3,.25).stacked()
         >>> y=Matrix.sequence(-3,-4,-.3)
@@ -724,21 +721,20 @@ class Matrix():
         if start == stop:
             return Matrix([[start, stop]])
         if gap < 0.0:
-            start, stop = float(max(start, stop) ), float(min(start, stop) )
+            start, stop = float(max(start, stop)), float(min(start, stop))
             seq = list([start])
             point = round(start + gap, 15)
             while not point < stop:
                 seq.append(point)
                 point = round(point + gap, 15)
         else:
-            start, stop = float(min(start, stop) ), float(max(start, stop) )
+            start, stop = float(min(start, stop)), float(max(start, stop))
             seq = list([start])
             point = round(start + gap, 15)
             while not point > stop:
                 seq.append(point)
                 point = round(point + gap, 15)
         return Matrix([seq])
-    
 
     def zero(rows, columns):
         """
@@ -812,7 +808,7 @@ class Matrix():
         [26, 65, 36]
         [32, -18, 36]
         """
-        return self.mul(self.inverse() )
+        return self.mul(self.inverse())
 
     def slide(rows, columns):
         """
@@ -826,29 +822,29 @@ class Matrix():
                         for column in range(columns)]
                        for row in range(rows)])
 
-    def random_float(rows, columns, lowest = 0, highest = 1):
-        lowest, highest = (min(lowest, highest), max(lowest, highest) )
+    def random_float(rows, columns, lowest=0, highest=1):
+        lowest, highest = (min(lowest, highest), max(lowest, highest))
         return Matrix([[lowest + random.random() * (highest - lowest)
                         for column in range(columns)]
                        for row in range(rows)])
 
-    def random_whole(rows, columns, lowest = 0, highest = 100):
-        lowest, highest = (min(lowest, highest), max(lowest, highest) )
+    def random_whole(rows, columns, lowest=0, highest=100):
+        lowest, highest = (min(lowest, highest), max(lowest, highest))
         return Matrix([[random.randint(lowest, highest)
                         for column in range(columns)]
                        for row in range(rows)])
 
     def random_binary(rows, columns):
-        return Matrix.random_int(rows, columns, 0, 1)
+        return Matrix.random_whole(rows, columns, 0, 1)
 
     def random_percent(rows, columns):
-        return Matrix.random_int(rows, columns, 0, 100)
+        return Matrix.random_whole(rows, columns, 0, 100)
 
     def histogram(self):
         values = {}
         for row in range(self.rows):
             for column in range(self.columns):
-##                values[self.get(row, column)] = values[self.get(row, column)] + 1
+                ##                values[self.get(row, column)] = values[self.get(row, column)] + 1
                 sample = self.get(row, column)
                 if not sample in values:
                     values[sample] = 1
@@ -955,7 +951,7 @@ class Matrix():
         # return Matrix([self.content[-row -1] for row in range(self.rows)] )
         return Matrix(self.content[::-1])  # Clever method
 
-    def flatten(self, vector = False):
+    def flatten(self, vector=False):
         flat = []
         ##        for row in range(self.rows):
         ##            for column in range(self.columns):
@@ -967,7 +963,7 @@ class Matrix():
         else:
             return Matrix([flat])
 
-    def stacked(self, vector = False):
+    def stacked(self, vector=False):
         stack = []
         for column in range(self.columns):
             line = self.vector(column).content
@@ -991,8 +987,7 @@ class Matrix():
         if not feed.columns == newrows * newcols:
             return self
         return Matrix([feed.element(0, segment * newcols, newcols)
-                       for segment in range(newrows) ] )
-        
+                       for segment in range(newrows)])
 
     def capital(self):
         # rows, columns = measure(self)
@@ -1001,12 +996,12 @@ class Matrix():
     def determinant(self):
         """
         """
-##        print("|", self.content[0][0], self.content[0][1], "|")
-##        print("|", self.content[1][0], self.content[1][1], "|")
-##        print(self.content[0][0] * self.content[1][1])
-##        print(self.content[0][1] * self.content[1][0])
+        ##        print("|", self.content[0][0], self.content[0][1], "|")
+        ##        print("|", self.content[1][0], self.content[1][1], "|")
+        ##        print(self.content[0][0] * self.content[1][1])
+        ##        print(self.content[0][1] * self.content[1][0])
         return ((self.content[0][0] * self.content[1][1]) -
-                (self.content[0][1] * self.content[1][0]) )
+                (self.content[0][1] * self.content[1][0]))
 
     def reverse(self):
         """
@@ -1024,10 +1019,11 @@ class Matrix():
         for eye in range(self.rows):
             opposite.content[eye][eye] = reverse.content[eye][eye]
         return opposite
-##        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
-##                        if not inverted.content[row][column] == 0 else float("inf")
-##                        for column in range(self.columns)]
-##                       for row in range(self.rows)])
+
+    ##        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
+    ##                        if not inverted.content[row][column] == 0 else float("inf")
+    ##                        for column in range(self.columns)]
+    ##                       for row in range(self.rows)])
 
     def normal_equation(self, vector):
         """
@@ -1038,24 +1034,25 @@ class Matrix():
         if not self.rows == vector.rows:
             return None, 'Size mismatch'
         capital = self.capital()
-        #print("capital\n", capital)
+        # print("capital\n", capital)
         transpose = capital.transpose()
-        #print("transpose\n", transpose)
+        # print("transpose\n", transpose)
         inversed = self.inverse()
-        #print("inversed1\n", inversed)
+        # print("inversed1\n", inversed)
         inversed = inversed.mul(capital)
-        #print("inversed2\n", inversed)
+        # print("inversed2\n", inversed)
         predictions = inversed.mul(transpose)
-        #print("predictions\n", predictions)
+        # print("predictions\n", predictions)
         return predictions.mul(vector if type(vector) == Matrix
                                else Matrix(vector.content))
+
+    def random_int(self, columns, param, param1):
+        pass
+
 
 transform_clockwise = Matrix([[0, 1], [-1, 0]])
 transform_counterclockwise = Matrix([[0, -1], [1, 0]])
 
-
-
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
-

@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -26,14 +26,13 @@ if DEBUG_MODE:
 
 RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break","except", "import", "print", "class",
+            "yield", "break", "except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
 KEYWORDS = keyword.kwlist
 
-
-
 import maths, matrices, moreadt
+
 
 class Vector():
     legal = True
@@ -42,20 +41,20 @@ class Vector():
     elements = float()
     rows = 0
 
-    def __init__(self, vector):
+    def __init__(self, vector: object) -> object:
         if type(vector) == matrices.Matrix:
             self.content = matrices.Matrix(vector).content
         elif type(vector) == Vector:
             self.content = vector.content
         else:
             self.content = vector
-        #self.validate()
+        # self.validate()
         self.update()
 
     def __str__(self):
         formatted = r""
         for row in self.content:
-            formatted += str(row)+"\n"
+            formatted += str(row) + "\n"
         return formatted[:-1]
 
     def __eq__(self, other):
@@ -77,7 +76,7 @@ class Vector():
             rows = len(self.content)
             columns = 1
             return rows, columns
-    
+
     def verify(self):
         """
         >>> print(Vector([[1],[2.0],[3j]]).verify())
@@ -96,58 +95,54 @@ class Vector():
             and
                 (False not in [type(element) in [int, float, complex]
                                for row in self.content
-                               for element in row] )
+                               for element in row])
             and
                 (False not in [len(self.content[row]) ==
-                               len(self.content[row - 1])
-                               for row in range(0, self.rows)] ) ):
+                                   len(self.content[row - 1])
+                               for row in range(0, self.rows)])):
             self.legal = True
         else:
             self.legal = False
         return self.legal
-    
 
     def update(self):
         self.rows, self.columns = self.size = self.measure()
         self.legal = self.verify()
-       
+
     def validate(self):
         correct = [[row[0]] for row in self.content]
         self.content = correct
         self.update()
 
-    def show(self, title = ""):
+    def show(self, title=""):
         if self.content is None:
-            print (r"Invalid output")
+            print(r"Invalid output")
         if not title == "":
-            print (title, "\n")
+            print(title, "\n")
             return
         for row in self.content:
-            print (row)
-            
-    def sequence(start, stop, gap = 1):
+            print(row)
+
+    def sequence(start, stop, gap=1):
         if gap == 0.0:
             return Vector([start, stop])
         if start == stop:
             return Vector([start, stop])
         if gap < 0.0:
-            start, stop = float(max(start, stop) ), float(min(start, stop) )
+            start, stop = float(max(start, stop)), float(min(start, stop))
             seq = list([start])
             point = start + gap
             while not point < stop:
                 seq.append(point)
                 point = point + gap
         else:
-            start, stop = float(min(start, stop) ), float(max(start, stop) )
+            start, stop = float(min(start, stop)), float(max(start, stop))
             seq = list([start])
             point = start + gap
             while not point > stop:
                 seq.append(point)
                 point = point + gap
         return Vector([seq])
-
-
-
 
     def pow(self, other):
         """
@@ -156,8 +151,8 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).pow(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[0], [1], [128], [729], [1024], [625], [216], [49], [8], [1]]
         """
-        #return Vector([[vec[pos][0] ** tor[pos][0] ] for pos in range(min(len(vec), len(tor)))]
-        return Vector([[base[0] ** exponent[0] ]
+        # return Vector([[vec[pos][0] ** tor[pos][0] ] for pos in range(min(len(vec), len(tor)))]
+        return Vector([[base[0] ** exponent[0]]
                        for (base, exponent) in zip(self.content, other.content)])
 
     def mul(self, other):
@@ -167,8 +162,8 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).mul(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[0], [8], [14], [18], [20], [20], [18], [14], [8], [0]]
         """
-        #return Vector([[vec[pos][0] * tor[pos][0] ] for pos in range(min(len(vec), len(tor)))]
-        return Vector([[multiplicand[0] * multiplier[0] ]
+        # return Vector([[vec[pos][0] * tor[pos][0] ] for pos in range(min(len(vec), len(tor)))]
+        return Vector([[multiplicand[0] * multiplier[0]]
                        for (multiplicand, multiplier) in zip(self.content, other.content)])
 
     def add(self, other):
@@ -178,8 +173,8 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).add(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[9], [9], [9], [9], [9], [9], [9], [9], [9], [9]]
         """
-        #[vec[pos] + tor[pos] for pos in range(min(len(vec), len(tor)))]
-        return Vector([[augend[0] + addend[0] ]
+        # [vec[pos] + tor[pos] for pos in range(min(len(vec), len(tor)))]
+        return Vector([[augend[0] + addend[0]]
                        for (augend, addend) in zip(self.content, other.content)])
 
     def sub(self, other):
@@ -189,9 +184,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).sub(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[-9], [-7], [-5], [-3], [-1], [1], [3], [5], [7], [9]]
         """
-        #[vec[pos] - tor[pos] for pos in range(min(len(vec), len(tor)))]
-        return Vector([[minuend[0] - subtrahend[0] ]
-                       for (minuend, subtrahend) in zip(self.content, other.content)] )
+        # [vec[pos] - tor[pos] for pos in range(min(len(vec), len(tor)))]
+        return Vector([[minuend[0] - subtrahend[0]]
+                       for (minuend, subtrahend) in zip(self.content, other.content)])
 
     def div(self, other):
         """
@@ -200,10 +195,10 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).div(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[0.0], [0.125], [0.2857142857142857], [0.5], [0.8], [1.25], [2.0], [3.5], [8.0], [inf]]
         """
-        #[vec[pos] / tor[pos] for pos in range(min(len(vec), len(tor)))]
-        return Vector([[dividend[0] / divisor[0] ]
+        # [vec[pos] / tor[pos] for pos in range(min(len(vec), len(tor)))]
+        return Vector([[dividend[0] / divisor[0]]
                        if not divisor[0] == 0 else [float("inf")]
-                       for (dividend, divisor) in zip(self.content, other.content)] )
+                       for (dividend, divisor) in zip(self.content, other.content)])
 
     def sqrt(self):
         """
@@ -211,9 +206,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).sqrt().content)
         [[0.0], [1.0], [1.414213562373095], [1.7320508075688772], [2.0], [2.23606797749979], [2.449489742783178], [2.6457513110645907], [2.82842712474619], [3.0]]
         """
-        #maths.sqrt([vector[pos]) for pos in range(len(self))]
-        return Vector([[maths.sqrt(maths.absolute(root[0]) ) ]
-                       for root in self.content] )
+        # maths.sqrt([vector[pos]) for pos in range(len(self))]
+        return Vector([[maths.sqrt(maths.absolute(root[0]))]
+                       for root in self.content])
 
     def log(self):
         """
@@ -221,10 +216,10 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).log().content)
         [[nan], [0.0], [0.6931471805599453], [1.0986122886681098], [1.3862943611198906], [1.6094379124341003], [1.791759469228055], [1.9459101490553132], [2.0794415416798357], [2.1972245773362196]]
         """
-        #math.log([vector[pos]) for pos in range(len(self)) if not vector[pos][0] == 0]
-        return Vector([[math.log(maths.absolute(loga[0]) ) ]
+        # math.log([vector[pos]) for pos in range(len(self)) if not vector[pos][0] == 0]
+        return Vector([[math.log(maths.absolute(loga[0]))]
                        if not loga[0] == 0 else [float("NaN")]
-                       for loga in self.content] )
+                       for loga in self.content])
 
     def exponent(self):
         """
@@ -232,9 +227,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).exponent().content)
         [[1.0], [2.7182818284590455], [7.389056098930649], [20.08553692318766], [54.598150033144265], [148.41315910257657], [403.4287934927351], [1096.6331584284578], [2980.957987041728], [8103.083927575384]]
         """
-        #math.exp([vector[pos]) for pos in range(len(self))]
-        return Vector([[maths.exponent(expo[0] ) ]
-                       for expo in self.content] )
+        # math.exp([vector[pos]) for pos in range(len(self))]
+        return Vector([[maths.exponent(expo[0])]
+                       for expo in self.content])
 
     def absolute(self):
         """
@@ -242,8 +237,8 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).absolute().content)
         [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]
         """
-        return Vector([[maths.absolute(positive[0] ) ]
-                       for positive in self.content] )
+        return Vector([[maths.absolute(positive[0])]
+                       for positive in self.content])
 
     def negate(self):
         """
@@ -251,8 +246,8 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).negate().content)
         [[0], [-1], [-2], [-3], [-4], [-5], [-6], [-7], [-8], [-9]]
         """
-        return Vector([[-(maths.absolute(negative[0]) ) ]
-                       for negative in self.content] )
+        return Vector([[-(maths.absolute(negative[0]))]
+                       for negative in self.content])
 
     def inverse(self):
         """
@@ -260,9 +255,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).inverse().content)
         [[inf], [1.0], [0.7071067811865476], [0.5773502691896258], [0.5], [0.4472135954999579], [0.4082482904638631], [0.3779644730092272], [0.3535533905932738], [0.3333333333333333]]
         """
-        return Vector([[maths.inv_sqrt(maths.absolute(inverse[0]) ) ]
+        return Vector([[maths.inv_sqrt(maths.absolute(inverse[0]))]
                        if not inverse[0] == 0 else [float("inf")]
-                       for inverse in self.content] )
+                       for inverse in self.content])
 
     def dot(self, other):
         """
@@ -271,7 +266,7 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).dot(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
         120
         """
-        #return sum([vec[pos] * tor[pos] for pos in range(min(len(vec), len(tor)))]
+        # return sum([vec[pos] * tor[pos] for pos in range(min(len(vec), len(tor)))]
         return sum([multiplicand[0] * multiplier[0]
                     for (multiplicand, multiplier) in zip(self.content, other.content)])
 
@@ -282,9 +277,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).maximum(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[9], [8], [7], [6], [5], [5], [6], [7], [8], [9]]
         """
-        #max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
+        # max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return Vector([max(diffe, rence)
-                       for (diffe, rence) in zip(self.content, other.content)] )
+                       for (diffe, rence) in zip(self.content, other.content)])
 
     def minimum(self, other):
         """
@@ -293,9 +288,9 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).minimum(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])).content)
         [[0], [1], [2], [3], [4], [4], [3], [2], [1], [0]]
         """
-        #min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
+        # min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return Vector([min(diffe, rence)
-                       for (diffe, rence) in zip(self.content, other.content)] )
+                       for (diffe, rence) in zip(self.content, other.content)])
 
     def morethan(self, other):
         """
@@ -304,7 +299,7 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).morethan(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
         [False, False, False, False, False, True, True, True, True, True]
         """
-        #max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
+        # max([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return [diffe > rence
                 for (diffe, rence) in zip(self.content, other.content)]
 
@@ -315,16 +310,11 @@ class Vector():
         >>> print(Vector([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]]).lessthan(Vector([[9], [8], [7], [6], [5], [4], [3], [2], [1], [0]])))
         [True, True, True, True, True, False, False, False, False, False]
         """
-        #min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
+        # min([vec[pos], tor[pos]) for pos in range(min(len(vec), len(tor)))]
         return [diffe < rence
                 for (diffe, rence) in zip(self.content, other.content)]
-
 
 
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
-
-        
-
-        

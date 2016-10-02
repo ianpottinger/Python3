@@ -18,7 +18,7 @@ import string, textwrap, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import socket, ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb, socket, subprocess
-import ipaddress, tkinter, colorama#, dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import ipaddress, tkinter, colorama  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -26,12 +26,10 @@ if DEBUG_MODE:
 
 RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break","except", "import", "print", "class",
+            "yield", "break", "except", "import", "print", "class",
             "exec", "in", "raise", "continue", "finally", "is",
             "return", "def", "for", "lambda", "try"]
 KEYWORDS = keyword.kwlist
-
-
 
 GLOBAL_SONG = r"Supercalifragilisticexpialidocious"
 GLOBAL_LONG_WORD_FEAR = r"hippopotomonstrosesquippedaliophobia"
@@ -64,9 +62,9 @@ binINbin = """01001000 01100101 01101100 01101100 01101111 01111110 00100001 001
 
 GLOBAL_EN_VOWELS = "AEIOUaeiou"
 QWERTY_UK = "1234567890qwertyuiopasdfghjklzxcvbnm"
-ALPHABET_LOWER = "abcdefghijklmnopqrstuvwxyz" # ASCII 97 - 122
-ALPHABET_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" # ASCII 65 - 90
-ASCII_CHARACTERS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~""" # note the space at the front
+ALPHABET_LOWER = "abcdefghijklmnopqrstuvwxyz"  # ASCII 97 - 122
+ALPHABET_UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # ASCII 65 - 90
+ASCII_CHARACTERS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"""  # note the space at the front
 REGEX_DIGITS = "\D"
 REGEX_LETTERS = "[^A-Za-z]"
 UNICODE_STRING = u"UniCode string"
@@ -97,8 +95,6 @@ KEY_MAP = {'back space': 8, 'tab': 9,
            'nums': 144, 'scroll': 145,
            '=': 187, ',': 188, '\\': 220, '`': 223}
 
-
-
 MORSE_CODE = {'A': '.-', 'B': '-...', 'C': '-.-.',
               'D': '-..', 'E': '.', 'F': '..-.',
               'G': '--.', 'H': '....', 'I': '..',
@@ -120,30 +116,26 @@ MORSE_CODE = {'A': '.-', 'B': '-...', 'C': '-.-.',
               'invite': '-.-', 'ack': '...-.', 'error': '........',
               'end': '...-.-'}
 
+PHONIC_CODE = {'A': 'Alfa', 'B': 'Bravo', 'C': 'Charlie',
+               'D': 'Delta', 'E': 'Echo', 'F': 'Foxtrot',
+               'G': 'Golf', 'H': 'Hotel', 'I': 'India',
+               'J': 'Juliett', 'K': 'Kilo', 'L': 'Lima',
+               'M': 'Mike', 'N': 'November', 'O': 'Oscar',
+               'P': 'Papa', 'Q': 'Quebec', 'R': 'Romeo',
+               'S': 'Sierra', 'T': 'Tango', 'U': 'Uniform',
+               'V': 'Victor', 'W': 'Whiskey', 'X': 'Xray',
+               'Y': 'Yankee', 'Z': 'Zulu', '0': 'Zero',
+               '1': 'One', '2': 'Two', '3': 'Three',
+               '4': 'Four', '5': 'Five', '6': 'Six',
+               '7': 'Seven', '8': 'Eight', '9': 'Nine'}
 
-
-PHONIC_CODE= {'A': 'Alfa', 'B': 'Bravo', 'C': 'Charlie',
-              'D': 'Delta', 'E': 'Echo', 'F': 'Foxtrot',
-              'G': 'Golf', 'H': 'Hotel', 'I': 'India',
-              'J': 'Juliett', 'K': 'Kilo', 'L': 'Lima',
-              'M': 'Mike', 'N': 'November', 'O': 'Oscar',
-              'P': 'Papa', 'Q': 'Quebec', 'R': 'Romeo',
-              'S': 'Sierra', 'T': 'Tango', 'U': 'Uniform',
-              'V': 'Victor', 'W': 'Whiskey', 'X': 'Xray',
-              'Y': 'Yankee', 'Z': 'Zulu', '0': 'Zero',
-              '1': 'One', '2': 'Two', '3': 'Three',
-              '4': 'Four', '5': 'Five', '6': 'Six',
-              '7': 'Seven', '8': 'Eight', '9': 'Nine'}
-
-SPELL_LETTERS = {"A" : "ay", "B" : "bee", "C" : "cee", "D" : "dee",
-                 "E" : "eee", "F" : "eff", "G" : "gee", "H" : "aych",
-                 "I" : "eye", "J" : "jay", "K" : "kay", "L" : "elle",
-                 "M" : "em", "N" : "en", "O" : "oh", "P" : "pee",
-                 "Q" : "cue", "R" : "are", "S" : "ess", "T" : "tee",
-                 "U" : "you", "V" : "vee", "W" : "dubbayou",
-                 "X" : "ex", "Y" : "why", "Z" : "zee"}
-
-
+SPELL_LETTERS = {"A": "ay", "B": "bee", "C": "cee", "D": "dee",
+                 "E": "eee", "F": "eff", "G": "gee", "H": "aych",
+                 "I": "eye", "J": "jay", "K": "kay", "L": "elle",
+                 "M": "em", "N": "en", "O": "oh", "P": "pee",
+                 "Q": "cue", "R": "are", "S": "ess", "T": "tee",
+                 "U": "you", "V": "vee", "W": "dubbayou",
+                 "X": "ex", "Y": "why", "Z": "zee"}
 
 FLIP_TABLE = {"a": "\u0250", "b": "q", "c": "\u0254", "d": "p",
               "e": "\u01DD", "f": "\u025F", "g": "\u0183", "h": "\u0265",
@@ -163,8 +155,6 @@ FLIP_TABLE = {"a": "\u0250", "b": "q", "c": "\u0254", "d": "p",
               "\"": ",", "<": ">", "_": "\u203E", ";": "\u061B",
               "\u203F": "\u2040", "\u2045": "\u2046", "\u2234": "\u2235",
               "\r": "\n", " ": " "}
-
-
 
 HTML_RESERVE = {'"': '&quot;', "'": '&apos;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}
 URL_ENCODE = {' ': '%20', '!': '%21', '"': '%22', '#': '%23', '$': '%24',
@@ -213,8 +203,6 @@ URL_ENCODE = {' ': '%20', '!': '%21', '"': '%22', '#': '%23', '$': '%24',
               '÷': '%F7', 'ø': '%F8', 'ù': '%F9', 'ú': '%FA', 'û': '%FB',
               'ü': '%FC', 'ý': '%FD', 'þ': '%FE', 'ÿ': '%FF'}
 
-
-
 ROMAN_NUMERALS = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}
 ROMAN_DOUBLES = {'CM': 900, 'CD': 400, 'XC': 90, 'XL': 40, 'IX': 9, 'IV': 4}
 
@@ -227,9 +215,6 @@ GREEK_ALPHABET = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta",
                   "ν": "nu", "ξ": "xi", "ο": "omicron", "π": "pi",
                   "ρ": "rho", "σ": "sigma", "τ": "tau", "υ": "upsilon",
                   "φ": "phi", "χ": "chi", "ψ": "psi", "ω": "omega"}
-
-
-
 
 backslash = '\\'
 backspace = '\b'
@@ -247,23 +232,25 @@ octothrope = '#'
 REPL = ["Read", "Eval", "Print", "Loop"]
 
 
-
 def memoise(function):
     cache = {}
+
     def memoised(*args):
         if args not in cache:
             cache[args] = function(*args)
         return cache[args]
+
     return memoised
 
-def input_int(prompt, low = 0, high = 0):
+
+def input_int(prompt, low=0, high=0):
     """
     age = input_int('Enter your age (minimum: 13): ',13,120)
     """
     valid = False
     if not low == high:
         low, high = (min(low, high), max(low, high))
-        limits = str("(Between {0:d} and {1:d}): ".format(low, high) )
+        limits = str("(Between {0:d} and {1:d}): ".format(low, high))
     else:
         limits = ""
     while not valid:
@@ -278,16 +265,17 @@ def input_int(prompt, low = 0, high = 0):
                 valid = True
     return integer
 
-def input_float(prompt, low = 0, high = 0):
+
+def input_float(prompt, low=0, high=0):
     valid = False
     if not low == high:
         low, high = (min(low, high), max(low, high))
-        limits = str("(Between {0:d} and {1:d}): ".format(low, high) )
+        limits = str("(Between {0:d} and {1:d}): ".format(low, high))
     else:
         limits = ""
     while not valid:
         try:
-            real = float(input(prompt + limits) )
+            real = float(input(prompt + limits))
         except ValueError:
             continue
         except SyntaxError:
@@ -297,7 +285,8 @@ def input_float(prompt, low = 0, high = 0):
                 valid = True
     return real
 
-def input_string(prompt, low = 0, high = 0):
+
+def input_string(prompt, low=0, high=0):
     """
     password = input_string('Enter a password: ', 3, 8)
     """
@@ -305,12 +294,12 @@ def input_string(prompt, low = 0, high = 0):
     if not low == high:
         low, high = (min(low, high), max(low, high))
         limits = str("(Must be between {0:d} and {1:d} characters in length): "
-                     .format(low, high) )
+                     .format(low, high))
     else:
         limits = ""
     while not valid:
         try:
-            string = input(str(prompt + limits) )
+            string = input(str(prompt + limits))
         except ValueError:
             continue
         except SyntaxError:
@@ -318,6 +307,7 @@ def input_string(prompt, low = 0, high = 0):
         else:
             valid = len(string) in range(low, high + 1)
     return string
+
 
 def input_datetime(prompt, example, expect):
     """
@@ -328,20 +318,21 @@ def input_datetime(prompt, example, expect):
         enteredate = input(prompt + '(' + example + '): ')
         try:
             datentered = datetime.datetime.strptime(enteredate, expect)
-            #print (enteredate, datentered)
+            # print (enteredate, datentered)
         except ValueError:
-            #print('ValueError')
+            # print('ValueError')
             print('A valid date needs to be entered in the expected format')
             continue
         except SyntaxError:
-            #print('SyntaxError')
+            # print('SyntaxError')
             print('Date needs to be entered in expected format')
-            continue            
+            continue
         else:
             valid = True
     return datentered.strftime(expect)
 
-def input_choice(prompt, strings, fails = False):
+
+def input_choice(prompt, strings, fails=False):
     """
     selection = ['yes', 'y', 'no', 'n']
     confirm = input_choice("Enter 'Yes' or 'No' to confirm: ", selection)
@@ -361,12 +352,11 @@ def input_choice(prompt, strings, fails = False):
             continue
         invalids.append(choice)
         valid = choice in strings
-        
+
     if fails:
         return choice, invalids
     else:
         return choice
-
 
 
 def romanise(number):
@@ -385,6 +375,7 @@ def romanise(number):
         romber += [romeral * tally]
     return "".join(romber)
 
+
 def numerise(romber):
     """
     Convert roman numeral to integer
@@ -402,43 +393,49 @@ def numerise(romber):
     number = 0
     index = 0
     for romeral, integer in romerals:
-        while romber[index : index + len(romeral)] == romeral:
+        while romber[index: index + len(romeral)] == romeral:
             number += integer
             index += len(romeral)
     return number
 
 
-
-def morse_code(string):    
+def morse_code(string):
     return ' '.join(MORSE_CODE.get(char.upper(), char) for char in string)
 
-def phonic_code(string):    
+
+def phonic_code(string):
     return ' '.join(PHONIC_CODE.get(char.upper(), char) for char in string)
 
-def letter_sounds(string):    
-    return ' '.join(SPELL_LETTERS.get(char.upper(), char) for char in string)
 
+def letter_sounds(string):
+    return ' '.join(SPELL_LETTERS.get(char.upper(), char) for char in string)
 
 
 def str2bits(string):
     def convert_str2bits(text_string):
-        for char in text_string:    
+        for char in text_string:
             number = ord(char)
             for bit in '{0:0=#10b}'.format(number)[2:]:
                 yield int(bit)
+
     return list(convert_str2bits(string))
 
-def grouper(n, iterable, fillvalue = None):
+
+def grouper(n, iterable, fillvalue=None):
     # Source: http://docs.python.org/library/itertools.html#recipes
     "grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx"
-    return itertools.zip_longest(*[iter(iterable)]*n, fillvalue = fillvalue)
+    return itertools.zip_longest(*[iter(iterable)] * n, fillvalue=fillvalue)
+
 
 def bits2str(bits):
     def convert_bits2str(bits_list):
         for bit in grouper(8, bits_list):
             yield chr(int(''.join(map(str, bit)), 2))
+
     return ''.join(convert_bits2str(bits))
-#list(bin(my_num)[2:].zfill(8))
+
+
+# list(bin(my_num)[2:].zfill(8))
 
 def binstr2dec(string):
     """
@@ -448,14 +445,17 @@ def binstr2dec(string):
     """
     return int(string, 2)
 
+
 def dec2binstr(number):
     return bin(number)[2:]
+
 
 def dec2hexstr(number):
     return hex(number)[2:]
 
 
 bin2dec = lambda s: sum(int(j) * pow(2, i) for i, j in enumerate(reversed(s)))
+
 
 def bin2string(binstring):
     """
@@ -466,12 +466,11 @@ def bin2string(binstring):
     # return (''.join(chr(bin2dec(bit)) for bit in binstring.split()))
     return "".join(chr(int(bit, 2)) for bit in binstring.split())
 
+
 """
 add = lambda x,y : x + y
 reduce(add, [int(x) * 2 ** y for x, y in zip(list(binstr), range(len(binstr) - 1, -1, -1))])
 """
-
-
 
 """
 Rules
@@ -494,6 +493,7 @@ Execution
 
 """
 
+
 def count_vowels(string):
     """ (str) -> int
 
@@ -506,13 +506,14 @@ def count_vowels(string):
         actual = count_vowels(string)
         expected = 1
         self.assertEqual(actual, expected)
-        
+
     vowels = GLOBAL_EN_VOWELS
     num_vowels = 0
     for character in string:
         if character in vowels:
             num_vowels += 1
     return num_vowels
+
 
 def extract_vowels(string):
     """ (str) -> str
@@ -522,11 +523,11 @@ def extract_vowels(string):
     """
 
     def test_extract_vowels(self):
-        string = "string"
-        actual = return_vowels (string)
+        test_string = "string"
+        actual = extract_vowels(test_string)
         expected = 'i'
         self.assertEqual(actual, expected)
-        
+
     vowels = GLOBAL_EN_VOWELS
     num_vowels = 0
     collector = []
@@ -534,6 +535,7 @@ def extract_vowels(string):
         if character in vowels:
             collector.append(character)
     return "".join(collector)
+
 
 def extract_digits(string):
     """ (str) -> str
@@ -543,16 +545,17 @@ def extract_digits(string):
     """
 
     def test_extract_digits(self):
-        string = "5tr1ng"
-        actual = return_digits(string)
+        test_string = "5tr1ng"
+        actual = extract_digits(test_string)
         expected = '51'
         self.assertEqual(actual, expected)
-        
+
     digits = []
     for character in string:
         if character.isdigit():
             digits.append(character)
     return "".join(digits)
+
 
 def extract_numbers(string):
     """
@@ -561,29 +564,36 @@ def extract_numbers(string):
     """
     return re.findall(r"[-+]?\d*\.\d+|[-+]?\d+", string)
 
+
 def extract_only_digits(string):
     return ''.join(char for char in string if char.isdigit())
-    #return filter(lambda char: char.isdigit(), string)
-    #return re.sub(REGEX_DIGITS, "", string)
+    # return filter(lambda char: char.isdigit(), string)
+    # return re.sub(REGEX_DIGITS, "", string)
+
 
 def extract_only_letters(string):
     return ''.join(char for char in string if char.isalpha())
-    #return filter(lambda char: char.isalpha(), string)
-    #return re.sub(REGEX_LETTERS, "", string)
+    # return filter(lambda char: char.isalpha(), string)
+    # return re.sub(REGEX_LETTERS, "", string)
+
 
 def regex_filter(string, regex):
     return re.sub(regex, "", string)
 
+
 def capitalise(string):
     return ' '.join(char.capitalize() for char in string.split(' '))
+
 
 def containsAny(string, strings):
     """Check whether 'str' contains ANY of the chars in 'strings'"""
     return 1 in [c in string for c in strings]
 
+
 def containsAll(string, strings):
     """Check whether 'str' contains ALL of the chars in 'strings'"""
     return 0 not in [c in string for c in strings]
+
 
 def contains_any(string, strings):
     """Check whether 'str' contains ANY of the chars in 'strings'"""
@@ -592,13 +602,13 @@ def contains_any(string, strings):
             return 1
     return 0
 
+
 def contains_all(string, strings):
     """Check whether 'str' contains ALL of the chars in 'strings'"""
     for c in strings:
         if c not in string:
             return 0
     return 1
-
 
 
 def add_to_letter_counts(dictonary, string):
@@ -615,6 +625,7 @@ def add_to_letter_counts(dictonary, string):
     for character in string:
         dictonary[character] += 1
     return None
+
 
 def common_characters(first, second):
     '''(str, str) -> str
@@ -637,10 +648,9 @@ def common_characters(first, second):
 
     for character in first:
         if character in second:
-            result.append(character)    # BODY MISSING
+            result.append(character)  # BODY MISSING
 
     return "".join(result)
-
 
 
 def reverse_string_iter(string):
@@ -651,11 +661,11 @@ def reverse_string_iter(string):
     """
 
     reverse = []
-    
-##    remaining = 0
-##    while remaining < len(string):
-##        reverse = string[remaining] + reverse
-##        remaining += 1  
+
+    ##    remaining = 0
+    ##    while remaining < len(string):
+    ##        reverse = string[remaining] + reverse
+    ##        remaining += 1
 
     remaining = len(string) - 1
     while remaining >= 0:
@@ -663,6 +673,7 @@ def reverse_string_iter(string):
         remaining -= 1
 
     return "".join(reverse)
+
 
 def reverse_string_loop(string):
     """ (str) -> str
@@ -676,6 +687,7 @@ def reverse_string_loop(string):
         reverse = character + reverse
     return reverse
 
+
 @memoise
 def reverse_string_recurse(string):
     """ (str) -> str
@@ -683,25 +695,30 @@ def reverse_string_recurse(string):
     >>> reverse_string_recurse('string of text')
     'txet fo gnirts'
     """
-    
+
     if string == '':
         return string
     return reverse_string(string[1:]) + string[0]
+
 
 def reverse_string_list(string):
     string = list(string)
     string.reverse()
     return "".join(string)
 
+
 def reverse_string(string):
     return string[::-1]
 
+
 def reverse_words(string):
-    #return ' '.join(reversed(string.split(' ')))
+    # return ' '.join(reversed(string.split(' ')))
     return ' '.join(string.split(' ')[::-1])
 
-def find_replace(string, search, replace = ""):
+
+def find_replace(string, search, replace=""):
     return string.replace(search, replace)
+
 
 def flip_text(string):
     reverse = reversed(string)
@@ -712,7 +729,6 @@ def flip_text(string):
         else:
             flipped += character
     return flipped
-
 
 
 def palindrome_reverse(string):
@@ -728,6 +744,7 @@ def palindrome_reverse(string):
 
     # Compare the string to the reverse of the string
     return string == reverse_string(string)
+
 
 def palindrome_split(string):
     """ (str) -> bool
@@ -746,6 +763,7 @@ def palindrome_split(string):
     # Compare the first half of the string to the second half using indices
     # Middle character of odd length strings is omitted using decimal division
     return string[:half] == reverse_string(string[length - half:])
+
 
 def palindrome_compare(string):
     """ (str) -> bool
@@ -768,6 +786,7 @@ def palindrome_compare(string):
     # If string is a single character, left and right are equal
     return right <= left
 
+
 def palindrome_loop(string):
     """ (str) -> bool
 
@@ -785,6 +804,7 @@ def palindrome_loop(string):
             return False
     return True
 
+
 def count_words(content):
     """
     str or list -> dict {"str" : int}
@@ -799,7 +819,7 @@ def count_words(content):
         if not content:
             return None
         content = [extract_only_letters(word) for word in content]
-        
+
     word_counts = {}
     for word in content:
         if word not in word_counts:
@@ -807,8 +827,10 @@ def count_words(content):
         word_counts[word] += 1
     return word_counts
 
+
 def map_words(content):
     return sorted([(word, 1) for word in content])
+
 
 def reduce_words(content):
     word_totals = {}
@@ -818,6 +840,7 @@ def reduce_words(content):
         else:
             word_totals[word[0]] = 1
     return word_totals
+
 
 def mapreduce_count_words(content):
     """
@@ -836,7 +859,8 @@ def mapreduce_count_words(content):
 
     words_mapped = map_words(content)
     words_reduced = reduce_words(words_mapped)
-    return sum(words_reduced.values() )
+    return sum(words_reduced.values())
+
 
 def mapreduce_word_counts(content):
     """
@@ -855,7 +879,8 @@ def mapreduce_word_counts(content):
 
     words_mapped = map_words(content)
     words_reduced = reduce_words(words_mapped)
-    return sorted(words_reduced.items() )
+    return sorted(words_reduced.items())
+
 
 def mapreduce_unique_words(content):
     """
@@ -874,7 +899,8 @@ def mapreduce_unique_words(content):
 
     words_mapped = map_words(content)
     words_reduced = reduce_words(words_mapped)
-    return sorted(words_reduced.keys() ), len(words_reduced)
+    return sorted(words_reduced.keys()), len(words_reduced)
+
 
 def mapreduce_solo_words(content):
     """
@@ -896,6 +922,7 @@ def mapreduce_solo_words(content):
     return sorted(word for word, count in words_reduced.items()
                   if count == 1)
 
+
 def total_words(word_counts):
     """
     dict {"str" : int} -> int
@@ -906,12 +933,13 @@ def total_words(word_counts):
     if type(word_counts) != dict:
         if type(word_counts) == str or type(word_counts) == list:
             word_counts = count_words(word_counts)
-        #return None
-            
+            # return None
+
     word_counter = 0
     for word in word_counts:
         word_counter += word_counts[word]
     return word_counter
+
 
 def common_word(word_counts):
     """
@@ -920,12 +948,12 @@ def common_word(word_counts):
     Returns the most common word and its count from a dictionary of words
     and their counts.
     """
-    
+
     if type(word_counts) != dict:
         if type(word_counts) == str or type(word_counts) == list:
             word_counts = count_words(word_counts)
-        #return None
-            
+            # return None
+
     most_used = ""
     word_count = 0
     for word, count in word_counts.items():
@@ -933,7 +961,8 @@ def common_word(word_counts):
             most_used = word
             word_count = count
     return most_used, word_count
-    
+
+
 def unique_words(word_counts):
     """
     dict {"str" : int} -> list["str"]
@@ -941,18 +970,17 @@ def unique_words(word_counts):
     Returns a list of words with count of one from a dictionary of words
     and their counts.
     """
-    
+
     if type(word_counts) != dict:
         if type(word_counts) == str or type(word_counts) == list:
             word_counts = count_words(word_counts)
-        #return None
-            
+            # return None
+
     used_once = []
     for word, count in word_counts.items():
         if count == 1:
             used_once.append(word)
     return used_once
-
 
 
 def swap_words(two_words):
@@ -972,7 +1000,6 @@ def swap_words(two_words):
     return second + ' ' + first
 
 
-
 def is_anagram(first, second):
     """ (str, str) -> bool
 
@@ -989,16 +1016,15 @@ def is_anagram(first, second):
     # If the words aren't the same length, there is no need to compare them
     if len(first) != len(second):
         return False
-    
+
     words = [[], []]
-    #Build lists from the characters in the words
+    # Build lists from the characters in the words
     for character in range(len(first)):
         words[0].append(first[character])
         words[1].append(second[character])
     words[0].sort()
     words[1].sort()
     return words[0] == words[1]
-
 
 
 def count_startswith_reduce(word_list, character):
@@ -1019,6 +1045,7 @@ def count_startswith_reduce(word_list, character):
 
     return len(word_list) - len(startswith)
 
+
 def count_startswith_build(word_list, character):
     """ (list of str, str) -> int
 
@@ -1037,13 +1064,13 @@ def count_startswith_build(word_list, character):
 
     return len(startswith)
 
+
 def both_start_with(first, second, prefix):
-    '''(str, str, str) -> bool
+    """(str, str, str) -> bool
 
     Return True if and only if first and second both start with the letters in prefix.
-    '''
+    """
     return upper(first.startswith(prefix)) and upper(second.startswith(prefix))
-
 
 
 def unique_values(dictionary):
@@ -1069,7 +1096,6 @@ def unique_values(dictionary):
     return True
 
 
-
 def return_list(string, delimiter):
     list_from_string = []
     sub_string = ''
@@ -1082,11 +1108,14 @@ def return_list(string, delimiter):
     list_from_string.append(sub_string)
     return list_from_string
 
+
 def get_MAC_address():
-    return ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0,8*6,8)][::-1])
+    return ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff) for i in range(0, 8 * 6, 8)][::-1])
+
 
 def get_MAC_regex():
     return ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+
 
 def little_endian(string):
     return struct.unpack('<L', b"/%1".string)
@@ -1095,11 +1124,8 @@ def little_endian(string):
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
-    print (get_MAC_address())
-    print (get_MAC_regex())
-
-
-
+    print(get_MAC_address())
+    print(get_MAC_regex())
 
 """
 pat = re.compile('[\w-]*$')
