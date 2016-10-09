@@ -11,28 +11,24 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import builtins, keyword, os, sys, time
-import queue, heapq, collections, pickle
-import threading, concurrent, subprocess
-import numbers, operator, math, cmath, decimal, fractions, random
-import itertools, functools
-import string, textwrap, re, unicodedata, locale, uuid, binascii
-import doctest, unittest, cProfile, timeit, logging, traceback, pdb
-import ipaddress, socket, email, html
-import ftplib, poplib, nntplib, smtplib, telnetlib, urllib, hashlib, zlib
-import argparse, datetime, calendar, pprint, struct, copy
-import shutil, tempfile, glob
-import tkinter, colorama, turtle  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import datetime
+import hashlib
+import itertools
+import keyword
+import pdb
+import random
+import re
+import unittest
 
 DEBUG_MODE = False
 if DEBUG_MODE:
     pdb.set_trace()
 
-RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
-            "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
-            "exec", "in", "raise", "continue", "finally", "is",
-            "return", "def", "for", "lambda", "try"]
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],

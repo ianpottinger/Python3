@@ -11,31 +11,25 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import builtins, keyword, os, sys, time
-import queue, heapq, collections, pickle
-import threading, concurrent, subprocess
-import numbers, operator, math, cmath, decimal, fractions, random
-import itertools, functools
-import string, textwrap, re, unicodedata, locale, uuid, binascii
-import doctest, unittest, cProfile, timeit, logging, traceback, pdb
-import ipaddress, socket, email, html
-import ftplib, poplib, nntplib, smtplib, telnetlib, urllib, hashlib, zlib
-import argparse, datetime, calendar, pprint, struct, copy
-import shutil, tempfile, glob
-import tkinter, colorama, turtle  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import doctest
+import keyword
+import math
+import pdb
+import random
+import unittest
 
 DEBUG_MODE = False
 if DEBUG_MODE:
     pdb.set_trace()
 
-RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
-            "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
-            "exec", "in", "raise", "continue", "finally", "is",
-            "return", "def", "for", "lambda", "try"]
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
-import maths, vectors, moreadt
+import maths, vectors
 
 
 class Matrix():
@@ -582,19 +576,19 @@ class Matrix():
         [7, 8, 9]
 
         """
-        return Matrix([[abs(self.content[row][column])
+        return Matrix([[maths.absolute(self.content[row][column])
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
     def opposite(self):
         """
         >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).opposite().show()
-        [1, -2, 3]
-        [-4, 5, -6]
-        [7, 8, 9]
+        [-1, -2, -3]
+        [-4, -5, -6]
+        [-7, -8, -9]
 
         """
-        return Matrix([[-(self.content[row][column])
+        return Matrix([[maths.opposite(self.content[row][column])
                         for column in range(self.columns)]
                        for row in range(self.rows)])
 
@@ -808,11 +802,11 @@ class Matrix():
 ##        [47, 109, 171, 357, 419, 481]
 
         >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).identity().show()
-        [-20, -32, -12]
-        [26, 65, 36]
-        [32, -18, 36]
+        [22, 16, -6]
+        [-58, -31, 12]
+        [158, 126, 78]
         """
-        return self.mul(self.inverse())
+        return self.mul(self.inverse() )
 
     def slide(rows, columns):
         """
@@ -1000,10 +994,10 @@ class Matrix():
     def determinant(self):
         """
         """
-        ##        print("|", self.content[0][0], self.content[0][1], "|")
-        ##        print("|", self.content[1][0], self.content[1][1], "|")
-        ##        print(self.content[0][0] * self.content[1][1])
-        ##        print(self.content[0][1] * self.content[1][0])
+##        print("|", self.content[0][0], self.content[0][1], "|")
+##        print("|", self.content[1][0], self.content[1][1], "|")
+##        print(self.content[0][0] * self.content[1][1])
+##        print(self.content[0][1] * self.content[1][0])
         return ((self.content[0][0] * self.content[1][1]) -
                 (self.content[0][1] * self.content[1][0]))
 
@@ -1015,6 +1009,10 @@ class Matrix():
 
     def inverse(self):
         """
+        >>> Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]]).inverse().show()
+        [9, -2, -3]
+        [-4, 5, -6]
+        [-7, -8, 1]
         """
         if not self.rows == self.columns:
             return (None, 'Size mismatch')
@@ -1022,18 +1020,25 @@ class Matrix():
         reverse = self.reverse()
         for eye in range(self.rows):
             opposite.content[eye][eye] = reverse.content[eye][eye]
+
+##        inverted = opposite
+##        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
+##                        if not inverted.content[row][column] == 0 else float("inf")
+##                        for column in range(self.columns)]
+##                       for row in range(self.rows)])
         return opposite
 
-    ##        return Matrix([[pow(inverted.content[row][column], -1)  # 1.0 / inverted[row][column]
-    ##                        if not inverted.content[row][column] == 0 else float("inf")
-    ##                        for column in range(self.columns)]
-    ##                       for row in range(self.rows)])
 
     def normal_equation(self, vector):
         """
-        Matrix([ [2104,5,1,45], [1416,3,2,40], [1534,3,2,30], [852,2,1,36] ]).normal_equation(Matrix([[460],[232],[315],[178]])).show()
-        [[1546.0105920616172], [1.0042033011153086], [455.787369777668], [1022.3385392981896], [40.504531960323575]]
-        [[9050.792414860909], [200993.18212597613], [105262.89762818097], [226.03941933340082], [333667.8460714147]]
+        Broken
+        >>> ne = Matrix([ [2104,5,1,45], [1416,3,2,40], [1534,3,2,30], [852,2,1,36] ])
+        >>> en = Matrix([[460],[232],[315],[178]])
+        >>> ne.normal_equation(en).show()
+        [55589478717]
+        [-5822900841432]
+        [-6285006755074]
+        [-6718839396]
         """
         if not self.rows == vector.rows:
             return None, 'Size mismatch'

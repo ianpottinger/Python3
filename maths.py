@@ -11,32 +11,31 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import builtins, keyword, os, sys, time
-import queue, heapq, collections, pickle
-import threading, concurrent, subprocess
-import numbers, operator, math, cmath, decimal, fractions, random
-import itertools, functools
-import string, textwrap, re, unicodedata, locale, uuid, binascii
-import doctest, unittest, cProfile, timeit, logging, traceback, pdb
-import ipaddress, socket, email, html
-import ftplib, poplib, nntplib, smtplib, telnetlib, urllib, hashlib, zlib
-import argparse, datetime, calendar, pprint, struct, copy
-import shutil, tempfile, glob
-import tkinter, colorama, turtle  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import cmath
+import doctest
+import keyword
+import math
+import pdb
+import random
+import re
+import string
+import time
+import traceback
+import unittest
 
 DEBUG_MODE = False
 if DEBUG_MODE:
     pdb.set_trace()
 
-RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
-            "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
-            "exec", "in", "raise", "continue", "finally", "is",
-            "return", "def", "for", "lambda", "try"]
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
 from decimal import Decimal, getcontext
-from itertools import count, islice
+from itertools import count
 
 POINT_ONE = 0.1000000000000000055511151231257827021181583404541015625
 POINT_TWO = 0.200000000000000011102230246251565404236316680908203125
@@ -274,6 +273,23 @@ def absolute(number: NUMBERS) -> NUMBERS:
     return number if number > 0 else -number
 
 
+def opposite(number: NUMBERS) -> NUMBERS:
+    """
+    Returns the absolute positive of a number
+    """
+    return number if number < 0 else -number
+
+
+def roundup(number):
+    #return math.ceil(number)
+    return (number // 1) + 1
+
+
+def roundown(number):
+    #return math.floor(number)
+    return (number // 1)
+
+
 ##def fract(mantissa, exponent):
 ##    return mantissa * exp(2, exponent)
 
@@ -491,7 +507,7 @@ percent_percent = lambda per, cent: ((per / 100) * (cent / 100)) * 100
 percent_diff = lambda initial, current: ((current - initial) / initial) * 100
 
 
-def sqrt(number, progress=False):
+def sqrt(number, progress = False):
     """
     >>> sqrt(100)
     10.0
@@ -547,7 +563,7 @@ def sqrt(number, progress=False):
 inv_sqrt = lambda number: 1 / sqrt(number)
 
 
-def approx_eq(num, ber, tolerance=1e-12):
+def approx_eq(num, ber, tolerance = 1e-12):
     return absolute(num - ber) <= tolerance
 
 

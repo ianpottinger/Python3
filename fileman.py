@@ -28,16 +28,16 @@ DEBUG_MODE = False
 if DEBUG_MODE:
     pdb.set_trace()
 
-RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
-            "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
-            "exec", "in", "raise", "continue", "finally", "is",
-            "return", "def", "for", "lambda", "try"]
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
 
 
-def file_exists(filename):
+def file_exists(filename: string) -> bool:
     return os.path.isfile(filename)
 
 
@@ -161,11 +161,11 @@ def empty_file(filename):
         open(filename, "w").close()
 
 
-def directory_exists(directory_path):
+def directory_exists(directory_path) -> bool:
     return os.path.isdir(directory_path)
 
 
-def list_directory(directory_path):
+def list_directory(directory_path: string) -> list:
     if directory_exists(directory_path):
         return os.listdir(directory_path)
     else:
@@ -183,7 +183,7 @@ def list_search(directory_search):
     return glob.glob(directory_search)
 
 
-def current_directory():
+def current_directory() -> str:
     return os.getcwd()
 
 
@@ -195,9 +195,24 @@ def create_directory(directory_path):
         return -1
 
 
+def create_directories(directory_path):
+    if not directory_exists(directory_path):
+        print(directory_path)
+        os.mkdirs(directory_path)
+    else:
+        return -1
+
+
 def remove_directory(directory_path):
     if directory_exists(directory_path):
         os.rmdir(directory_path)
+    else:
+        return -1
+
+
+def remove_directories(directory_path):
+    if directory_exists(directory_path):
+        os.removedirs(directory_path)
     else:
         return -1
 

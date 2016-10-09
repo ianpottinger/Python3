@@ -11,28 +11,26 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import builtins, keyword, os, sys, time
-import queue, heapq, collections, pickle
-import threading, concurrent, subprocess
-import numbers, operator, math, cmath, decimal, fractions, random
-import itertools, functools
-import string, textwrap, re, unicodedata, locale, uuid, binascii
-import doctest, unittest, cProfile, timeit, logging, traceback, pdb
-import ipaddress, socket, email, html
-import ftplib, poplib, nntplib, smtplib, telnetlib, urllib, hashlib, zlib
-import argparse, datetime, calendar, pprint, struct, copy
-import shutil, tempfile, glob
-import tkinter, colorama, turtle  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
+import binascii
+import hashlib
+import keyword
+import math
+import os
+import pdb
+import random
+import sys
+import unittest
+import uuid
 
 DEBUG_MODE = False
 if DEBUG_MODE == True:
     pdb.set_trace()
 
-RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
-            "global", "or", "with", "assert", "else", "if", "pass",
-            "yield", "break", "except", "import", "print", "class",
-            "exec", "in", "raise", "continue", "finally", "is",
-            "return", "def", "for", "lambda", "try"]
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
 import maths, ropes
@@ -41,83 +39,83 @@ ENCRYPT, DECRYPT = 1, -1
 
 CEASAR_CIPHER = {
     "00": (
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
-    "X", "Y", "Z"),
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"),
     "01": (
-    "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-    "Y", "Z", "A"),
+    "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A"),
     "02": (
-    "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y",
-    "Z", "A", "B"),
+    "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+    "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B"),
     "03": (
-    "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-    "A", "B", "C"),
+    "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
+    "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C"),
     "04": (
-    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A",
-    "B", "C", "D"),
+    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+    "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D"),
     "05": (
-    "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B",
-    "C", "D", "E"),
+    "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+    "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E"),
     "06": (
-    "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C",
-    "D", "E", "F"),
+    "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+    "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F"),
     "07": (
-    "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D",
-    "E", "F", "G"),
+    "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+    "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G"),
     "08": (
-    "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E",
-    "F", "G", "H"),
+    "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+    "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H"),
     "09": (
-    "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F",
-    "G", "H", "I"),
+    "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+    "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I"),
     "10": (
-    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G",
-    "H", "I", "J"),
+    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
+    "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"),
     "11": (
-    "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H",
-    "I", "J", "K"),
+    "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+    "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"),
     "12": (
-    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I",
-    "J", "K", "L"),
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y",
+    "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"),
     "13": (
-    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-    "K", "L", "M"),
+    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"),
     "14": (
-    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-    "L", "M", "N"),
+    "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A",
+    "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"),
     "15": (
-    "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-    "M", "N", "O"),
+    "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B",
+    "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"),
     "16": (
-    "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-    "N", "O", "P"),
+    "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C",
+    "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"),
     "17": (
-    "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q"),
+    "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D",
+    "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"),
     "18": (
-    "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
-    "P", "Q", "R"),
+    "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E",
+    "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"),
     "19": (
-    "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-    "Q", "R", "S"),
+    "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F",
+    "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S"),
     "20": (
-    "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-    "R", "S", "T"),
+    "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G",
+    "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"),
     "21": (
-    "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-    "S", "T", "U"),
+    "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H",
+    "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"),
     "22": (
-    "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-    "T", "U", "V"),
+    "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I",
+    "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V"),
     "23": (
-    "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-    "U", "V", "W"),
+    "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W"),
     "24": (
-    "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
-    "V", "W", "X"),
+    "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+    "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"),
     "25": (
-    "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-    "W", "X", "Y")}
+    "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+    "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y")}
 
 ROT13_SHIFT = CEASAR_CIPHER['13']
 
@@ -228,16 +226,16 @@ def shift_alphabet(mode, string, key):  # AKA Ceasar
     alphabet_size = len(ropes.ALPHABET_LOWER)
     translation = ''
 
-    ##    for character in string:
-    ##        if character.isalpha():
-    ##            if character.isupper():
-    ##                translation += chr((((ord(character) - 65) - key) % 26) + 65)
-    ##            elif character.islower():
-    ##                translation += chr((((ord(character) - 97) - key) % 26) + 97)
-    ####            elif character.isdigit():
-    ####                translation += chr((((ord(character) - 48) - key) % 10) + 48)
-    ##        else:
-    ##            translation += character
+##    for character in string:
+##        if character.isalpha():
+##            if character.isupper():
+##                translation += chr((((ord(character) - 65) - key) % 26) + 65)
+##            elif character.islower():
+##                translation += chr((((ord(character) - 97) - key) % 26) + 97)
+##            elif character.isdigit():
+##                translation += chr((((ord(character) - 48) - key) % 10) + 48)
+##        else:
+##            translation += character
 
     for character in string:
         if character.isalpha():
@@ -252,11 +250,11 @@ def shift_alphabet(mode, string, key):  # AKA Ceasar
                     replacement -= alphabet_size
                 elif replacement < ord('a'):
                     replacement += alphabet_size
-                ##            elif character.isdigit():
-                ##                if replacement > ord('9'):
-                ##                    replacement -= 10
-                ##                elif replacement < ord('0'):
-                ##                    replacement += 10
+##            elif character.isdigit():
+##                if replacement > ord('9'):
+##                    replacement -= 10
+##                elif replacement < ord('0'):
+##                    replacement += 10
             translation += chr(replacement)
         else:
             translation += character
