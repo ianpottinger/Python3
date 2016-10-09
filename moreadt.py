@@ -38,10 +38,10 @@ KEYWORDS = keyword.kwlist
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
-ZODIAC_HOUSES = {'Aries': '\u2648', 'Tauras': '\u2649', 'Gemini': '\u264A',
-                 'Cancer': '\u264B', 'Leo': '\u264C', 'Virgo': '\u264D',
-                 'Libra': '\u264E', 'Scorpio': '\u264F', 'Sagittarius': '\u2650',
-                 'Capricorn': '\u2651', 'Aquarius': '\u2652', 'Pisces': '\u2653'}
+ZODIAC_HOUSES = {'Aries': '♈', 'Tauras': '♉', 'Gemini': '♊',
+                 'Cancer': '♋', 'Leo': '♌', 'Virgo': '♍', 'Libra': '♎',
+                 'Scorpio': '♏', 'Ophiuchus': '⛎', 'Sagittarius': '♐',
+                 'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'}
 
 CONSTELLATIONS = {'Aries': (18, 13), 'Tauras': (13, 21), 'Gemini': (21, 20),
                   'Cancer': (20, 10), 'Leo': (10, 16), 'Virgo': (16, 30),
@@ -60,7 +60,7 @@ DAYS_IN_MONTH = {'January': 31, 'February': 28, 'March': 31, 'April': 30,
 
 ZODIAC_SEASONS = {'Spring': ['Aries', 'Tauras', 'Gemini'],
                   'Summer': ['Cancer', 'Leo', 'Virgo'],
-                  'Autumn': ['Libra', 'Scorpio', 'Sagittarius'],
+                  'Autumn': ['Libra', 'Scorpio', 'Ophiuchus', 'Sagittarius'],
                   'Winter': ['Caprocorn', 'Aquarius', 'Pisces']}
 
 KEMET_SEASONS = {'Akhet': ["Djehuty", "Pa-en-Opet", "Hethert", "Ka-her-ka"],
@@ -1202,12 +1202,6 @@ def check_bitcoin(bitcoin):
     return bcbytes[-4:] == hashlib.sha256(hashlib.sha256(bcbytes[:-4]).digest()).digest()[:4]
 
 
-class Vector:
-    def __init__(self, labels, function):
-        self.domain = labels
-        self.function = function
-
-
 def zero_vector(domain):
     return Vector(domain, {element: 0 for element in domain})
 
@@ -1227,7 +1221,7 @@ def list2vector(L):
 
 
 class Stack:
-    "Stack of objects; Last In First Out basis"
+    """Stack of objects; Last In First Out basis"""
 
     def __init__(self, stackList=[]):
         "Initialise the stack"
@@ -1280,7 +1274,7 @@ class Stack:
 
 
 class Queue:
-    "Queue of Objects; First In First Out basis"
+    """Queue of Objects; First In First Out basis"""
 
     def __init__(self, queueList=[]):
         "Initialise the queue"
@@ -1378,7 +1372,7 @@ def fibonacci_tree(number):
 
 
 class ObjectClass(object):
-    'Generic object'
+    """Generic object"""
 
     def __init__(self, instance):
         self.instance = instance
@@ -1389,7 +1383,7 @@ class ObjectClass(object):
 
 
 class SubObjectClass(ObjectClass):
-    'Inherit the properties of ObjectClass'
+    """Inherit the properties of ObjectClass"""
 
     def __init__(self, subInstance):
         self.instance = subInstance
@@ -1401,7 +1395,7 @@ class SubObjectClass(ObjectClass):
 
 
 class SuperObjectClass(ObjectClass):
-    'Inherit the properties of ObjectClass'
+    """Inherit the properties of ObjectClass"""
 
     def __init__(self, superInstance):
         self.instance = superInstance

@@ -46,7 +46,7 @@ class Matrix():
     rows = 0
     columns = 0
 
-    def __init__(self, matrix):
+    def __init__(self, matrix: object) -> object:
         if type(matrix) == tuple:
             self.content = Matrix.zero(*matrix).content
         elif type(matrix) == Matrix:

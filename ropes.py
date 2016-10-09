@@ -259,15 +259,15 @@ def input_int(prompt, low=0, high=0):
         limits = ""
     while not valid:
         try:
-            integer = int(input(prompt + limits))
+            whole = int(input(prompt + limits))
         except ValueError:
             continue
         except SyntaxError:
             continue
         else:
-            if (integer >= low) and (integer <= high):
+            if (whole >= low) and (whole <= high):
                 valid = True
-    return integer
+    return whole
 
 
 def input_float(prompt, low=0, high=0):
@@ -290,15 +290,21 @@ def input_float(prompt, low=0, high=0):
     return real
 
 
-def input_string(prompt, low=0, high=0):
+def input_string(prompt, low= 0, high= 0):
     """
     password = input_string('Enter a password: ', 3, 8)
+    continue = input_string('Press Enter to continue: ', 0, 0)
     """
     valid = False
-    if not low == high:
-        low, high = (min(low, high), max(low, high))
-        limits = str("(Must be between {0:d} and {1:d} characters in length): "
-                     .format(low, high))
+    low, high = abs(low), abs(high)
+    low, high = (min(low, high), max(low, high))
+    if high > 0:
+        if not low == high:
+            limits = str("(Must be between {0:d} and {1:d} characters in length): "
+                         .format(low, high))
+        elif low == high:
+            limits = str("(Must be between {0:d} characters in length): "
+                         .format(high))
     else:
         limits = ""
     while not valid:
@@ -309,11 +315,14 @@ def input_string(prompt, low=0, high=0):
         except SyntaxError:
             continue
         else:
-            valid = len(string) in range(low, high + 1)
+            if not high == 0:
+                valid = len(string) in range(low, high + 1)
+            else:
+                valid = True
     return string
 
 
-def input_datetime(prompt, example, expect):
+def input_date(prompt, example, expect):
     """
     birthday = input_datetime('Enter date of birth ', 'YYYY/MM/DD', '%Y/%m/%d')
     """
@@ -336,10 +345,34 @@ def input_datetime(prompt, example, expect):
     return datentered.strftime(expect)
 
 
+def input_time(prompt, example, expect):
+    """
+    eventime = input_time('Enter time of event ', 'HH:MM:ss', '%H:%M:%S')
+    """
+    valid = False
+    while not valid:
+        enteredtime = input(prompt + '(' + example + '): ')
+        try:
+            timentered = datetime.datetime.strptime(enteredtime, expect)
+            # print (enteredtime, timentered)
+        except ValueError:
+            # print('ValueError')
+            print('A valid time needs to be entered in the expected format')
+            continue
+        except SyntaxError:
+            # print('SyntaxError')
+            print('Time needs to be entered in expected format')
+            continue
+        else:
+            valid = True
+    return timentered.strftime(expect)
+
+
 def input_choice(prompt, strings, fails=False):
     """
     selection = ['yes', 'y', 'no', 'n']
-    confirm = input_choice("Enter 'Yes' or 'No' to confirm: ", selection)
+    confirm = input_choice("Enter 'Yes' or 'No' to continue: ", selection)
+    
     selection = ['male', 'm', 'female', 'f']
     confirm = input_choice("Enter sex as 'Male' or 'Female': ", selection)
     """
