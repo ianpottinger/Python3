@@ -1124,8 +1124,9 @@ def quickSorter(array):
     return array
 
 
-def neighbours(point):
-    x, y = point
+def neighbours(points):
+    assert isinstance(points, object)   # Inserted by PyCharm
+    x, y = points
     yield x + 1, y
     yield x - 1, y
     yield x, y + 1
