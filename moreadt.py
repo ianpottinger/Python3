@@ -391,14 +391,17 @@ def current_day():
     return day_of_week(currentDate.year, currentDate.month, currentDate.day)
 
 
-def full_datetime_now():
+def full_datetime_now(holocene = False):
     """http://strftime.org/"""
     currentDate = datetime.datetime.today().date()
+    holoceneYear = int(currentDate.strftime('%Y')) + 10000
     print("Today is day {0:s} in week {1:s}, which is"
           .format(currentDate.strftime('%j'), currentDate.strftime('%U')))
     print(current_day(), currentDate.strftime('the %d of %B in the year %Y'))
+    if holocene:
+        print("or the year", holoceneYear, "of the human era using the holocene calendar")
     currentTime = datetime.datetime.now().time()
-    print(currentTime.strftime("And the time a moment ago was %H:%M:%S.%f"))
+    print(currentTime.strftime("and the time before you read this a moment ago was %H:%M:%S.%f"))
 
 
 def time_to_minutes(time_str):
