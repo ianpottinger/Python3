@@ -1,5 +1,6 @@
 #! /usr/bin/env python		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+from vectors import Vector
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -421,12 +422,12 @@ def time_to_seconds(time_str):
 
 
 # outcomes = set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-outcomes = set(["Red", "Green", "Blue"])
+outcomes = {"Red", "Green", "Blue"}
 
 
 # outcomes = set(["Sunday", "Mondy", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
 
-def gen_all_sequences(outcomes, length=3):
+def gen_all_sequences(outcomes, length = 3):
     """
     Iterative function that enumerates the set of all sequences of
     outcomes of given length

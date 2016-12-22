@@ -20,6 +20,7 @@ import re
 import struct
 import unittest
 import uuid
+import maths
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -217,6 +218,8 @@ GREEK_ALPHABET = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta",
                   "ρ": "rho", "σ": "sigma", "τ": "tau", "υ": "upsilon",
                   "φ": "phi", "χ": "chi", "ψ": "psi", "ω": "omega"}
 
+TASTES = ["Sweet", "Sour", "Savoury", "Salty", "Bitter"]
+
 backslash = '\\'
 backspace = '\b'
 newline = '\n'
@@ -287,7 +290,7 @@ def input_float(prompt, low=0, high=0):
     return real
 
 
-def input_string(prompt, low= 0, high= 0):
+def input_string(prompt, low=0, high=0):
     """
     password = input_string('Enter a password: ', 3, 8)
     continue = input_string('Press Enter to continue: ', 0, 0)
@@ -392,6 +395,57 @@ def input_choice(prompt, strings, fails=False):
     else:
         return choice
 
+
+def input_IPaddress(prompt, fails=False):
+    """
+    input_IPaddress("Enter IP address: ", True)
+    
+    """
+    valid_address, valid_mask, valid_port = False, False, False
+    invalids = []
+    while not valid_address:
+        address = input(prompt)
+        octets = address.split(".")[0:4]
+        last_octet = octets[-1]
+        print(octets)
+        
+        if "/" in last_octet:
+            mask = int(extract_only_digits(last_octet.split("/")[1]) )
+            octets[-1] = str(extract_only_digits(last_octet.split("/")[0]) )
+            valid_mask = (mask in range(1, 32) )
+            print ("Valid Mask: ", mask, valid_mask)
+            print ("Octets: ", octets)
+
+        if ":" in last_octet:
+            port = int(extract_only_digits(last_octet.split(":")[1]) )
+            octets[-1] = str(extract_only_digits(last_octet.split(":")[0]) )
+            valid_port = (port in range(0, 65536) )
+            print ("Valid Port: ", port, valid_port)
+            print ("Octets: ", octets)
+
+        valid_octets = [str(int(extract_only_digits(octet))) for octet in octets
+                        if ( (octet != '') and
+                             (int(extract_only_digits(octet)) > -1 and
+                              int(extract_only_digits(octet)) < 256) ) ]
+        print ("Valid Octets: ", valid_octets)
+        
+        if len(valid_octets) != 4:
+            valid_address = False
+            invalids.append(address)
+            continue
+        else:
+            address = ".".join(valid_octets)
+            if valid_mask:
+                address += "/" + str(mask)
+            if valid_port:
+                address += ":" + str(port)
+            print("Validated IP address", address)
+            valid_address = True
+    if fails:
+        return address, invalids
+    else:
+        return address
+        
 
 def romanise(number):
     """

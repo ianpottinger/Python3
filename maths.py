@@ -204,7 +204,7 @@ operators = {'**': Power, '*': Multiply,
 # Logical operator order of precedence. NOT AND OR
 var = not first > second and first == third * 2 or second != third
 'Returns True' == 'Returns True'
-var = 'Returns True' != 'Returns False'
+'Returns True' != 'Returns False'
 'Turns' in "Returns"
 'TURNS' in 'Returns'
 'turns' in "Returns"

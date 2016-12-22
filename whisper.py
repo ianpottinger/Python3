@@ -546,7 +546,7 @@ def checksum(par):
     """
     16bit checksum against a packet of data
     """
-    return
+    return check_sum
 
 
 def CRC32(message):

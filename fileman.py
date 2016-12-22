@@ -11,18 +11,10 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import builtins, keyword, os, sys, time
-import queue, heapq, collections, pickle
-import threading, concurrent, subprocess
-import numbers, operator, math, cmath, decimal, fractions, random
-import itertools, functools
-import string, textwrap, re, unicodedata, locale, uuid, binascii
-import doctest, unittest, cProfile, timeit, logging, traceback, pdb
-import ipaddress, socket, email, html
-import ftplib, poplib, nntplib, smtplib, telnetlib, urllib, hashlib, zlib
-import argparse, datetime, calendar, pprint, struct, copy
+import keyword, os
+import string
+import doctest, unittest, pdb
 import shutil, tempfile, glob
-import tkinter, colorama, turtle  # , dateutil, numpy, scipy, pygame, matplotlib, pygobject
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -34,7 +26,6 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
-
 
 
 def file_exists(filename: string) -> bool:
@@ -165,7 +156,7 @@ def directory_exists(directory_path) -> bool:
     return os.path.isdir(directory_path)
 
 
-def list_directory(directory_path: string) -> list:
+def list_directory(directory_path: string):
     if directory_exists(directory_path):
         return os.listdir(directory_path)
     else:
@@ -183,7 +174,7 @@ def list_search(directory_search):
     return glob.glob(directory_search)
 
 
-def current_directory() -> str:
+def current_directory() -> object:
     return os.getcwd()
 
 
@@ -198,7 +189,7 @@ def create_directory(directory_path):
 def create_directories(directory_path):
     if not directory_exists(directory_path):
         print(directory_path)
-        os.mkdirs(directory_path)
+        os.mkdir(directory_path)
     else:
         return -1
 
