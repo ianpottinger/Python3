@@ -216,6 +216,7 @@ CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
 colours = RGB_light + CMY_kemet
 
 DNA = {'A': Yellow, 'C': Red, 'G': Blue, 'T': Green}
+DNA_BASES = {'Adenine': Blue, 'Cytosine': Yellow, 'Guanine': Green, 'Thymine': Red}
 
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
