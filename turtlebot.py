@@ -16,6 +16,8 @@ import pdb
 import turtle
 import unittest
 import keyword
+import random
+import moreadt
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -44,24 +46,38 @@ def polygon(sides, length, colour = "Black", width = 1, speed = 10):
     turtle.penup()
     turtle.done()
 
+pencolours = list(moreadt.web_colours.keys() )
+pens = len(pencolours)
+colour_selections = list()
 
 ninja = turtle.Turtle()
 
 ninja.speed(1000)
+ninja.pensize(8)
 
-for i in range(180):
+
+for i in range(45):
     ninja.forward(100)
+    #ninja.left(172)
+    #ninja.circle(100)
+    #ninja.right(172)
     ninja.right(30)
     ninja.forward(20)
     ninja.left(60)
     ninja.forward(50)
     ninja.right(30)
-    
+
+    pencolour = pencolours[random.randrange(pens) ]
+    print (pencolour, moreadt.web_colours[pencolour])
+    colour_selections += pencolour
+    ninja.pencolor(pencolour)
     ninja.penup()
     ninja.setposition(0, 0)
     ninja.pendown()
+    #ninja.circle(100)
     
-    ninja.right(2)
+    ninja.right(8)
+
     
 turtle.done()
 

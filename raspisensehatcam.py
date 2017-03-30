@@ -35,10 +35,10 @@ camera.start_preview()
 
 for i in range(100):
     camera.brightness = i
-    sleep(0.2)
+    time.sleep(0.2)
 
 camera.start_recording('video.h264')
-sleep(5)
+time.sleep(5)
 camera.stop_recording()
 
 
@@ -60,6 +60,6 @@ while True:
     g = random.randint(0, 255)
     b = random.randint(0, 255)
     sensehat.set_pixel(x, y, r, g, b)
-    time.sleep(0.1)
+    time.sleep(0.01)
 
 
