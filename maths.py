@@ -334,7 +334,7 @@ def median(LofN):
 def mode(LofN):
     """
     Returns the average mode from a list of numbers by dividing the sum of the
-    numbers with the number of numbers in the list
+    numbers with the number of unique numbers in the list
     """
     size = len(LofN)
     if size == 0:

@@ -33,6 +33,9 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
+#Please Do Not Throw Sausgage Pizza Away
+#Because
+#All People Seem To Need Data Processing
 OSI_Layers = {0: ("Layer", "Type", {"Protocol Data Units"},
                   {"Protocol"}, {""},
                   "", {"", "", ""}),

@@ -80,7 +80,6 @@ def file_size(filename):
 
 def file_extension(filepath):
     if file_exists(filepath):
-
         return os.path.splitext(filepath)[-1]
     else:
         return -1
