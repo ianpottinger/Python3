@@ -215,10 +215,10 @@ RGB_light = ("Red", "Green", "Blue", "White")
 CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
 colours = RGB_light + CMY_kemet
 
-DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia}
+DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
 
 DNA_BASES = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
-             'Cytosine': Red, 'dNaM': Aqua, 'dTPT3': Fuchsia}
+             'Cytosine': Red, 'dNaM': Aqua, 'dTPT3': Fuchsia, 'd5SICS': Teal}
 
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
@@ -362,6 +362,27 @@ def flip_best_of(maximum):
         if track[COINSIDE[flip]] > lead:
             lead = track[COINSIDE[flip]]
     return track
+
+
+def fizzbuzz(integer):
+    string = str(integer)
+    if integer % 15 == 0:
+        string = "FizzBuzz"
+    elif integer % 5 == 0:
+        string = "Buzz"
+    elif integer % 3 == 0:
+        string = "Fizz"
+    return string
+
+
+def fizzbuzzrange(start, stop):
+    return [fizzbuzz(integer) for integer in range(start, stop)]
+
+
+def fizzbuzzlist(start, stop):
+    return ["Fizz" * (not integer % 3) +
+            "Buzz" * (not integer % 5) or
+            str(integer) for integer in range(start, stop)]
 
 
 def day_of_week(year, month, day, origin=0):

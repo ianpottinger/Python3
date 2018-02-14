@@ -893,6 +893,25 @@ def palindrome_loop(string):
     return True
 
 
+def index_list_items(items, term):
+    """
+    >>> test = [4,5,7,3,4,7,3,4,6,8,6,5,1,3,4,0,6,7,4]
+    >>> index_list_items(test, 4)
+    (5, [0, 4, 7, 14, 18])
+    """
+    hits = items.count(term)
+    pointer = 0
+    index = []
+    if hits > 0:
+        for hit in range(hits):
+            match = items[pointer:].index(term)
+            pointer += match + 1
+            index.append(pointer - 1)
+        return (hits, index)
+    else:
+        return (pointer, index)
+
+
 def count_words(content):
     """
     str or list -> dict {"str" : int}
