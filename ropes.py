@@ -542,7 +542,7 @@ def dec2hexstr(number):
     return hex(number)[2:]
 
 
-bin2dec = lambda s: sum(int(j) * pow(2, i) for i, j in enumerate(reversed(s)))
+bin2dec = lambda string: sum(int(j) * pow(2, i) for i, j in enumerate(reversed(string)))
 
 
 def bin2string(binstring):
@@ -935,6 +935,14 @@ def count_words(content):
     return word_counts
 
 
+fullname = lambda first, last : first.strip().title() + " " + last.strip().title()
+
+
+def last_word_sort(pharse_list):
+    pharse_list.sort(key = lambda pharse : pharse.split(" ")[-1].lower() )
+    return pharse_list
+
+
 def map_words(content):
     return sorted([(word, 1) for word in content])
 
@@ -1107,6 +1115,11 @@ def swap_words(two_words):
     return second + ' ' + first
 
 
+not_zero = lambda value : None if not _ == 0 else 0
+def filter_empty(incomplete):
+    return list(filter((None if not _ == 0 else '0'), incomplete))
+
+                
 def is_anagram(first, second):
     """ (str, str) -> bool
 

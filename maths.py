@@ -247,6 +247,7 @@ def remainder(dividend, divisor):
     Returns the remainder of a dividend from the divisor without using modulus
     """
     return dividend - ((dividend // divisor) * divisor)
+lam_remainder = lambda dividend, divisor : dividend - ((dividend // divisor) * divisor)
 
 
 def div_mod(dividend, divisor):
@@ -254,6 +255,7 @@ def div_mod(dividend, divisor):
     Returns the floor division of the dividend by the divisor and the remainder
     """
     return dividend // divisor, remainder(dividend, divisor)
+lam_div_mod = lambda dividend, divisor : (dividend // divisor, remainder(dividend, divisor))
 
 
 def whole_division(numerator, denominator):
@@ -264,6 +266,7 @@ def whole_division(numerator, denominator):
     245850922 / 78256779.0 is 3 remainder 11080585
     """
     return int(numerator // denominator), int(numerator % denominator)
+lam_whole_division = lambda numerator, denominator : (int(numerator // denominator), int(numerator % denominator))
 
 
 def absolute(number: NUMBERS) -> NUMBERS:
@@ -271,13 +274,15 @@ def absolute(number: NUMBERS) -> NUMBERS:
     Returns the absolute positive of a number
     """
     return number if number > 0 else -number
+lam_absolute = lambda number : number if number > 0 else -number
 
 
 def opposite(number: NUMBERS) -> NUMBERS:
     """
     Returns the absolute positive of a number
     """
-    return number if number < 0 else -number
+    return -number if number > 0 else -number
+lam_opposite = lambda number : -number if number > 0 else -number
 
 
 def roundup(number):
