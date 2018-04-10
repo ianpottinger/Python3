@@ -223,6 +223,14 @@ def memoise(function):
     return memoised
 
 
+def love(mistake):
+    try:
+        int(mistake) / 0
+    except:
+        mistake = "Undefined"
+    return mistake
+
+
 def is_number(number):
     try:
         type(number) in NUMBERS

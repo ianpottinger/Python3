@@ -555,6 +555,52 @@ def bin2string(binstring):
     return "".join(chr(int(bit, 2)) for bit in binstring.split())
 
 
+class Love(BaseException):
+    meaning = ""
+    relationship = ""
+
+    def __init__(self):
+        self.meaning = "Undefined"
+
+    def __str__(self):
+        return self.meaning
+
+    def __eq__(self, other):
+        if type(other) == type(None):
+            self.relationship = "Very True"
+        if type(other) == type(Love()):
+            self.relationship = "conditional"
+        return self.relationship
+
+    def __del__(self):
+        return ()
+
+##def love(mistake):
+##
+##    
+##    try:
+##        mistake / 0
+##    except IOError:
+##        print('An error occured trying to read the file.')
+##        
+##    except ValueError:
+##        print('Non-numeric data found in the file.')
+##
+##    except ImportError:
+##        print("NO module found")
+##        
+##    except EOFError:
+##        print('Why did you do an EOF on me?')
+##
+##    except KeyboardInterrupt:
+##        print('You cancelled the operation.')
+##
+##    except:
+##        print('An error occured.')
+##        mistake = "love is undefinable"
+##    return mistake
+
+
 """
 add = lambda x,y : x + y
 reduce(add, [int(x) * 2 ** y for x, y in zip(list(binstr), range(len(binstr) - 1, -1, -1))])
