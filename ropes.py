@@ -234,6 +234,14 @@ ORDINALS = {"NE": (north + east),
             "SE": (south + east),
             "SW": (south + west),
             "NW": (north + west)}
+ROSINALS = {"NNE": (north + north + east),
+            "ENE": (east + north + east),
+            "ESE": (east + south + east),
+            "SSE": (south + south + east),
+            "SSW": (south + south + west),
+            "WSW": (west + south + west),
+            "WNW": (west + north + west),
+            "NNW": (north + north + west)}
 POSITION = {"Latitude φ": 0,
             "Longitude λ": 0}
 path = []

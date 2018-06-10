@@ -778,7 +778,7 @@ def is_prime(number):
     return regex_prime(int(number))
 
 
-def mersenne_prime(number: int) -> bool:  # meesed up
+def mersenne_prime(number: int) -> bool:  # messed up
     mersenne = cycle_power(2, number) - 1
     answer = True
     for divisor in range(2, int(sqrt(mersenne))):
@@ -816,7 +816,7 @@ def return_primes(number):  # Max 168
     return primes
 
 
-def primes41(number):
+def primes41(number): # Tested 10000
     return [(n ** 2 - n) + 41 for n in range(number)]
 
 
