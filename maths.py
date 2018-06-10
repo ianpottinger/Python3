@@ -1,5 +1,5 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
-# _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#!/usr/bin/env python3		#Allow Unix shell to execute as a Python script
+# _*_ coding: UTF-8 _*_	#Enable unicode encoding
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -11,6 +11,8 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
+import this
+#import antigravity
 import cmath
 import doctest
 import keyword
@@ -1018,6 +1020,17 @@ def fibonacci_iter(number):
     return current
 
 
+def fibonacci_gen(number):
+    previous, current = 1, 0
+    if number == 1:
+        return 0
+    if number == 2:
+        return 1
+    while True:
+        previous, current = current, previous + current
+        yield current
+
+
 @memoise
 def fibonacci(number):
     if number == 1:
@@ -1693,7 +1706,7 @@ def narcissists():
 def hanoi(disks, startPeg=1, endPeg=3):
     if disks:
         hanoi(disks - 1, startPeg, 6 - startPeg - endPeg)
-        print(r"""Move disk %d from peg %d to peg %d""" % (disks, startPeg, endPeg))
+        print(f"Move disk {disks} from peg {startPeg} to {endPeg}")
         hanoi(disks - 1, 6 - startPeg - endPeg, endPeg)
 
 

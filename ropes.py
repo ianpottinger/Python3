@@ -21,6 +21,7 @@ import struct
 import unittest
 import uuid
 import maths
+import random
 
 DEBUG_MODE = False
 if DEBUG_MODE:
@@ -207,6 +208,7 @@ URL_ENCODE = {' ': '%20', '!': '%21', '"': '%22', '#': '%23', '$': '%24',
 
 ROMAN_NUMERALS = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}
 ROMAN_DOUBLES = {'CM': 900, 'CD': 400, 'XC': 90, 'XL': 40, 'IX': 9, 'IV': 4}
+ROMAN_TRIPLES = {**ROMAN_NUMERALS, **ROMAN_DOUBLES}
 
 romerals = (("M", 1000), ("CM", 900), ("D", 500), ("CD", 400), ("C", 100), ("XC", 90),
             ("L", 50), ("XL", 40), ("X", 10), ("IX", 9), ("V", 5), ("IV", 4), ("I", 1))
@@ -219,6 +221,29 @@ GREEK_ALPHABET = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta",
                   "φ": "phi", "χ": "chi", "ψ": "psi", "ω": "omega"}
 
 TASTES = ["Sweet", "Sour", "Savoury", "Salty", "Bitter"]
+
+north = (1, 0)
+east = (0, 1)
+south = (-1, 0)
+west = (0, -1)
+CARDINALS = {"North": north,
+             "East": east,
+             "South":south,
+             "West": west}
+ORDINALS = {"NE": (north + east),
+            "SE": (south + east),
+            "SW": (south + west),
+            "NW": (north + west)}
+POSITION = {"Latitude φ": 0,
+            "Longitude λ": 0}
+path = []
+for step in range(360):
+    latitude, longitude = random.choice(list(CARDINALS.values()))
+    POSITION["Latitude φ"] += latitude
+    POSITION["Longitude λ"] += longitude
+    path.append(tuple(POSITION.values()))
+print (POSITION, "is",abs(path[-1][0]) + abs(path[-1][1]),"steps from home")
+
 
 backslash = '\\'
 backspace = '\b'
@@ -439,7 +464,7 @@ def input_IPaddress(prompt, fails=False):
                 address += "/" + str(mask)
             if valid_port:
                 address += ":" + str(port)
-            print("Validated IP address", address)
+            print(f"Validated IP address {address}")
             valid_address = True
     if fails:
         return address, invalids

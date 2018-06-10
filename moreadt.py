@@ -103,6 +103,8 @@ RANKS = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,
          'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
          'Jack': 10, 'Queen': 10, 'King': 10}
 
+CARDS = {**SUITS, **RANKS}
+
 Black = (0, 0, 0)
 Brown = (128, 0, 0)
 Green = (0, 128, 0)
@@ -420,13 +422,21 @@ def full_datetime_now(holocene = False):
     """http://strftime.org/"""
     currentDate = datetime.datetime.today().date()
     holoceneYear = int(currentDate.strftime('%Y')) + 10000
+    
     print("Today is day {0:s} in week {1:s}, which is"
           .format(currentDate.strftime('%j'), currentDate.strftime('%U')))
+    print(f"Today is day {currentDate.strftime('%j')} in week {currentDate.strftime('%U')}, which is")
+
     print(current_day(), currentDate.strftime('the %d of %B in the year %Y'))
+    print(f"{current_day()} {currentDate.strftime('the %d of %B in the year %Y')}")
+    
     if holocene:
         print("or the year", holoceneYear, "of the human era using the holocene calendar")
+        print(f"or the year {holoceneYear} of the human era using the holocene calendar")
+
     currentTime = datetime.datetime.now().time()
     print(currentTime.strftime("and the time before you read this a moment ago was %H:%M:%S.%f"))
+    print(f'{currentTime.strftime("and the time before you read this a moment ago was %H:%M:%S.%f")}')
 
 
 def time_to_minutes(time_str):
