@@ -11,17 +11,22 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-
-
 import doctest
 import hashlib
 import keyword
 import random
 
-
-DEBUG_MODE = False
+DEBUG_MODE = True
 if DEBUG_MODE:
-    pdb.set_trace()
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',

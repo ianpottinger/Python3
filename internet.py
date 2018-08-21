@@ -22,9 +22,17 @@ import threading
 import unittest
 import urllib
 
-DEBUG_MODE = False
-if DEBUG_MODE == True:
-    pdb.set_trace()
+DEBUG_MODE = True
+if DEBUG_MODE:
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',

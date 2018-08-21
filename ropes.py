@@ -12,10 +12,9 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import datetime
-import doctest
 import itertools
+import doctest
 import keyword
-import pdb
 import re
 import struct
 import unittest
@@ -23,9 +22,17 @@ import uuid
 import maths
 import random
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 if DEBUG_MODE:
-    pdb.set_trace()
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
@@ -139,6 +146,12 @@ SPELL_LETTERS = {"A": "ay", "B": "bee", "C": "cee", "D": "dee",
                  "Q": "cue", "R": "are", "S": "ess", "T": "tee",
                  "U": "you", "V": "vee", "W": "dubbayou",
                  "X": "ex", "Y": "why", "Z": "zee"}
+
+GEMATRIA = {"A": 6, "B": 12, "C": 18, "D": 24, "E": 30,
+           "F": 36, "G": 42, "H": 48, "I": 54, "J": 60,
+           "K": 66, "L": 72, "M": 78, "N": 84, "O": 90,
+           "P": 96, "Q": 102, "R": 108, "S": 114, "T": 120,
+           "U": 126, "V": 130, "W": 136, "X": 142, "Y": 148, "Z": 156}
 
 FLIP_TABLE = {"a": "\u0250", "b": "q", "c": "\u0254", "d": "p",
               "e": "\u01DD", "f": "\u025F", "g": "\u0183", "h": "\u0265",

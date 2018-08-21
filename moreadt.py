@@ -1,6 +1,5 @@
 #! /usr/bin/env python		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
-from vectors import Vector
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -15,15 +14,23 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 import datetime
 import hashlib
 import itertools
+import doctest
 import keyword
-import pdb
 import random
 import re
 import unittest
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 if DEBUG_MODE:
-    pdb.set_trace()
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
@@ -31,6 +38,8 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
+
+from vectors import Vector
 
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
@@ -467,21 +476,21 @@ def gen_all_sequences(outcomes, length = 3):
     outcomes of given length
     """
 
-    ans = set([()])
+    answer = set([()])
     for dummy_idx in range(length):
         temp = set()
-        for seq in ans:
+        for seq in answer:
             for item in outcomes:
                 new_seq = list(seq)
                 new_seq += [item]
                 temp.add(tuple(new_seq))
-        ans = temp
-    return ans
+        answer = temp
+    return answer
 
 
 def gen_permutations(elements):
     """
-    Compute all permuations of elems.
+    Compute all permuations of elements.
     """
     stack = list(elements)
     results = [[stack.pop()]]

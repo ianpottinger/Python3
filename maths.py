@@ -17,7 +17,6 @@ import cmath
 import doctest
 import keyword
 import math
-import pdb
 import random
 import re
 import string
@@ -25,9 +24,17 @@ import time
 import traceback
 import unittest
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 if DEBUG_MODE:
-    pdb.set_trace()
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
@@ -175,6 +182,12 @@ Remainder = lambda dividend, divisor: remainder(dividend, divisor)
 Add = lambda augend, addend: augend + addend
 # Subtraction
 Subtract = lambda minuend, subtrahend: minuend - subtrahend
+# Group
+Group = {'Add': Add, 'Subtract': Subtract}
+# Ring
+Ring = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply}
+# Field
+Field = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply, 'Division': Division}
 # Less than
 Less = lambda term, compare: term < compare
 # More than

@@ -20,9 +20,17 @@ import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb
 import ipaddress, tkinter, dateutil, numpy, scipy, pygame, matplotlib
 
-DEBUG_MODE = False
-if DEBUG_MODE == True:
-    pdb.set_trace()
+DEBUG_MODE = True
+if DEBUG_MODE:
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
 RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
             "global", "or", "with", "assert", "else", "if", "pass",
