@@ -263,7 +263,7 @@ for step in range(360):
     POSITION["Latitude φ"] += latitude
     POSITION["Longitude λ"] += longitude
     path.append(tuple(POSITION.values()))
-print (POSITION, "is",abs(path[-1][0]) + abs(path[-1][1]),"steps from home")
+print (f'{POSITION} is {abs(path[-1][0]) + abs(path[-1][1])} steps from home')
 
 
 backslash = '\\'

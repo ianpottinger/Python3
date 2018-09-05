@@ -13,6 +13,7 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 
 import binascii
 import hashlib
+import bcrypt
 import doctest
 import keyword
 import math
@@ -124,6 +125,15 @@ CEASAR_CIPHER = {
     "25": (
     "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y")}
+
+CEASAR = {0: tuple([chr(character) for character in range (65, 91)])}
+#for letter in range(1, 26):
+#    CEASAR[letter] = tuple([])
+#for letter in range(26):
+#    CEASAR[letter] = tuple([ (  (letter + character) % 91 )
+#                             if letter
+#                            for character in range(65, 91)])
+
 
 ROT13_SHIFT = CEASAR_CIPHER['13']
 

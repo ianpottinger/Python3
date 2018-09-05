@@ -226,6 +226,36 @@ var = not first > second and first == third * 2 or second != third
 'lowercase' > 'UPPERCASE'
 'do' in "don't"
 
+FREQ_RANGES = ('ELF', 'SLF', 'ULF', 'VLF', 'LF', 'MF',
+               'HF', 'VHF', 'UHF', 'SHF', 'EHF', 'THF')
+freq_start = 3.0
+max_m = 100000000.0
+Freq_Ranges = dict()
+for rangename in range(len(FREQ_RANGES)):
+    freq_end = freq_start * 10
+    min_m = max_m / 10
+    Freq_Ranges[FREQ_RANGES[rangename]] = (freq_start, freq_end, max_m, min_m)
+    freq_start = freq_end
+    max_m = min_m
+
+def which_freq_range(hertz):
+    freq_range = 'Out of frequency range.'
+    for rangename in list(Freq_Ranges.keys() ):
+        freq_bottom = Freq_Ranges[rangename][0]
+        freq_top = Freq_Ranges[rangename][1]
+        if (hertz >= freq_bottom and hertz < freq_top):
+            freq_range = rangename
+    print (f'{freq_range} has a distance reach between {Freq_Ranges[freq_range][2]} and {Freq_Ranges[freq_range][3]} metres.')
+
+def which_distance_reach(metres):
+    distance = 'Out of distance limits.'
+    for rangename in list(Freq_Ranges.keys() ):
+        metres_high = Freq_Ranges[rangename][2]
+        metres_low = Freq_Ranges[rangename][3]
+        if (metres < metres_high and metres >= metres_low):
+            distance = rangename
+            print (f'{distance} has a frequency range between {Freq_Ranges[distance][0]} and {Freq_Ranges[distance][1]} hertz.')
+
 
 def memoise(function):
     cache = {}
