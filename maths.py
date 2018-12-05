@@ -87,7 +87,10 @@ LTUAE = 42
 NINE9S = 99.9999999
 NUMBERS = [int, float, complex]
 
-kilo = 1000
+base = 0
+deca = 1000 // 100
+hecto = 1000 // 10
+kilo = 1000 
 mega = 1000 ** 2
 giga = 1000 ** 3
 tera = 1000 ** 4

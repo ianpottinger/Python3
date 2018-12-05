@@ -257,6 +257,9 @@ ROSINALS = {"NNE": (north + north + east),
             "NNW": (north + north + west)}
 POSITION = {"Latitude φ": 0,
             "Longitude λ": 0}
+
+TONAL_SCALE = ["Doe", "Rae", "Mi", "Far", "Sol", "Lar", "Tea", "Doh"]
+
 path = []
 for step in range(360):
     latitude, longitude = random.choice(list(CARDINALS.values()))
@@ -543,6 +546,21 @@ def phonic_code(string):
 
 def letter_sounds(string):
     return ' '.join(SPELL_LETTERS.get(char.upper(), char) for char in string)
+
+
+def fizzbuzz(question):
+    answer = str(question)
+    if question == 0:
+        return "zero"
+    if question % 3 == 0:
+        answer = "fizz"
+    if question % 5 == 0:
+        if answer == "fizz":
+            answer += "buzz"
+        else:
+            answer = "buzz"
+    return answer
+print ([fizzbuzz(question) for question in range(-15,16)])
 
 
 def str2bits(string):

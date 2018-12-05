@@ -384,6 +384,7 @@ def fizzbuzz(integer):
     elif integer % 3 == 0:
         string = "Fizz"
     return string
+print ([fizzbuzz(question) for question in range(-15,16)])
 
 
 def fizzbuzzrange(start, stop):
