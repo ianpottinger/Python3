@@ -130,6 +130,9 @@ ZB = lambda size: size * cycle_power(2, 70)
 YB = lambda size: size * cycle_power(2, 80)
 BB = lambda size: size * cycle_power(2, 90)
 
+#degreesToRadians = lamba degrees: 
+#theta = lamba degreesToRadians: 
+
 """
 100 - (100 * (kilo / kibi) ) =              2.34375
 100 - (100 * (mega / mebi) ) =              4.632568359375
@@ -488,12 +491,36 @@ def sphere_volume(radius):
     return cube_radius(radius) * GLOBAL_PI * (4 / 3)
 
 
+def SOH(opposite, hypotenuse):
+    return math.sin(opposite / hypotenuse)
+
+
+def CAH(adjacent, hypotenuse):
+    return math.cos(adjacent / hypotenuse)
+
+
+def TOA(opposite, adjacent):
+    return math.tan(opposite / adjacent)
+
+
+def easing(currentTime, startValue, delta, duration):
+    return delta * currentTime / duration * startValue
+
+
 def square_area(height, width):
     return absolute(height) * absolute(width)
 
 
 def triangle_hypotenuse(base, height):
     return sqrt(square_radius(base) + square_radius(height))
+
+
+def triangle_opposite(adjacent, hypotenuse):
+    return 
+
+
+def triangle_adjacent(opposite, hypotenuse):
+    return 
 
 
 def is_triangle(first, second, third):
@@ -1192,6 +1219,10 @@ def project_to_distance(point_x, point_y, distance):
 def distance_between_points(vector1, vector2):
     return sqrt((vector1[0] - vector2[0]) ** 2 +
                 (vector1[1] - vector2[1]) ** 2)
+
+
+def degrees_to_radians(degrees):
+    return (GLOBAL_PI * degrees) / 180
 
 
 def distance_on_unit_sphere(lat1, long1, lat2, long2):

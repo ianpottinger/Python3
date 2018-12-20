@@ -224,7 +224,24 @@ def colour_print(string, fore="Black", back="White", style="Normal"):
 
 RGB_light = ("Red", "Green", "Blue", "White")
 CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
+RYB_paint = ("Red", "Yellow", "Blue", Grey)
 colours = RGB_light + CMY_kemet
+
+Colour_HEX_codes = {"Black": "000000",
+                    "Red": "FF0000",
+                    "Orange": "FF7F00",
+                    "Yellow": "FFFF00",
+                    "Chartreuse": "7FFF00",
+                    "Green": "00FF00",
+                    "Spring Green": "00FF7F",
+                    "Grey": "7F7F7F",
+                    "Cyan": "00FFFF",
+                    "Azure": "007FFF",
+                    "Blue": "0000FF",
+                    "Purple": "7F00FF",
+                    "Magenta": "FF00FF",
+                    "Rose": "FF007F",
+                    "White": "FFFFFF"}
 
 DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
 
