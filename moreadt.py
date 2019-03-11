@@ -39,6 +39,7 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
+from maths import triangle_hypotenuse
 from vectors import Vector
 
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
@@ -130,6 +131,37 @@ Fuchsia = (255, 0, 255)
 Aqua = (0, 255, 255)
 Silver = (192, 192, 192)
 White = (255, 255, 255)
+
+
+north = (1, 0)
+east = (0, 1)
+south = (-1, 0)
+west = (0, -1)
+centre = (0, 0)
+CARDINALS = {"North": north,
+             "East": east,
+             "South": south,
+             "West": west,
+             "Centre": centre}
+COLOUDINALS = {"North": Black,
+               "East": Blue,
+               "South": Red,
+               "West": White,
+               "Centre": Green}
+ORDINALS = {"NE": (north + east),
+            "SE": (south + east),
+            "SW": (south + west),
+            "NW": (north + west)}
+ROSINALS = {"NNE": (north + north + east),
+            "ENE": (east + north + east),
+            "ESE": (east + south + east),
+            "SSE": (south + south + east),
+            "SSW": (south + south + west),
+            "WSW": (west + south + west),
+            "WNW": (west + north + west),
+            "NNW": (north + north + west)}
+POSITION = {"Latitude φ": 0,
+            "Longitude λ": 0}
 
 web_colours = {"Aqua": Aqua,
                "Black": Black,
@@ -273,6 +305,15 @@ CONTINENTS_AREA = {"Asia": (17139445, 4055000000),
                    "Europe": (3997929, 729871042),
                    "Australia": (2967909, 20434176)}
 
+
+path = []
+for step in range(360):
+    latitude, longitude = random.choice(list(CARDINALS.values()))
+    POSITION["Latitude φ"] += latitude
+    POSITION["Longitude λ"] += longitude
+    path.append(tuple(POSITION.values()))
+print (f'{POSITION} is {abs(path[-1][0]) + abs(path[-1][1])} steps from home along path')
+print (f'{POSITION} is {triangle_hypotenuse(abs(path[-1][0]), abs(path[-1][1]) ) } steps from home direct')
 
 def any_colour():
     return web_colours[random.randrange(0, len(web_colours))]

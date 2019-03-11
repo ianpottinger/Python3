@@ -11,7 +11,7 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import json
+import re
 import keyword
 
 DEBUG_MODE = True
@@ -34,17 +34,9 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
 KEYWORDS = keyword.kwlist
 
 
-JSON = 'JavaScript Object Notation'
+REGEX = 'Regular Expression'
 
 
 import fileman
-
-
-def dict_to_json():
-    return
-
-
-def json_to_dict():
-    return
 
 

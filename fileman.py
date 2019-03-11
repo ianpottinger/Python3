@@ -11,10 +11,16 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import keyword, os
+import keyword
+import os
 import string
-import doctest, unittest, pdb
-import shutil, tempfile, glob
+import doctest
+import unittest
+import pdb
+import traceback
+import shutil
+import tempfile
+import glob
 
 DEBUG_MODE = True
 if DEBUG_MODE:

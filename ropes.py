@@ -235,38 +235,7 @@ GREEK_ALPHABET = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta",
 
 TASTES = ["Sweet", "Sour", "Savoury", "Salty", "Bitter"]
 
-north = (1, 0)
-east = (0, 1)
-south = (-1, 0)
-west = (0, -1)
-CARDINALS = {"North": north,
-             "East": east,
-             "South":south,
-             "West": west}
-ORDINALS = {"NE": (north + east),
-            "SE": (south + east),
-            "SW": (south + west),
-            "NW": (north + west)}
-ROSINALS = {"NNE": (north + north + east),
-            "ENE": (east + north + east),
-            "ESE": (east + south + east),
-            "SSE": (south + south + east),
-            "SSW": (south + south + west),
-            "WSW": (west + south + west),
-            "WNW": (west + north + west),
-            "NNW": (north + north + west)}
-POSITION = {"Latitude φ": 0,
-            "Longitude λ": 0}
-
 TONAL_SCALE = ["Doe", "Rae", "Mi", "Far", "Sol", "Lar", "Tea", "Doh"]
-
-path = []
-for step in range(360):
-    latitude, longitude = random.choice(list(CARDINALS.values()))
-    POSITION["Latitude φ"] += latitude
-    POSITION["Longitude λ"] += longitude
-    path.append(tuple(POSITION.values()))
-print (f'{POSITION} is {abs(path[-1][0]) + abs(path[-1][1])} steps from home')
 
 
 backslash = '\\'
