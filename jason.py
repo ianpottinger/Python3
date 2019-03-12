@@ -12,6 +12,8 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import json
+#import pyyaml
+import pickle
 import keyword
 
 DEBUG_MODE = True
