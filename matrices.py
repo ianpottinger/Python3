@@ -591,9 +591,9 @@ class Matrix():
     def opposite(self):
         """
         >>> Matrix([[-1, 2, -3], [4, -5, 6], [-7, -8, -9]]).opposite().show()
-        [-1, -2, -3]
-        [-4, -5, -6]
-        [-7, -8, -9]
+        [1, -2, 3]
+        [-4, 5, -6]
+        [7, 8, 9]
 
         """
         return Matrix([[maths.opposite(self.content[row][column])

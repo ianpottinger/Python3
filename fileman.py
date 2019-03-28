@@ -13,6 +13,7 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 
 import keyword
 import os
+import pathlib
 import string
 import doctest
 import unittest
