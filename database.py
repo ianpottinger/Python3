@@ -364,6 +364,24 @@ def query_rows(cursor, table_name, column, query, columns = '*'):
     return (cursor.fetchall())
 
 
+def union_query(cursor, m_table_name, m_column, m_query, m_columns,
+                s_table_name, s_column, s_query, s_columns):
+    statement = f'SELECT {m_columns}\nFROM {m_table_name}\nWHERE {m_column} = {m_query}\nUNION\nSELECT {s_columns}\nFROM {s_table_name}\nWHERE {s_column} = {s_query};'
+    print(f'Executing SQL:\n{statement}')
+    result = cursor.execute(statement, entry)
+    #print(cursor.fetchall())
+    return (cursor.fetchall())
+
+
+def create_view(cursor, view_name, table_name, column, query, columns = '*'):
+    entry = (f'{query}',)
+    statement = f'CREATE VIEW {view_name} AS SELECT {columns} FROM {table_name} WHERE {column} = ?;'
+    print(f'Executing SQL:\n{statement} for {entry}')
+    result = cursor.execute(statement, entry)
+    #print(cursor.fetchall())
+    return (cursor.fetchall())
+
+
 def insert_rows(cursor, table_name, columns, values_list):
     """
 >>> database, cursor = connect_database('sqlite', ':memory:')
@@ -582,6 +600,19 @@ def join_tables(cursor, left_table, right_table, left_column, right_column,
     print(f'Executing SQL:\n{statement}\n')
     print(f'to {join_type.lower()} join {left_table}.{left_column} with {right_table}.{right_column}')
     #cursor.execute(statement)
+    return
+
+
+def create_index(cursor, table_name, index_name, columns):
+
+    statement = f'CREATE INDEX {index_name} ON table_name ({colums})'
+    print(f'Executing SQL:\n{statement}\n')
+    print(f'to create an index named {index_name} for table {table_name} using column/s {columns}')
+    #cursor.execute(statement)
+    return
+    
+
+def cross_join():
     return
 
 

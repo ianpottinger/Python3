@@ -770,11 +770,11 @@ def displacement(time, initial=None, final=None, acceleration=None):
 
     if nuns > 1:
         return None
-    elif acceleration == None:
+    elif acceleration is None:
         return .5 * (final + initial) * time
-    elif final == None:
+    elif final is None:
         return initial * time + .5 * acceleration * time ** 2
-    elif initial == None:
+    elif initial is None:
         return final * time - .5 * acceleration * time ** 2
     else:
         return .5 * (initial + final) / acceleration
