@@ -49,6 +49,7 @@ from itertools import count
 POINT_ONE = 0.1000000000000000055511151231257827021181583404541015625
 POINT_TWO = 0.200000000000000011102230246251565404236316680908203125
 POINT_THREE = 0.3000000000000000444089209850062616169452667236328125
+GLOBAL_THIRD = 0.333333333333333333333333333333333333333333333333333
 GLOBAL_SQRT2 = 1.4142135623730950488016887242096980785696
 GOLDEN_RATIO = 1.618033988749894848204586834
 GLOBAL_E = 2.71828182845904523536028747135266249775724709369995
@@ -170,7 +171,7 @@ POINT_ONE + POINT_TWO == POINT_THREE
 
 first = 245850922  # Integer
 second = 78256779.0  # Floating point
-third = 11j  # Complex
+third = 22j / 7j  # Complex
 
 # Numerical operator order of precedence.
 # Exponentiation
@@ -204,6 +205,10 @@ Equal = lambda term, compare: term == compare
 Lshift = lambda value, places: value << places
 # Bitwise Right-shift
 Rshift = lambda value, places: value >> places
+# Bitwise Left-powershift
+#LpowerShift = lambda value, places: (value^places) * (value^places)
+# Bitwise Right-powershift
+#RpowerShift = lambda value, places: (value^places) / (value^places)
 # Bitwise NOT
 NOT = lambda term, compare: term != compare
 # Bitwise AND
@@ -231,6 +236,14 @@ var = not first > second and first == third * 2 or second != third
 'turns' in "Returns"
 'lowercase' > 'UPPERCASE'
 'do' in "don't"
+
+heart = lambda a: ( x * GLOBAL_THIRD * 2 +
+                    0.9 * ( 3.3 - x**2 ) / 2 *
+                    math.sin(a * GLOBAL_PI * x ) )
+
+heart2 = lambda a: ( ( x * (GLOBAL_THIRD * 2) ) +
+                    ( 0.9 * ( 3.3 - x**2) / 2 ) *
+                    math.sin(a * GLOBAL_PI * x ) )
 
 FREQ_RANGES = ('ELF', 'SLF', 'ULF', 'VLF', 'LF', 'MF',
                'HF', 'VHF', 'UHF', 'SHF', 'EHF', 'THF')
@@ -307,7 +320,6 @@ def remainder(dividend, divisor):
     """
     return dividend - ((dividend // divisor) * divisor)
 lam_remainder = lambda dividend, divisor : dividend - ((dividend // divisor) * divisor)
-
 
 def div_mod(dividend, divisor):
     """

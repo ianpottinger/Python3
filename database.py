@@ -14,6 +14,8 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 import doctest
 import sqlite3
 import psycopg2
+import pymongo
+import mongoengine
 import keyword
 import unittest
 
