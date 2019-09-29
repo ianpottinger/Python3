@@ -61,9 +61,20 @@ ZODIAC_DATES = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
                 'Libra': (23, 22), 'Scorpio': (23, 22), 'Sagittarius': (23, 21),
                 'Capricorn': (22, 20), 'Aquarius': (21, 19), 'Pisces': (20, 20)}
 
+DAYS_IN_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+MONTHS_IN_YEAR = {1: 'January', 2: 'February', 3: 'March',
+                  4: 'April', 5: 'May', 6: 'June',
+                  7: 'July', 8: 'August', 9: 'September',
+                  10: 'October', 11: 'November', 12: 'December'}
+
 DAYS_IN_MONTH = {'January': 31, 'February': 28, 'March': 31, 'April': 30,
                  'May': 31, 'June': 30, 'July': 31, 'August': 31,
                  'September': 30, 'October': 31, 'November': 30, 'December': 31}
+
+SHORT_MONTHS = [month[0:3] for month in MONTHS_IN_YEAR.values()]
+
+FULL_MONTHS = list(MONTHS_IN_YEAR.values() )
 
 ZODIAC_SEASONS = {'Spring': ['Aries', 'Tauras', 'Gemini'],
                   'Summer': ['Cancer', 'Leo', 'Virgo'],
@@ -84,8 +95,6 @@ GRIEF_STAGES = ['Denial', 'Anger', 'Bargaining', 'Depression', 'Acceptance']
 
 EQUINOX = ['Spring', 'Autumn']
 SOLSTICE = ['Summer', 'Winter']
-
-DAYS_IN_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 # STARS = ['Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Sun']
 
