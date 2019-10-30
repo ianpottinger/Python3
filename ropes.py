@@ -571,6 +571,12 @@ def dec2binstr(number):
     return bin(number)[2:]
 
 
+def dec2binstring(number):
+    if number >= 1:
+        print (number % 2, end = "")
+        return dec2binstring(number // 2)
+
+
 def dec2hexstr(number):
     return hex(number)[2:]
 
