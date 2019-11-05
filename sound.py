@@ -18,7 +18,7 @@ import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import ftplib, poplib, nntplib, smtplib, telnetlib, email, functools
 import argparse, calendar, pprint, struct, copy, pdb
-import ipaddress, tkinter, dateutil, numpy, scipy, pygame, matplotlib
+import ipaddress, tkinter, dateutil, numpy, scipy, pygame, mutagen, matplotlib
 
 DEBUG_MODE = True
 if DEBUG_MODE:
@@ -148,6 +148,30 @@ length - the length to play the wave for in milliseconds
 sampleRate - the sample rate
 """
 
+
+def metadata(file_path):
+    file_name = os.path.basename(file_path)
+    file_parts = os.path.splitext(file_path)
+    file_ext = (file_parts[-1]).tolower()
+
+    if file_ext == '.wav':
+        audio_file = mixer.Sound(file_path)
+        audio_length = audio_file.get_length()
+    elif file_ext == '.mp3':
+        audio_file = MP3(file_path)
+        audio_length = audio.info.length()
+    elif file_ext == '.ogg':
+        audio_file = OGG(file_path)
+        audio_length = audio.info.length()
+    elif file_ext == '.flac':
+        audio_file = FLAC(file_path)
+        audio_length = audio.info.length()
+    elif file_ext == '.mp3':
+        audio_file = MP3(file_path)
+        audio_length = audio.info.length()
+        
+    
+    
 
 def SineWave(freq, length, sampleRate=DEFAULT_SAMPLE_RATE):
     """

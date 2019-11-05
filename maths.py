@@ -11,8 +11,7 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
-import this
-#import antigravity
+
 import cmath
 import doctest
 import keyword
@@ -1229,8 +1228,8 @@ def project_to_distance(point_x, point_y, distance):
 
 
 def distance_between_points(vector1, vector2):
-    return sqrt((vector1[0] - vector2[0]) ** 2 +
-                (vector1[1] - vector2[1]) ** 2)
+    return math.sqrt((vector1[0] - vector2[0]) ** 2 +
+                     (vector1[1] - vector2[1]) ** 2)
 
 
 def degrees_to_radians(degrees):
