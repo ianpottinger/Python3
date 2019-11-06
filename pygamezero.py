@@ -55,10 +55,12 @@ clock = pygame.time.Clock()
 
 # Grab joystick 0
 if pygame.joystick.get_count() == 0:
-    raise IOError("No joystick detected")
-joy = pygame.joystick.Joystick(0)
-joyDeadzone = 2.0
-joy.init()
+    joyPresent = False
+else:
+    joyPresent = True
+    joy = pygame.joystick.Joystick(0)
+    joyDeadzone = 2.0
+    joy.init()
 keyMove = False
  
 
@@ -137,18 +139,19 @@ crosshair = crosshair.convert()
 # Generate button surfaces
 writer = pygame.font.Font(pygame.font.get_default_font(), 15)
 buttons = {}
-for button in range(joy.get_numbuttons()):
-    buttons[button] = [
-        writer.render(
-            hex(button)[2:].upper(),
-            1,
-            pygame.Color("red"),
-            pygame.Color("black")
-        ).convert(),
-        # Get co-ords: ((width*slot)+offset, offset). Offsets chosen
-        #                                             to match frames.
-        ((15*button)+45, 560)
-    ]
+if joyPresent:
+    for button in range(joy.get_numbuttons()):
+        buttons[button] = [
+            writer.render(
+                hex(button)[2:].upper(),
+                1,
+                pygame.Color("red"),
+                pygame.Color("black")
+            ).convert(),
+            # Get co-ords: ((width*slot)+offset, offset). Offsets chosen
+            #                                             to match frames.
+            ((15*button)+45, 560)
+        ]
 
 
 # Ready player
@@ -206,8 +209,8 @@ for opponent in range(opponents):
 
 # Ready observer
 observerIMG = pygame.image.load("G:\WorkingData\Work @ Home\Humanity\GoldenRatioHorus.png")
-observerX = -1
-observerY = -1
+observerX = None
+observerY = None
 observerWidth = observerIMG.get_width()
 observerHeight = observerIMG.get_height()
 observerXcentre = observerWidth // 2
@@ -243,7 +246,7 @@ def pong_init(right):
     # Computer serves from centre of court
     pong_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     pong_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
-    pong_pos = [WIDTH / 2, HEIGHT / 2]
+    pong_pos = [WIDTH // 2, HEIGHT // 2]
     pong_tail = [pong_pos]
     if rally > highest:
         highest = rally
@@ -264,7 +267,7 @@ def ping_init(left):
     # Core launches from out of nowhere
     ping_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     ping_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
-    ping_pos = [WIDTH / 2, random.randrange(HEIGHT / 2)]
+    ping_pos = [WIDTH // 2, random.randrange(HEIGHT // 2)]
     ping_tail = [ping_pos]
     if rally + flurry > highest:
         highest = flurry + rally 
@@ -540,8 +543,8 @@ while game_loop:
             if event.key == pygame.K_RCTRL:
                 if observerwatching == True:
                     observerwatching = False
-                    observerX = -1
-                    observerY = -1
+                    observerX = None
+                    observerY = None
                     oldobserverXrate = observerXrate
                     oldobserverYrate = observerYrate
                     observerXrate = 0
@@ -568,8 +571,9 @@ while game_loop:
 
             
     # Get joystick axes
-    joyX = joy.get_axis(0)
-    joyY = joy.get_axis(1)
+    if joyPresent:
+        joyX = joy.get_axis(0)
+        joyY = joy.get_axis(1)
 
     # update paddle's vertical position, keep paddle on the screen
     if left_assist:
@@ -680,19 +684,19 @@ while game_loop:
         opponentXhitbox[opponent] = opponentX[opponent] + opponentXcentre[opponent]
         opponentYhitbox[opponent] = opponentY[opponent] + opponentYcentre[opponent]
     
-    observerXhitbox = observerX + observerXcentre
-    observerYhitbox = observerY + observerYcentre
+    if observerwatching == True:
+        observerXhitbox = observerX + observerXcentre
+        observerYhitbox = observerY + observerYcentre
         
     for opponent in range(opponents):
         player_opponent[opponent] = collision(playerXhitbox, playerYhitbox, opponentXhitbox[opponent], opponentYhitbox[opponent])
         
-    for opponent in range(opponents):
-        opponent_observer[opponent] = collision(opponentXhitbox[opponent], opponentYhitbox[opponent], observerXhitbox, observerYhitbox)
+    if observerwatching == True:
+        for opponent in range(opponents):
+            opponent_observer[opponent] = collision(opponentXhitbox[opponent], opponentYhitbox[opponent], observerXhitbox, observerYhitbox)
         
-    observer_player = collision(observerXhitbox, observerYhitbox, playerXhitbox, playerYhitbox)
-    #for opponent in range(opponents):
-    #    print (player_opponent[opponent], opponent_observer[opponent])
-    #print (observer_player)
+    if observerwatching == True:
+        observer_player = collision(observerXhitbox, observerYhitbox, playerXhitbox, playerYhitbox)
 
     # Object scoring
     for opponent in range(opponents):
@@ -703,42 +707,38 @@ while game_loop:
             opponentXrate[opponent] += playerXrate
             opponentY[opponent] = random.randint(0, HEIGHT)
             opponentYrate[opponent] += playerYrate
-            #print (playerScore, opponentScore, observerScore)
 
     for opponent in range(opponents):
         if opponent_observer[opponent]:
             opponentScore[opponent] += 1
             observerScore += 1
             opponentX[opponent] = random.randint(0, WIDTH)
-            opponentXrate[opponent] += observerXrate
+            opponentXrate[opponent] += random.randint(-3, 3)
             opponentY[opponent] = random.randint(0, HEIGHT)
-            opponentYrate[opponent] += observerYrate
-            #print (playerScore, opponentScore, observerScore)
+            opponentYrate[opponent] += random.randint(-3, 3)
         
     if observerwatching == True:
         if observer_player:
             playerScore -= 1
             observerScore += 1
             observerX = random.randint(0, WIDTH)
-            observerXrate += playerXrate
-            observerXstep -= playerXstep
+            observerXrate += random.randint(-3, 3)
+            #observerXstep -= playerXstep
             observerY = random.randint(0, HEIGHT)
-            observerYrate += playerYrate
+            observerYrate += random.randint(-3, 3)
             #observerYstep -= playerYstep
+            
             #respawn = mixer.Sound("G:\WorkingData\My Music\Portable\Skits\Reloaded.mp3")
             #respawn.play()
-            #print (playerScore, opponentScore, observerScore)
 
     
     # draw TT&T
     if tracking:
         if len(pong_tail) > 1:
             pygame.draw.lines(screen, Yellow, False, pong_tail, 1)
-        #pygame.draw.line(screen, Red, False, pong_tail[0], pong_pos, 3)
         if helping_hand:
             if len(ping_tail) > 1:
                 pygame.draw.lines(screen, Red, False, ping_tail, 1)
-            #pygame.draw.line(screen, ping_tail[0], ping_pos, 3, "Yellow")
 
 
     # Set opponent position
@@ -762,18 +762,18 @@ while game_loop:
         observerX += observerXstep * observerXrate
         observerY += observerYstep * observerYrate
         # Restrict observer position within boundaries
-        if observerX < 0.0:
-            #observerX = 0.0
-            observerXrate = 0.9
-        if observerX > WIDTH - observerWidth:
-            #observerX = WIDTH - observerWidth
-            observerXrate = -0.9
-        if observerY < 0.0:
-            #observerY = 0.0
-            observerYrate = 0.9
-        if observerY > HEIGHT - observerHeight:
-            #observerY = HEIGHT - observerHeight
-            observerYrate = -0.9
+        if observerX < 0:
+            observerX = 0
+            observerXrate = 1.1
+        elif observerX > WIDTH - observerWidth:
+            observerX = WIDTH - observerWidth
+            observerXrate = -1.1
+        if observerY < 0:
+            observerY = 0
+            observerYrate = 1.1
+        elif observerY > HEIGHT - observerHeight:
+            observerY = HEIGHT - observerHeight
+            observerYrate = -1.1
         # Display observer state
         screen.blit(observerIMG, (observerX, observerY) )
 
@@ -788,10 +788,11 @@ while game_loop:
 ##        playerY = round(joyY * (HEIGHT / 2)) + (HEIGHT / 2) - (playerHeight / 2)
 
     # Relative joystick position control with deadzone
-    if ((abs(joyX * 255) > joyDeadzone) or
-        (abs(joyY * 255) > joyDeadzone) ):
-        playerX += (joyX * playerXstep * 2)
-        playerY += (joyY * playerYstep * 2)
+    if joyPresent:
+        if ((abs(joyX * 255) > joyDeadzone) or
+            (abs(joyY * 255) > joyDeadzone) ):
+            playerX += (joyX * playerXstep * 2)
+            playerY += (joyY * playerYstep * 2)
 
     # Restrict player position within boundaries
     if playerX < 0:
@@ -910,9 +911,15 @@ while game_loop:
     gutter = abs(leader - chaser)
                     
 
-    # draw paddles
+    # Draw paddles
     pygame.draw.line(screen, Green, [(PAD_WIDTH / 2) + 1, left_pos],[(PAD_WIDTH / 2) + 1, left_pos + PAD_HEIGHT], PAD_WIDTH)
     pygame.draw.line(screen, Blue, [WIDTH - (PAD_WIDTH / 2) - 1, right_pos],[WIDTH - (PAD_WIDTH / 2) - 1, right_pos + PAD_HEIGHT], PAD_WIDTH)
+
+    # Draw Ping Pong
+    pong_pos = list([int(pong_pos[0]), int(pong_pos[1])])
+    ping_pos = list([int(ping_pos[0]), int(ping_pos[1])])
+    pygame.draw.circle(screen, Red, pong_pos, BALL_RADIUS)
+    pygame.draw.circle(screen, Yellow, ping_pos, BALL_RADIUS)
     
     # Update score board
     scores = f"Player: {playerScore}, Opponents: {opponentScore}, Observer: {observerScore}"
@@ -921,14 +928,18 @@ while game_loop:
 
     # Update positions
     #positions = f"Player: {playerX}:{playerY}, Observer: {observerX}:{observerY}"
-    positions = "Player: x {:01f} : y {:01f} , Observer: x {:02f} : y {:02f}".format(playerX, playerY, observerX, observerY)
+    if observerwatching == True:
+        positions = "Player: x {:01f} : y {:01f} , Observer: x {:02f} : y {:02f}".format(playerX, playerY, observerX, observerY)
+    else:
+        positions = "Player: x {:01f} : y {:01f} , Observer: Idle, press Ctrl to invoke".format(playerX, playerY)
     positions_board = position_font.render(positions, True, (255, 255, 255))
     screen.blit(positions_board, (scoreX, scoreY * 2) )    
 
     # Get and display the joystick buttons
-    for button in range(joy.get_numbuttons()):
-        if joy.get_button(button):
-            screen.blit(buttons[button][0], buttons[button][1])
+    if joyPresent:
+        for button in range(joy.get_numbuttons()):
+            if joy.get_button(button):
+                screen.blit(buttons[button][0], buttons[button][1])
 
     # Update canvas
     pygame.display.update()
