@@ -1146,10 +1146,11 @@ def permutations(items, draws):
     for draw in range(items, items - draws, -1):
         result *= draw
     return result
-
+# math.perm(items, draws)
 
 def combinations(items, draws):
     return permutations(items, draws) / factorial(draws)
+# math.comb(items, draws)
 
 
 def mandel(z):
