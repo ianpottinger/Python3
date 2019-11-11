@@ -167,6 +167,8 @@ playerYstep = 2
 playerXrate = 0
 playerYrate = 0
 playerScore = 0
+playerJumping = False
+playerJumper = 10
 
 # Ready opponent
 opponentImages = ['Tetrahedron.gif', 'Octahedron.gif', 'Icosahedron.gif', 'Hexahedron.gif']
@@ -522,27 +524,108 @@ while game_loop:
             print (f"Frames: {frame}")
             sys.exit()
 
-        keys = pygame.key.get_pressed()
-        clicks = pygame.mouse.get_pressed()
+        if event.type == pygame.MOUSEMOTION:
+            pass
+        if event.type == pygame.MOUSEBUTTONDOWN:            
+            playerX, playerY = pygame.mouse.get_pos()
+            playerX -= playerWidth // 2
+            playerY -= playerHeight // 2
+        if event.type == pygame.MOUSEBUTTONUP:
+            pass
+        if event.type == pygame.MOUSEWHEEL:
+            pass
 
-##        for key in keys:
-##            if keys[pygame.K_LEFT]:
+##        clicks = pygame.mouse.get_pressed()
+##        if clicks[pygame.MOUSEMOTION]:
+##            pass
+##        if clicks[pygame.MOUSEBUTTONDOWN]:            
+##            playerX, playerY = pygame.mouse.get_pos()
+##            playerX -= playerWidth // 2
+##            playerY -= playerHeight // 2
+##        if clicks[pygame.MOUSEBUTTONUP]:
+##            pass
+##        if clicks[pygame.MOUSEWHEEL]:
+##            pass
+
+        keys = pygame.key.get_pressed()
+        for key in keys:
+            
+            if keys[pygame.K_LEFT]:
+                keyMove = True
+                playerXrate = -1.1
+                #print (f"Moving LEFT: {playerX}") 
+            elif keys[pygame.K_RIGHT]:
+                keyMove = True
+                playerXrate = 1.1
+                #print (f"Moving RIGHT: {playerX}")
+            else:
+                keyMove = False
+                playerXrate = 0
+
+            if not playerJumping:
+                if keys[pygame.K_UP]:
+                    keyMove = True
+                    playerYrate = -1.1
+                    #print (f"Moving UP: {playerY}") 
+                elif keys[pygame.K_DOWN]:
+                    keyMove = True
+                    playerYrate = 1.1
+                    #print (f"Moving DOWN: {playerY}")
+                else:
+                    keyMove = False
+                    playerYrate = 0
+
+                if keys[pygame.K_SPACE]:
+                    playerJumping = True
+                    playerYrate = 0
+                    #print(playerY, playerJumping, playerJumper)
+                    
+            if keys[pygame.K_RCTRL]:
+                if observerwatching == True:
+                    observerwatching = False
+                    observerX = None
+                    observerY = None
+                    oldobserverXrate = observerXrate
+                    oldobserverYrate = observerYrate
+                    observerXrate = 0
+                    observerYrate = 0
+                elif observerwatching == False:
+                    observerwatching = True
+                    observerX = random.randint(0, WIDTH)
+                    observerY = random.randint(0, HEIGHT)
+                    observerXrate = oldobserverXrate
+                    observerYrate = oldobserverYrate
+
+
+        # Detect key pressed state
+##        if event.type == pygame.KEYDOWN:
+##            #print (f"Key pressed at frame: {frame}")
+##        
+##            if event.key == pygame.K_LEFT:
 ##                keyMove = True
 ##                playerXrate = -1.1
 ##                #print (f"Moving LEFT: {playerX}") 
-##            elif keys[pygame.K_RIGHT]:
+##            elif event.key == pygame.K_RIGHT:
 ##                keyMove = True
 ##                playerXrate = 1.1
 ##                #print (f"Moving RIGHT: {playerX}")
-##            if keys[pygame.K_UP]:
-##                keyMove = True
-##                playerYrate = -1.1
-##                #print (f"Moving UP: {playerY}") 
-##            elif keys[pygame.K_DOWN]:
-##                keyMove = True
-##                playerYrate = 1.1
-##                #print (f"Moving DOWN: {playerY}")
-##            if keys[pygame.K_RCTRL]:
+##        
+##            if not playerJumping:
+##                if event.key == pygame.K_UP:
+##                    keyMove = True
+##                    playerYrate = -1.1
+##                    #print (f"Moving UP: {playerY}") 
+##                elif event.key == pygame.K_DOWN:
+##                    keyMove = True
+##                    playerYrate = 1.1
+##                    #print (f"Moving DOWN: {playerY}")
+##
+##                if event.key == pygame.K_SPACE:
+##                    playerJumping = True
+##                    playerYrate = 0
+##                    print(playerY, playerJumping, playerJumper)
+##        
+##            if event.key == pygame.K_RCTRL:
 ##                if observerwatching == True:
 ##                    observerwatching = False
 ##                    observerX = None
@@ -558,78 +641,37 @@ while game_loop:
 ##                    observerXrate = oldobserverXrate
 ##                    observerYrate = oldobserverYrate
 ##                #print (f"observernwatching: {observerwatching}, {observerXrate}, {observerYrate}")
-
-        # Detect key released state
+##
+##        # Detect key released state
 ##        if event.type == pygame.KEYUP:
 ##            #print (f"Key released at frame: {frame}")
-##            if not keys[pygame.K_UP] or not keys[pygame.K_DOWN]:
-##                keyMove = False
-##                playerYrate = 0
-##                #print (f"Holding vertical: {playerY}") 
-##            if not keys[pygame.K_LEFT] or not keys[pygame.K_RIGHT]:
+##        
+##            if not playerJumping:
+##                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+##                    keyMove = False
+##                    playerYrate = 0
+##                    #print (f"Holding vertical: {playerY}")
+##            else:
+##                playerYrate = -1
+##         
+##            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 ##                keyMove = False
 ##                playerXrate = 0
 ##                #print (f"Holding horizontal: {playerX}")
 
-        # Detect key pressed state
-        if event.type == pygame.KEYDOWN:
-            #print (f"Key pressed at frame: {frame}")
-            if event.key == pygame.K_LEFT:
-                keyMove = True
-                playerXrate = -1.1
-                #print (f"Moving LEFT: {playerX}") 
-            elif event.key == pygame.K_RIGHT:
-                keyMove = True
-                playerXrate = 1.1
-                #print (f"Moving RIGHT: {playerX}")
-            if event.key == pygame.K_UP:
-                keyMove = True
-                playerYrate = -1.1
-                #print (f"Moving UP: {playerY}") 
-            elif event.key == pygame.K_DOWN:
-                keyMove = True
-                playerYrate = 1.1
-                #print (f"Moving DOWN: {playerY}")
-            if event.key == pygame.K_RCTRL:
-                if observerwatching == True:
-                    observerwatching = False
-                    observerX = None
-                    observerY = None
-                    oldobserverXrate = observerXrate
-                    oldobserverYrate = observerYrate
-                    observerXrate = 0
-                    observerYrate = 0
-                elif observerwatching == False:
-                    observerwatching = True
-                    observerX = random.randint(0, WIDTH)
-                    observerY = random.randint(0, HEIGHT)
-                    observerXrate = oldobserverXrate
-                    observerYrate = oldobserverYrate
-                #print (f"observernwatching: {observerwatching}, {observerXrate}, {observerYrate}")
 
-        # Detect key released state
-        if event.type == pygame.KEYUP:
-            #print (f"Key released at frame: {frame}")
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                keyMove = False
-                playerYrate = 0
-                #print (f"Holding vertical: {playerY}") 
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                keyMove = False
-                playerXrate = 0
-                #print (f"Holding horizontal: {playerX}")
-
-        if event.type == pygame.MOUSEMOTION:
-            pass
-        if event.type == pygame.MOUSEBUTTONDOWN:            
-            playerX, playerY = pygame.mouse.get_pos()
-            playerX -= playerWidth // 2
-            playerY -= playerHeight // 2
-        if event.type == pygame.MOUSEBUTTONUP:
-            pass
-        if event.type == pygame.MOUSEWHEEL:
-            pass
-
+    if playerJumping:
+        if playerJumper >= -10:
+            jumpRising = 1
+            if playerJumper < 0:
+                jumpRising = -1
+            playerY -= (playerJumper ** 2) * 0.5 * jumpRising
+            playerJumper -= 1
+            #print(playerY, playerJumping, playerJumper, jumpRising)
+        else:
+            playerJumping = False
+            playerJumper = 10
+            #print(playerY, playerJumping, playerJumper)
 
 
     # Get joystick axes
@@ -841,10 +883,12 @@ while game_loop:
 
     # Set player position
     playerX += playerXstep * playerXrate
-    playerY += playerYstep * playerYrate
+    if not playerJumping:
+        playerY += playerYstep * playerYrate
 
     # Absolute joystick position control with deadzone
-##    if (keyMove == False and (abs(joyX * 255) > joyDeadzone) or
+##    if (keyMove == False and
+##        (abs(joyX * 255) > joyDeadzone) or
 ##        (abs(joyY * 255) > joyDeadzone) ):
 ##        playerX = round(joyX * (WIDTH / 2)) + (WIDTH / 2) - (playerWidth / 2)
 ##        playerY = round(joyY * (HEIGHT / 2)) + (HEIGHT / 2) - (playerHeight / 2)
@@ -993,7 +1037,6 @@ while game_loop:
 
 
     # Update positions
-    #positions = f"Player: {playerX}:{playerY}, Observer: {observerX}:{observerY}"
     if observerwatching == True:
         positions = "Player: x {:01f} : y {:01f} , Observer: x {:02f} : y {:02f}".format(playerX, playerY, observerX, observerY)
     else:
@@ -1010,7 +1053,7 @@ while game_loop:
 
 
     # Update canvas
-    pygame.display.update()
+    #pygame.display.update()
     pygame.display.flip()
     frame += 1
             
