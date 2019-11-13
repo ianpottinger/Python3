@@ -602,6 +602,14 @@ def reed_solomon():
     return
 
 
+def hash_string(phrase, size = 128):
+    _list = []
+    for character in phrase:
+        _list.append(ord(character))
+        print (f"{character} == {_list[-1]}")
+    return (sum(_list) % size)
+
+
 def hash_fraction(m, n):
     """Compute the hash of a rational number m / n.
 
