@@ -20,6 +20,7 @@ import sys
 import math
 import random
 import pygame
+import cv2
 #import pgzrun
 
 DEBUG_MODE = True
@@ -48,6 +49,9 @@ from pygame import mixer
 from maths import *
 from moreadt import *
 
+
+print(cv2.__version__)
+importedModules = sys.modules.keys()
 
 pygame.init()
 frameRate = 60
@@ -171,6 +175,9 @@ class Player(object):
         self.playerYcentre = self.playerHeight // 2
         self.playerXhitbox = self.playerX + self.playerXcentre
         self.playerYhitbox = self.playerY + self.playerYcentre
+        self.playerHitbox = (self.playerX + (self.playerWidth * 0.25),
+                             self.playerY + (self.playerWidth * 0.25),
+                             self.playerXcentre, self.playerYcentre)
         self.playerXstep = 2
         self.playerYstep = 2
         self.playerXrate = 0
@@ -180,8 +187,11 @@ class Player(object):
         self.playerJumper = 10
 
     def draw(self, canvas):
-        self.playerXhitbox = self.playerX + self.playerXcentre
-        self.playerYhitbox = self.playerY + self.playerYcentre
+        self.playerXhitbox = round(self.playerX + self.playerXcentre)
+        self.playerYhitbox = round(self.playerY + self.playerYcentre)
+        self.playerHitbox = (self.playerX + (self.playerWidth * 0.25),
+                             self.playerY + (self.playerWidth * 0.25),
+                             self.playerXcentre, self.playerYcentre)
         # Restrict player position within boundaries
         if self.playerX < 0:
             self.playerX = 0
@@ -194,6 +204,9 @@ class Player(object):
 
         # Display player state
         canvas.blit(self.playerIMG, (self.playerX, self.playerY) )
+        pygame.draw.rect(canvas, lines, self.playerHitbox, 1 )
+        pygame.draw.circle(canvas, lines, (self.playerXhitbox, self.playerYhitbox), 20)
+        
 
 player = Player()
 
@@ -208,6 +221,11 @@ class Projectile(object):
         self.projectileHeight = self.projectileIMG.get_height()
         self.projectileXcentre = self.projectileWidth // 2
         self.projectileYcentre = self.projectileHeight // 2
+        self.projectileXhitbox = self.projectileX + self.projectileXcentre
+        self.projectileYhitbox = self.projectileY + self.projectileYcentre
+        self.projectileHitbox = (self.projectileX + (self.projectileWidth * 0.25),
+                                 self.projectileY + (self.projectileWidth * 0.25),
+                                 self.projectileXcentre, self.projectileYcentre)
         self.projectileXstep = 4
         self.projectileYstep = 4
         self.projectileXrate = source.playerXrate * 2
@@ -219,10 +237,17 @@ class Projectile(object):
         # Set observer position
         self.projectileX += self.projectileXstep * self.projectileXrate
         self.projectileY += self.projectileYstep * self.projectileYrate
+        self.projectileXhitbox = int(self.projectileX + self.projectileXcentre)
+        self.projectileYhitbox = int(self.projectileY + self.projectileYcentre)
+        self.projectileHitbox = (self.projectileX + (self.projectileWidth * 0.25),
+                                 self.projectileY + (self.projectileWidth * 0.25),
+                                 self.projectileXcentre, self.projectileYcentre)
 
         # Display player state
         canvas.blit(self.projectileIMG, (self.projectileX, self.projectileY) )
-
+        pygame.draw.rect(canvas, lines, self.projectileHitbox, 1 )
+        pygame.draw.circle(canvas, lines, (self.projectileXhitbox, self.projectileYhitbox), 20)
+                         
 bullets = []
 shotsFired = 0
 reloading = 0
@@ -277,6 +302,9 @@ class Observer(object):
         self.observerHeight = self.observerIMG.get_height()
         self.observerXcentre = self.observerWidth // 2
         self.observerYcentre = self.observerHeight // 2
+        #self.observerHitbox = (self.observerX + (self.observerWidth * 0.25),
+        #                       self.observerY + (self.observerWidth * 0.25),
+        #                       self.observerXcentre, self.observerYcentre)
         self.observerXhitbox = 0
         self.observerYhitbox = 0
         self.observerXstep = 3
@@ -295,7 +323,10 @@ class Observer(object):
             self.observerY += self.observerYstep * self.observerYrate
             self.observerXhitbox = self.observerX + self.observerXcentre
             self.observerYhitbox = self.observerY + self.observerYcentre
-            
+            if self.observerwatching:
+                self.observerHitbox = (self.observerX + (self.observerWidth * 0.25),
+                                       self.observerY + (self.observerHeight * 0.25),
+                                       self.observerXcentre, self.observerYcentre)
             # Restrict observer position within boundaries
             if self.observerX < 0:
                 self.observerX = 0
@@ -311,6 +342,7 @@ class Observer(object):
                 self.observerYrate = -1.1
             # Display observer state
             canvas.blit(self.observerIMG, (self.observerX, self.observerY) )
+            pygame.draw.rect(canvas, lines, self.observerHitbox, 1 )
 
 enemy = Observer()
 
@@ -613,8 +645,10 @@ while game_loop:
             sys.exit()
 
         if event.type == pygame.MOUSEMOTION:
-            pass
-        if event.type == pygame.MOUSEBUTTONDOWN:            
+            player.playerX, player.playerY = pygame.mouse.get_pos()
+            player.playerX -= player.playerWidth // 2
+            player.playerY -= player.playerHeight // 2
+        if event.type == pygame.MOUSEBUTTONDOWN:
             player.playerX, player.playerY = pygame.mouse.get_pos()
             player.playerX -= player.playerWidth // 2
             player.playerY -= player.playerHeight // 2
@@ -744,7 +778,8 @@ while game_loop:
 ##                    enemy.observerY = random.randint(0, HEIGHT)
 ##                    enemy.observerXrate = enemy.oldobserverXrate
 ##                    enemy.observerYrate = enemy.oldobserverYrate
-##                #print (f"observernwatching: {enemy.observerwatching}, {enemy.observerXrate}, {enemy.observerYrate}")
+##                #print (f"observernwatching: {enemy.observerwatching},
+##                #       {enemy.observerXrate}, {enemy.observerYrate}")
 ##
 ##        # Detect key released state
 ##        if event.type == pygame.KEYUP:
@@ -949,7 +984,27 @@ while game_loop:
             
             #respawn = mixer.Sound("G:\WorkingData\My Music\Portable\Skits\Reloaded.mp3")
             #respawn.play()
-        
+
+
+    if shotsFired > 0:
+        for bullet in bullets:
+            if bullet.projectile_observer and bullet.projectile_opponent:
+                bullets.pop(bullets.index(bullet))
+                player.playerScore += 2
+                enemy.observerScore -= 1
+                print(bullet.projectile_observer, bullet.projectile_opponent,
+                      shotsFired, "2 Birds")
+                shotsFired -= 1
+            if bullet.projectile_observer or bullet.projectile_opponent:
+                bullets.pop(bullets.index(bullet))
+                player.playerScore += 1
+                if bullet.projectile_observer:
+                    enemy.observerScore -= 1
+                print(bullet.projectile_observer, bullet.projectile_opponent,
+                      shotsFired, "1 Birds")
+                shotsFired -= 1
+
+    
     if shotsFired > 0:
         for bullet in bullets:
             bullet.projectile_observer = collision(bullet.projectileXhitbox, bullet.projectileYhitbox,
@@ -957,10 +1012,6 @@ while game_loop:
             for opponent in range(opponents):
                 bullet.projectile_opponent = collision(opponentXhitbox[opponent], opponentYhitbox[opponent],
                                                        bullet.projectileXhitbox, bullet.projectileYhitbox)
-                if bullet.projectile_observer or bullet.projectile_opponent:
-                    player.playerScore += 1
-                    #bullets.pop(bullets.index(bullet))
-                    #shotsFired -= 1
 
 
     # draw TT&T
@@ -1128,8 +1179,10 @@ while game_loop:
                     
 
     # Draw paddles
-    pygame.draw.line(screen, Green, [(PAD_WIDTH / 2) + 1, left_pos],[(PAD_WIDTH / 2) + 1, left_pos + PAD_HEIGHT], PAD_WIDTH)
-    pygame.draw.line(screen, Blue, [WIDTH - (PAD_WIDTH / 2) - 1, right_pos],[WIDTH - (PAD_WIDTH / 2) - 1, right_pos + PAD_HEIGHT], PAD_WIDTH)
+    pygame.draw.line(screen, Green, [(PAD_WIDTH / 2) + 1, left_pos],
+                     [(PAD_WIDTH / 2) + 1, left_pos + PAD_HEIGHT], PAD_WIDTH)
+    pygame.draw.line(screen, Blue, [WIDTH - (PAD_WIDTH / 2) - 1, right_pos],
+                     [WIDTH - (PAD_WIDTH / 2) - 1, right_pos + PAD_HEIGHT], PAD_WIDTH)
 
 
     # Draw Ping Pong
