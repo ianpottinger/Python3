@@ -22,6 +22,7 @@ import string
 import time
 import traceback
 import unittest
+import array
 
 DEBUG_MODE = True
 if DEBUG_MODE:
@@ -44,6 +45,7 @@ KEYWORDS = keyword.kwlist
 
 from decimal import Decimal, getcontext
 from itertools import count
+from array import *
 
 
 POINT_ONE = 0.1000000000000000055511151231257827021181583404541015625
@@ -244,6 +246,22 @@ heart = lambda a: ( x * GLOBAL_THIRD * 2 +
 heart2 = lambda a: ( ( x * (GLOBAL_THIRD * 2) ) +
                     ( 0.9 * ( 3.3 - x**2) / 2 ) *
                     math.sin(a * GLOBAL_PI * x ) )
+
+vector1 = array('d', [1.0, 4.0, 7.0])
+vector2 = array('d', [2.0, 5.0, 8.0])
+vector3 = array('d', [3.0, 6.0, 9.0])
+matrix0 = [vector1, vector2, vector3]
+
+#Type code	Python Data Type	Byte size
+#i	int	2
+#I	int	2
+#u	unicode character	2
+#h	int	2
+#H	int	2
+#l	int	4
+#L	int	4
+#f	float	4
+#d	float	8
 
 FREQ_RANGES = ('ELF', 'SLF', 'ULF', 'VLF', 'LF', 'MF',
                'HF', 'VHF', 'UHF', 'SHF', 'EHF', 'THF')

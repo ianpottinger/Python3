@@ -99,6 +99,10 @@ SOLSTICE = ['Summer', 'Winter']
 
 # STARS = ['Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Sun']
 
+EVERYKIND = {'Universe': ['Nebulae', 'Clusters', 'Galaxies', 'Blazars', 'Quasars', 'DarkMatter','DarkEnergy'],
+             'Galaxies': ['SolarSystems', 'BlackHoles', 'SuperNova', 'NeutronStars', 'Giants', 'Stars', 'BrownDwarfs'],
+             'SolarSystems': ['Suns', 'Planets', 'Moons', 'Asteroids','Comets', 'CosmicDust']}
+
 DRAUGHTS_BW = {'Man': ('\u26C2', '\u26C0'), 'King': ('\u26C3', '\u26C1')}
 
 CHESS_BW = {'King': ('\u265A', '\u2654'), 'Queen': ('\u265B', '\u2655'),

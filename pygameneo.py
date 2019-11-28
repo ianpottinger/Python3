@@ -1,5 +1,6 @@
 #! /usr/bin/env python		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -12,6 +13,9 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
+import time
+import calendar
+import datetime
 import this
 #import antigravity
 import keyword
@@ -21,6 +25,7 @@ import math
 import random
 import pygame
 import cv2
+#import tensorflow
 #import pgzrun
 
 DEBUG_MODE = True
@@ -49,6 +54,13 @@ from pygame import mixer
 from maths import *
 from moreadt import *
 
+
+# https://www.epochconverter.com/
+epoch = time.time()
+timenow = calendar.timegm(time.strptime('2000-01-01 12:34:00', '%Y-%m-%d %H:%M:%S'))
+print (epoch, timenow)
+timenow = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime(epoch))
+print (epoch, timenow)
 
 print(cv2.__version__)
 importedModules = sys.modules.keys()
