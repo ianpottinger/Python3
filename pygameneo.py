@@ -25,8 +25,7 @@ import math
 import random
 import pygame
 import cv2
-#import tensorflow
-#import pgzrun
+
 
 DEBUG_MODE = True
 if DEBUG_MODE:

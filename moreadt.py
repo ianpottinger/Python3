@@ -20,6 +20,7 @@ import keyword
 import random
 import re
 import unittest
+import analytics
 
 DEBUG_MODE = True
 if DEBUG_MODE:
