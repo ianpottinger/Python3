@@ -271,7 +271,7 @@ def colour_print(string, fore="Black", back="White", style="Normal"):
 
 RGB_light = ("Red", "Green", "Blue", "White")
 CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
-RYB_paint = ("Red", "Yellow", "Blue", Grey)
+RYB_paint = ("Red", "Yellow", "Blue", "Grey")
 colours = RGB_light + CMY_kemet
 
 Colour_HEX_codes = {"Black": "000000",
@@ -858,6 +858,10 @@ def list2dict(keys, values):
 
 def dict2list(dictionary, keys):
     return [dictionary[keys[key]] for key in range(len(keys))]
+
+
+def swap_keys_values(dictionary):
+    return dict( [ (value, key) for (key, value) in dictionary.items() ] )
 
 
 def get_keys(L, d):

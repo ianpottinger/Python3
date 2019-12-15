@@ -178,6 +178,8 @@ if joyPresent:
 class Player(object):
     def __init__(self):
         self.playerIMG = pygame.image.load("G:\WorkingData\Work @ Home\Humanity\Dodecahedron.gif")
+        self.playerOriginal = self.playerIMG
+        self.playerAngle = 0
         self.playerX = random.randint(0, WIDTH)
         self.playerY = random.randint(0, HEIGHT)
         self.playerWidth = self.playerIMG.get_width()
@@ -214,6 +216,8 @@ class Player(object):
             self.playerY = HEIGHT - self.playerHeight
 
         # Display player state
+        self.playerAngle += self.playerXstep + self.playerYstep
+        self.playerIMG = pygame.transform.rotate(self.playerOriginal, self.playerAngle)
         canvas.blit(self.playerIMG, (self.playerX, self.playerY) )
         pygame.draw.rect(canvas, lines, self.playerHitbox, 1 )
         pygame.draw.circle(canvas, lines, (self.playerXhitbox, self.playerYhitbox), 20)
@@ -267,6 +271,9 @@ reloading = 0
 # Ready opponent
 opponentImages = ['Tetrahedron.gif', 'Octahedron.gif', 'Icosahedron.gif', 'Hexahedron.gif']
 opponentIMG = []
+opponentOriginal = []
+opponentAngle = []
+opponentSpinrate = []
 opponentX = []
 opponentY = []
 opponentWidth = []
@@ -286,6 +293,9 @@ opponents = 4
 
 for opponent in range(opponents):
     opponentIMG.append(pygame.image.load(f"G:\WorkingData\Work @ Home\Humanity\{opponentImages[opponent]}"))
+    opponentOriginal.append(opponentIMG[opponent])
+    opponentAngle.append(0)
+    opponentSpinrate.append(random.randint(-2,2))
     opponentX.append(random.randint(0, WIDTH))
     opponentY.append(random.randint(0, HEIGHT))
     opponentWidth.append(opponentIMG[opponent].get_width())
@@ -813,8 +823,10 @@ while game_loop:
     if player.playerJumping:
         if player.playerJumper >= -10:
             jumpRising = 1
+            player.playerAngle += jumpRising * 3
             if player.playerJumper < 0:
                 jumpRising = -1
+                player.playerAngle += jumpRising * 6
             player.playerY -= (player.playerJumper ** 2) * 0.5 * jumpRising
             player.playerJumper -= 1
             #print(player.playerY, player.playerJumping, player.playerJumper, jumpRising)
@@ -969,6 +981,7 @@ while game_loop:
             opponentXrate[opponent] += player.playerXrate
             opponentY[opponent] = random.randint(0, HEIGHT)
             opponentYrate[opponent] += player.playerYrate
+            opponentSpinrate[opponent] = random.randint(-2,2)
         if opponent_observer[opponent]:
             opponentScore[opponent] += 1
             enemy.observerScore += 1
@@ -976,6 +989,7 @@ while game_loop:
             opponentXrate[opponent] += random.randint(-3, 3)
             opponentY[opponent] = random.randint(0, HEIGHT)
             opponentYrate[opponent] += random.randint(-3, 3)
+            opponentSpinrate[opponent] = random.randint(-2,2)
 
     if enemy.observerwatching == True:
         observer_player = collision(enemy.observerXhitbox, enemy.observerYhitbox,
@@ -1048,6 +1062,9 @@ while game_loop:
         if opponentY[opponent] > HEIGHT - opponentHeight[opponent]:
             opponentYrate[opponent] = -0.9
         # Display opponent state
+        opponentIMG[opponent] = pygame.transform.rotate(opponentOriginal[opponent],
+                                                        opponentAngle[opponent])
+        opponentAngle[opponent] += opponentSpinrate[opponent]
         screen.blit(opponentIMG[opponent], (opponentX[opponent], opponentY[opponent]) )
 
     # Set observer position
@@ -1084,7 +1101,7 @@ while game_loop:
             bullet.draw(screen)
 
 
-    if distance_between_points(ping_pos, pong_pos) < BALL_RADIUS * 2:
+    if distance_between_2Dpoints(ping_pos, pong_pos) < BALL_RADIUS * 2:
         collide()
     
     # update pong
