@@ -33,30 +33,34 @@ parent.iconbitmap(r'G:\WorkingData\Work @ Home\Humanity\My Icon.png')
 
 
 leftframe = Frame(parent)
-leftframe.pack(anchor = W, padx = 5, pady = 5)
+leftframe.grid(row = 0, column = 0, padx = 5, pady = 5)
 
 centreframe = Frame(parent)
-centreframe.pack(padx = 5, pady = 5)
+centreframe.grid(row = 0, column = 1, padx = 5, pady = 5)
 
 rightframe = Frame(parent)
-rightframe.pack(anchor = E, padx = 5, pady = 5)
+rightframe.grid(row = 0, column = 2, padx = 5, pady = 5)
+
+
+statusbar = Label(parent, text = "Status bar", relief = SUNKEN)
+statusbar.grid(row = 1, column = 1)
 
 
 imagefile = PhotoImage(file = 'G:\WorkingData\Work @ Home\Humanity\My Icon.png')
 labelimage = Label(centreframe, image = imagefile)
-labelimage.pack(padx = 5, pady = 5)
+labelimage.grid(row = 1, column = 0, padx = 5, pady = 5)
 
 
 label = Label(centreframe, text = audiofile)
-label.pack(pady = 10)
+label.grid(row = 2, column = 0, pady = 10)
+
+
+controls = Frame(centreframe, relief = SUNKEN, borderwidth = 3)
+controls.grid(row = 3, column = 0, padx = 5, pady = 5)
 
 
 menubar = Menu(parent)
 parent.config(menu = menubar)
-
-statusbar = Label(parent, text = "Status bar", relief = SUNKEN, anchor = W)
-statusbar.pack(side = BOTTOM, fill = X)
-
 
 submenu = Menu(menubar, tearoff = 0)
 
@@ -100,15 +104,12 @@ mixer.music.set_volume(volume / 100)
 mixer.music.load(audiofile)
 
 
-controls = Frame(centreframe, relief = SUNKEN, borderwidth = 3)
-controls.pack(padx = 5, pady = 5)
-
 def rewind():
     speak.Speak("Come again selectA")
     mixer.music.rewind()
 
 rewind = Button(controls, text = "Rewind", command = rewind, relief = RAISED, borderwidth = 3)
-rewind.pack(side = LEFT, padx = 5, pady = 5)
+rewind.grid(row = 0, column = 0, padx = 5, pady = 5)
 
 
 def play():
@@ -125,7 +126,7 @@ def play():
         tkinter.messagebox.showinfo("Error", "Error playing audio file")
     
 play = Button(controls, text = "Play", command = play, relief = RAISED, borderwidth = 4)
-play.pack(side = LEFT, padx = 5, pady = 5)
+play.grid(row = 0, column = 1, padx = 5, pady = 5)
 
 
 def pause():
@@ -145,7 +146,7 @@ def pause():
         paused = True
 
 pause = Button(controls, text = "Pause", command = pause, relief = RAISED, borderwidth = 5)
-pause.pack(side = LEFT, padx = 5, pady = 5)
+pause.grid(row = 0, column = 2, padx = 5, pady = 5)
 
 
 def stop():
@@ -156,7 +157,7 @@ def stop():
     playing = False
 
 stop = Button(controls, text = "Stop", command = stop, relief = RAISED, borderwidth = 4)
-stop.pack(side = LEFT, padx = 5, pady = 5)
+stop.grid(row = 0, column = 3, padx = 5, pady = 5)
 
 
 def forward():
@@ -164,11 +165,16 @@ def forward():
     pass
 
 forward = Button(controls, text = "Forward", command = forward, relief = RAISED, borderwidth = 3)
-forward.pack(side = LEFT, padx = 5, pady = 5)
+forward.grid(row = 0, column = 4, padx = 5, pady = 5)
 
 
-output = Frame(centreframe, relief = SUNKEN, borderwidth = 3)
-output.pack(anchor = E, padx = 5, pady = 5)
+playlist = Listbox(rightframe)
+playlist.insert(0, audiofile)
+playlist.insert(1, filename)
+playlist.grid(row = 1, column = 0, padx = 10, pady = 10)
+
+output = Frame(rightframe, relief = SUNKEN, borderwidth = 3)
+output.grid(row = 3, column = 0, padx = 5, pady = 5)
 
 
 def mute():
@@ -189,7 +195,7 @@ def mute():
         muted = True
 
 mute = Button(output, text = "Mute", command = mute, relief = RAISED, borderwidth = 3)
-mute.pack(side = LEFT, padx = 5, pady = 5)
+mute.grid(row = 0, column = 0, padx = 5, pady = 5)
 
 
 def position(val):
@@ -199,16 +205,11 @@ def position(val):
 position = Scale(output, from_ = 0, to = 100, command = position, orient = HORIZONTAL)
 position.set(volume)
 mixer.music.set_volume(volume)
-position.pack(anchor = E, padx = 10, pady = 10)
-
-
-playlist = Listbox(rightframe)
-playlist.insert(0, audiofile)
-playlist.insert(1, filename)
-playlist.pack()
-
+position.grid(row = 1, column = 0, padx = 10, pady = 10)
 
 
 parent.mainloop()
 mixer.music.fadeout(2000)
 mixer.quit()
+
+
