@@ -100,9 +100,28 @@ def file_extension(filepath):
         return -1
 
 
+class safe_open(object):
+    def __init__(self, path, mode = 'w+b'):
+        self._target = path
+        self._mode = mode
+
+    def __enter__(self):
+        self._file = tempfile.NamedTemporaryFile(self._mode, delete = False)
+        return self._file
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self._file.close()
+        if exc_type is None:
+            os.rename(self._file.name, self._target)
+        else:
+            self._target = self._target + '.recovered {datetime.datetime.today().time()}'
+            os.rename(self._file.name, self._target)
+            #os.unlink(self._file.name)
+
+
 def append_file(filename, data):
     if file_exists(filename):
-        with open(filename, "a") as out:
+        with safe_open(filename, "a") as out:
             out.write(data)
     else:
         return -1
@@ -110,14 +129,14 @@ def append_file(filename, data):
 
 def create_file(filename):
     if not file_exists(filename):
-        open(filename, "w").close()
+        safe_open(filename, "w").close()
     else:
         return -1
 
 
 def write_file(filename, data):
     if file_exists(filename):
-        with open(filename, 'w') as out:
+        with safe_open(filename, 'w') as out:
             out.write(data)
     else:
         return -1
@@ -125,7 +144,7 @@ def write_file(filename, data):
 
 def write_binary_file(filename, data):
     if file_exists(filename):
-        with open(filename, 'wb') as out:
+        with safe_open(filename, 'wb') as out:
             out.write(data).close()
     else:
         return -1
@@ -250,6 +269,15 @@ def write_temp(tempofile, data):
 def close_temp(tempofile):
     os.close(tempofile)
 
+
+def spool_temp(tempdata):
+    with tempfile.SpooledTemporaryFile(max_size = 32) as temp:
+        for i in range(len(tempdata)):
+            temp.write(tempdata)
+
+        temp.seek(0)
+        return (temp.read())
+    
 
 def release_temp(tempname):
     os.unlink(tempname)

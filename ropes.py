@@ -22,6 +22,7 @@ import unittest
 import uuid
 import maths
 import random
+import win32com.client as wincl
 
 DEBUG_MODE = True
 if DEBUG_MODE:
@@ -42,6 +43,7 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
+speak = wincl.Dispatch("SAPI.SpVoice")
 GLOBAL_SONG = r"Supercalifragilisticexpialidocious"
 GLOBAL_LONG_WORD_FEAR = r"hippopotomonstrosesquippedaliophobia"
 GLOBAL_PANGRAM = r"The quick brown fox jumps over the lazy dog"
@@ -153,6 +155,13 @@ GEMATRIA = {"A": 6, "B": 12, "C": 18, "D": 24, "E": 30,
            "K": 66, "L": 72, "M": 78, "N": 84, "O": 90,
            "P": 96, "Q": 102, "R": 108, "S": 114, "T": 120,
            "U": 126, "V": 130, "W": 136, "X": 142, "Y": 148, "Z": 156}
+
+EN_GEMATRIA = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6,
+               "G": 7,
+               "H": 6, "I": 5, "J": 4, "K": 3, "L": 2, "M": 1,
+               "N": 1, "O": 2, "P": 3, "Q": 4, "R": 5, "S": 6,
+               "T": 7,
+               "U": 6, "V": 5, "W": 4, "X": 3, "Y": 2, "Z": 1}
 
 FLIP_TABLE = {"a": "\u0250", "b": "q", "c": "\u0254", "d": "p",
               "e": "\u01DD", "f": "\u025F", "g": "\u0183", "h": "\u0265",
@@ -507,15 +516,34 @@ def numerise(romber):
 
 
 def morse_code(string):
-    return ' '.join(MORSE_CODE.get(char.upper(), char) for char in string)
+    return ' '.join(str(MORSE_CODE.get(char.upper()))
+                    for char in string.lower()) 
 
 
 def phonic_code(string):
-    return ' '.join(PHONIC_CODE.get(char.upper(), char) for char in string)
+    operator = ' '.join(str(PHONIC_CODE.get(char.upper()))
+                    for char in string.lower())
+    speak.Speak(operator)
+    return operator
 
 
 def letter_sounds(string):
-    return ' '.join(SPELL_LETTERS.get(char.upper(), char) for char in string)
+    infant = ' '.join(str(SPELL_LETTERS.get(char.upper()))
+                    for char in string.lower())
+    speak.Speak(infant)
+    return infant
+
+
+def gematria(string):
+    message =  [GEMATRIA.get(char.upper()) for char in string]
+    sign = sum(message)
+    return sign, message
+
+
+def english_gematria(string):
+    message =  [EN_GEMATRIA.get(char.upper()) for char in string]
+    sign = sum(message)
+    return sign, message
 
 
 def fizzbuzz(question):

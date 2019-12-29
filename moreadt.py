@@ -12,6 +12,11 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
+import sys
+import ctypes
+import struct
+import shutil
+import time
 import datetime
 import hashlib
 import itertools
@@ -20,6 +25,7 @@ import keyword
 import random
 import re
 import unittest
+import win32gui
 import analytics
 
 DEBUG_MODE = True
@@ -287,8 +293,24 @@ Colour_HEX_codes = {"Black": "000000",
                     "Blue": "0000FF",
                     "Purple": "7F00FF",
                     "Magenta": "FF00FF",
-                    "Rose": "FF007F",
+                    "Pink": "ffC0CB",
                     "White": "FFFFFF"}
+
+Khemet_HEX_codes = {"Onyx": "0F0F0F",
+                    "Jasper": "660000",
+                    "Gold": "FFD700",
+                    "Golden": "FFDF00",
+                    "Mint": "3EB489",
+                    "Emerald": "50C878",
+                    "Guppie ": "00FF7F",
+                    "Carbon": "404040",
+                    "Aqua": "00FFFF",
+                    "Azure": "007FFF",
+                    "Eygptian": "1034A6",
+                    "Patriarch": "800080",
+                    "Violet": "6600A6",
+                    "Rose": "FF007F",
+                    "Ivory": "FFFFF0"}
 
 DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
 
@@ -330,6 +352,123 @@ for step in range(360):
 print (f'{POSITION} is {abs(path[-1][0]) + abs(path[-1][1])} steps from home along path')
 print (f'{POSITION} is {triangle_hypotenuse(abs(path[-1][0]), abs(path[-1][1]) ) } steps from home direct')
 
+
+def idle_terminal_size():
+    """Get the width and height of the terminal.
+
+    http://code.activestate.com/recipes/440694-determine-size-of-console-window-on-windows/
+    http://stackoverflow.com/questions/17993814/why-the-irrelevant-code-made-a-difference
+
+    :return: Width (number of characters) and height (number of lines) of the terminal.
+    :rtype: tuple
+    """
+    if hasattr(ctypes, 'windll'):
+        # Only works on Microsoft Windows platforms.
+        string_buffer = ctypes.create_string_buffer(22)  # To be written to by GetConsoleScreenBufferInfo.
+        ctypes.windll.kernel32.GetConsoleScreenBufferInfo(ctypes.windll.kernel32.GetStdHandle(-11), string_buffer)
+        left, top, right, bottom = struct.unpack('hhhhHhhhhhh', string_buffer.raw)[5:-2]
+        width, height = right - left, bottom - top
+        if width < 1 or height < 1:
+            return DEFAULT_WIDTH, DEFAULT_HEIGHT
+        return width, height
+
+    try:
+        device = fcntl.ioctl(0, termios.TIOCGWINSZ, '\0' * 8)
+    except IOError:
+        return DEFAULT_WIDTH, DEFAULT_HEIGHT
+    height, width = struct.unpack('hhhh', device)[:2]
+    return width, height
+
+
+def get_terminal_size():
+    """Returns the current size of the terminal as tuple in the form
+    ``(width, height)`` in columns and rows.
+    """
+    # If shutil has get_terminal_size() (Python 3.3 and later) use that
+    if sys.version_info >= (3, 3):
+        import shutil
+        shutil_get_terminal_size = getattr(shutil, 'get_terminal_size', None)
+        if shutil_get_terminal_size:
+            sz = shutil_get_terminal_size()
+            return sz.columns, sz.lines
+
+    if get_winterm_size is not None:
+        return get_winterm_size()
+
+    def ioctl_gwinsz(fd):
+        try:
+            import fcntl
+            import termios
+            cr = struct.unpack(
+                'hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, '1234'))
+        except Exception:
+            return
+        return cr
+
+    cr = ioctl_gwinsz(0) or ioctl_gwinsz(1) or ioctl_gwinsz(2)
+    if not cr:
+        try:
+            fd = os.open(os.ctermid(), os.O_RDONLY)
+            try:
+                cr = ioctl_gwinsz(fd)
+            finally:
+                os.close(fd)
+        except Exception:
+            pass
+    if not cr or not cr[0] or not cr[1]:
+        cr = (os.environ.get('LINES', 25),
+              os.environ.get('COLUMNS', DEFAULT_COLUMNS))
+    return int(cr[1]), int(cr[0])
+
+def update_screen_size(self, lines, columns):
+        """
+        Notify the shell of a terminal screen resize
+        """
+        if self.is_running:
+            # Note, assume ws_xpixel and ws_ypixel are zero.
+            tiocswinsz = getattr(termios, 'TIOCSWINSZ', -2146929561)
+            size_update = struct.pack('HHHH', lines, columns, 0, 0)
+            fcntl.ioctl(self._master_fd, tiocswinsz, size_update) 
+
+#print('Number of columns and Rows: ',idle_terminal_size())
+
+
+def withprogressbar(func):
+    def _func_with_progress(*args, **kwargs):
+        max_width, max_height = shutil.get_terminal_size()
+        max_width, max_height = get_terminal_size()
+
+        gen = func(*args, **kwargs)
+        while True:
+            try:
+                progress = next(gen)
+            except StopIteration as exc:
+                sys.stdout.write('\n')
+                return exc.value
+            else:
+                message = '[%s] {}%%'.format(progress)
+                bar_width = max_width - len(message) + 3
+
+                filled = int(round(bar_width / 100.0 * progress))
+                spaceleft = bar_width - filled
+                bar = '=' * filled + ' ' * spaceleft
+                sys.stdout.write((message + '\r') % bar)
+                sys.stdout.flush()
+
+    return _func_with_progress
+
+
+        
+@withprogressbar
+def wait(seconds):
+    start = time.time()
+    step = seconds / 100.0
+    for i in range(1, 101):
+        time.sleep(step)
+        yield i
+
+    
+
 def any_colour():
     return web_colours[random.randrange(0, len(web_colours))]
 
@@ -338,9 +477,9 @@ DICEFACE = {1: '\u2680', 2: '\u2681', 3: '\u2682',
             4: '\u2683', 5: '\u2684', 6: '\u2685'}
 
 
-def roll_dice(sides=6):
+def roll_dice(sides = 6):
     # return random.randrange(1, sides + )
-    return random.randint(1, sides)
+    return random.randint(1, sides )
 
 
 def multi_roll(rolls=6, sides=6):
