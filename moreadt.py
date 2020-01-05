@@ -293,7 +293,7 @@ Colour_HEX_codes = {"Black": "000000",
                     "Blue": "0000FF",
                     "Purple": "7F00FF",
                     "Magenta": "FF00FF",
-                    "Pink": "ffC0CB",
+                    "Pink": "FFC0CB",
                     "White": "FFFFFF"}
 
 Khemet_HEX_codes = {"Onyx": "0F0F0F",

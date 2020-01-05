@@ -59,6 +59,10 @@ controls = Frame(centreframe, relief = SUNKEN, borderwidth = 3)
 controls.grid(row = 3, column = 0, padx = 5, pady = 5)
 
 
+textbox = Entry(centreframe, relief = SUNKEN, borderwidth = 3)
+textbox.grid(row = 4, column = 0, padx = 5, pady = 5)
+
+
 menubar = Menu(parent)
 parent.config(menu = menubar)
 
@@ -135,7 +139,7 @@ def pause():
     if playing == True and paused == True:
         mixer.music.unpause()
         pause.config(text = "Pause")
-        speak.Speak("Unpaused")
+        speak.Speak("bless up yo' self")
         statusbar['text'] = f"Playing {os.path.basename(audiofile)}"
         paused = False
     elif playing == True and paused == False:
@@ -152,7 +156,7 @@ pause.grid(row = 0, column = 2, padx = 5, pady = 5)
 def stop():
     global playing
     mixer.music.stop()
-    speak.Speak("Stop")
+    speak.Speak("Likkle more")
     statusbar['text'] = f"Audio stopped"
     playing = False
 
@@ -161,7 +165,7 @@ stop.grid(row = 0, column = 3, padx = 5, pady = 5)
 
 
 def forward():
-    speak.Speak("Skip")
+    speak.Speak("Soon forward")
     pass
 
 forward = Button(controls, text = "Forward", command = forward, relief = RAISED, borderwidth = 3)
@@ -175,6 +179,20 @@ playlist.grid(row = 1, column = 0, padx = 10, pady = 10)
 
 output = Frame(rightframe, relief = SUNKEN, borderwidth = 3)
 output.grid(row = 3, column = 0, padx = 5, pady = 5)
+
+
+comments = Listbox(rightframe)
+comments.insert(0, "Bumbaclart")
+comments.insert(1, "Lliiarta")
+comments.grid(row = 5, column = 0, padx = 10, pady = 10)
+
+def submit():
+    speak.Speak(textbox.get() )
+    comments.insert(0, textbox.get() )
+    textbox.insert("")
+
+record = Button(centreframe, text = "Submit", command = submit, relief = RAISED, borderwidth = 3)
+record.grid(row = 4, column = 0, padx = 5, pady = 5)
 
 
 def mute():
