@@ -62,13 +62,13 @@ GLOBAL_FARM = "Tweebuffelsmeteenskootmorsdoodgeskietfontein"
 GLOBAL_FARM_ENG = "The spring where two buffaloes were cleanly killed with a single shot"
 
 TUQoLtUaE = r"""
-Without the groundation of darkness, gnosis cannot lead to enlightenment;
+Without the groundation of darkness, gnosis cannot lead to our Nehast;
 From the calm of the ether, came the expression of our consciousness;
 The natural balance of our universe from the laws of ordered chaos;
-An everliving cyclic transition of energy between states of intent;
-Smai Tawi of scared feminine principles with divine masculine actions;
+An ever-living cyclic transition of energy between states of intent;
+Smai Tawi of sacred feminine principles with divine masculine actions;
 Interdependence between our unique spiritual and tangible matters of life;
-Humanity reaching the euphoria of truth within a fabric of vibrational desires.
+Humanity reaching Shedi of the Ma'at within a fabric of vibrational desires.
 """
 
 binINbin = """01001000 01100101 01101100 01101100 01101111 01111110 00100001 00100000 00110000 00110001 00110000 00110000 00110001 00110001 00110000 00110000 00100000 00110000 00110001 00110001 00110000 00110001 00110001 00110001 00110001 00100000 00110000 00110001 00110001 00110001 00110000 00110001 00110001 00110000 00100000 00110000 00110001 00110001 00110000 00110000 00110001 00110000 00110001 00100000 00110000 00110000 00110001 00110000 00110000 00110000 00110000 00110000 00100000 00110000 00110001 00110001 00110001 00110001 00110000 00110000 00110001 00100000 00110000 00110001 00110001 00110000 00110001 00110001 00110001 00110001 00100000 00110000 00110001 00110001 00110001 00110000 00110001 00110000 00110001 00100000 00110000 00110000 00110001 00110000 00110000 00110000 00110000 00110000 00100000 00110000 00110001 00110001 00110000 00110000 00110000 00110000 00110001 00100000 00110000 00110001 00110001 00110000 00110001 00110001 00110000 00110000 00100000 00110000 00110001 00110001 00110000 00110001 00110001 00110000 00110000 00100000 00110000 00110000 00110001 00110000 00110000 00110000 00110000 00110001 00100000"""
@@ -262,6 +262,7 @@ recursion = '…'
 octothrope = '#'
 
 REPL = ["Read", "Eval", "Print", "Loop"]
+mistakes = "m͏̺͓̲̥̪í͇͔̠ś̷͎̹̲̻̻̘̝t̞̖͍͚̤k̥̞à̸͕̮͍͉̹̰͚̰ẹ̶̢̪s͏̨͈̙̹̜͚̲ ̛̬͓͟"
 
 
 def memoise(function):

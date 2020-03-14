@@ -15,6 +15,9 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 import keyword
 import trace
 import collections
+import doctest
+import unittest
+import inspect
 
 DEBUG_MODE = True
 if DEBUG_MODE:

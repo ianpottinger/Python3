@@ -50,6 +50,8 @@ KEYWORDS = keyword.kwlist
 from maths import triangle_hypotenuse
 from vectors import Vector
 
+from tkinter import *
+
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 

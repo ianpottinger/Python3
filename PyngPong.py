@@ -23,8 +23,6 @@ import os
 import sys
 import math
 import random
-import pygame
-import cv2
 
 
 DEBUG_MODE = True
@@ -46,6 +44,9 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
 
+
+import pygame
+import cv2
 from tkinter import *
 from tkinter import ttk
 from pygame.locals import *

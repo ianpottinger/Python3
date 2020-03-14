@@ -1,3 +1,16 @@
+#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+# _*_ coding: UTF-8 _*_		#Enable unicode encoding
+
+__author__ = "Ian Pottinger"
+__date__ = "20/12/2012"
+__contact__ = "ianpottinger@me.com"
+__version__ = "1.3.5.7.9 even avoidance"
+__credits__ = "Commonly known as Potts"
+__copyright__ = "Copyleft for balance"
+__license__ = "Whatever Potts Decides"
+__metadata__ = [__author__, __date__, __contact__, __version__,
+                __credits__, __copyright__, __license__]
+
 import os
 import win32com.client as wincl
 
@@ -6,7 +19,8 @@ from tkinter import filedialog
 import tkinter.messagebox
 
 from pygame import mixer
-#from pillow import Image
+from PIL import ImageTk,Image
+#import cairosvg
 
 global volume
 volume = 100
@@ -22,15 +36,16 @@ audiofile = "G:\WorkingData\My Music\Portable\Soul Divas\VideoGames.mp3"
 speak = wincl.Dispatch("SAPI.SpVoice")
 
 filename = r'G:\WorkingData\Work @ Home\Humanity\My Icon.png'
-#img = Image.open(filename)
+flag = Image.open(filename)
 icon_sizes = [(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (255, 255)]
-#img.save('logo.ico', sizes = icon_sizes)
+flag.save('logo.ico', sizes = icon_sizes)
 
 parent = Tk()
 parent.geometry() #'800x600'
 parent.title("Python GUI")
-parent.iconbitmap(r'G:\WorkingData\Work @ Home\Humanity\My Icon.png')
+parent.iconbitmap('logo.ico')
 
+flag = ImageTk.PhotoImage(Image.open(r"G:\WorkingData\Work @ Home\Humanity\My Icon.png"))
 
 leftframe = Frame(parent)
 leftframe.grid(row = 0, column = 0, padx = 5, pady = 5)

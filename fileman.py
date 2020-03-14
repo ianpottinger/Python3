@@ -211,6 +211,10 @@ def current_directory() -> object:
     return os.getcwd()
 
 
+def set_directory(directory_path):
+    return os.chdir(directory_path)
+
+
 def create_directory(directory_path):
     if not directory_exists(directory_path):
         print(directory_path)
@@ -286,3 +290,4 @@ def release_temp(tempname):
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
+    current_directory()
