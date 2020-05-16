@@ -44,6 +44,7 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
 KEYWORDS = keyword.kwlist
 
 from decimal import Decimal, getcontext
+from fractions import Fraction, gcd
 from itertools import count
 from array import *
 
@@ -239,11 +240,11 @@ var = not first > second and first == third * 2 or second != third
 'lowercase' > 'UPPERCASE'
 'do' in "don't"
 
-heart = lambda a: ( x * GLOBAL_THIRD * 2 +
+heart = lambda a, x: ( x * GLOBAL_THIRD * 2 +
                     0.9 * ( 3.3 - x**2 ) / 2 *
                     math.sin(a * GLOBAL_PI * x ) )
 
-heart2 = lambda a: ( ( x * (GLOBAL_THIRD * 2) ) +
+heart2 = lambda a, x: ( ( x * (GLOBAL_THIRD * 2) ) +
                     ( 0.9 * ( 3.3 - x**2) / 2 ) *
                     math.sin(a * GLOBAL_PI * x ) )
 

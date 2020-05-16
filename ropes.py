@@ -1230,9 +1230,9 @@ def swap_words(two_words):
     return second + ' ' + first
 
 
-not_zero = lambda value : None if not _ == 0 else 0
+not_zero = lambda value : None if not _ == 0 else '0'
 def filter_empty(incomplete):
-    return list(filter((None if not _ == 0 else '0'), incomplete))
+    return list(filter((not_zero(incomplete)), incomplete))
 
                 
 def is_anagram(first, second):
@@ -1305,7 +1305,7 @@ def both_start_with(first, second, prefix):
 
     Return True if and only if first and second both start with the letters in prefix.
     """
-    return upper(first.startswith(prefix)) and upper(second.startswith(prefix))
+    return (first.startswith(prefix)) and (second.startswith(prefix))
 
 
 def unique_values(dictionary):
