@@ -24,6 +24,8 @@ import doctest
 import keyword
 import random
 import re
+import queue
+import heapq
 import unittest
 import win32gui
 #import analytics
@@ -1863,6 +1865,83 @@ def count_entries(tree):
     if tree is None:
         return 0
     return 1 + count_entries(tree.left) + count_entries(tree.right)
+
+
+class Trie:
+
+    def __init__(self):
+        self.__final = False
+        self.__nodes = {}
+
+    def __repr__(self):
+        return 'Trie<len={}, final={}>'.format(len(self), self.__final)
+
+    def __getstate__(self):
+        return self.__final, self.__nodes
+
+    def __setstate__(self, state):
+        self.__final, self.__nodes = state
+
+    def __len__(self):
+        return len(self.__nodes)
+
+    def __bool__(self):
+        return self.__final
+
+    def __contains__(self, array):
+        try:
+            return self[array]
+        except KeyError:
+            return False
+
+    def __iter__(self):
+        yield self
+        for node in self.__nodes.values():
+            yield from node
+
+    def __getitem__(self, array):
+        return self.__get(array, False)
+
+    def create(self, array):
+        self.__get(array, True).__final = True
+
+    def read(self):
+        yield from self.__read([])
+
+    def update(self, array):
+        self[array].__final = True
+
+    def delete(self, array):
+        self[array].__final = False
+
+    def prune(self):
+        for key, value in tuple(self.__nodes.items()):
+            if not value.prune():
+                del self.__nodes[key]
+        if not len(self):
+            self.delete([])
+        return self
+
+    def __get(self, array, create):
+        if array:
+            head, *tail = array
+            if create and head not in self.__nodes:
+                self.__nodes[head] = Trie()
+            return self.__nodes[head].__get(tail, create)
+        return self
+
+    def __read(self, name):
+        if self.__final:
+            yield name
+        for key, value in self.__nodes.items():
+            yield from value.__read(name + [key])
+
+
+#Class Heap(object):
+#    """A heap"""
+#
+#    def __self__(self):
+#        return
 
 
 @memoise

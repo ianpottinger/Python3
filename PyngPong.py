@@ -372,6 +372,7 @@ enemy = Observer()
 def collision(object1X, object1Y, object2X, object2Y):
     distance = math.sqrt(math.pow( (object2X - object1X), 2) + \
                          math.pow( (object2Y - object1Y), 2) )
+    #distance = math.dist([object2X, object1X], [object2Y, - object1Y])
     return distance < 200
 
 
@@ -1102,7 +1103,8 @@ while game_loop:
             bullet.draw(screen)
 
 
-    if distance_between_2Dpoints(ping_pos, pong_pos) < BALL_RADIUS * 2:
+    if distance_2Dpoints(ping_pos, pong_pos) < BALL_RADIUS * 2:
+#    if math.dist(ping_pos, pong_pos) < BALL_RADIUS * 2:
         collide()
     
     # update pong

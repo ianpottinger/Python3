@@ -1248,7 +1248,7 @@ def project_to_distance(point_x, point_y, distance):
     return point_x * scale, point_y * scale
 
 
-def distance_between_2Dpoints(vector1, vector2):
+def distance_2Dpoints(vector1, vector2):
     return math.sqrt((vector2[0] - vector1[0]) ** 2 +
                      (vector2[1] - vector1[1]) ** 2)
 
@@ -1276,7 +1276,7 @@ def shear_2Dpoints(vector, shearX = 0, shearY = 0):
             (vector[1] + (vector[0] * shearY) ) )
 
 
-def distance_between_3Dpoints(vector1, vector2):
+def distance_3Dpoints(vector1, vector2):
     return math.sqrt((vector2[0] - vector1[0]) ** 2 +
                      (vector2[1] - vector1[1]) ** 2 +
                      (vector2[2] - vector1[2]) ** 2)
@@ -1296,7 +1296,7 @@ def distance_between_polar_points(polar1, polar2):
     y2 = altitude2 * math.sin(latitude2)
     z2 = altitude2 * math.cos(latitude2) * math.cos(longitude2)
 
-    return distance_between_3Dpoints( (x1, y1, z1), (x2, y2, z2) )
+    return distance_3Dpoints( (x1, y1, z1), (x2, y2, z2) )
 
 
 def degrees_to_radians(degrees):
