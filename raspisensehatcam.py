@@ -61,5 +61,3 @@ while True:
     b = random.randint(0, 255)
     sensehat.set_pixel(x, y, r, g, b)
     time.sleep(0.01)
-
-

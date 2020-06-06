@@ -48,4 +48,3 @@ def find_shortest_path(graph, start, end, path=[]):
                 if not shortest or len(newpath) < len(shortest):
                     shortest = newpath
     return shortest
-

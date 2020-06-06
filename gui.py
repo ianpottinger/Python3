@@ -94,7 +94,7 @@ def open_file():
         if playing and not paused:
             mixer.music.play(-1)
             statusbar['text'] = f"Playing {os.path.basename(audiofile)}"
-    
+
 submenu.add_command(label = "Open", command = open_file)
 
 
@@ -103,7 +103,7 @@ submenu.add_command(label = "Close")
 
 submenu.add_command(label = "Quit", command = parent.destroy)
 
-    
+
 submenu = Menu(menubar, tearoff = 0)
 
 
@@ -143,7 +143,7 @@ def play():
         statusbar['text'] = f"Playing {os.path.basename(audiofile)}"
     except:
         tkinter.messagebox.showinfo("Error", "Error playing audio file")
-    
+
 play = Button(controls, text = "Play", command = play, relief = RAISED, borderwidth = 4)
 play.grid(row = 0, column = 1, padx = 5, pady = 5)
 
@@ -244,5 +244,3 @@ position.grid(row = 1, column = 0, padx = 10, pady = 10)
 parent.mainloop()
 mixer.music.fadeout(2000)
 mixer.quit()
-
-

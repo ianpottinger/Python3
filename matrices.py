@@ -92,7 +92,7 @@ class Matrix():
         """
         >>> print(Matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]]).verify())
         True
-        
+
         >>> print(Matrix([[0, 0, 0], [1, 1], [0, 0, 0]]).verify())
         False
 
@@ -123,7 +123,7 @@ class Matrix():
         print(Matrix.zero(10, 10))
         >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
         (None, 'Size mismatch')
-        
+
         >>> print(Matrix([[1,0,0],[0,1,0],[0,0,1]]).mul(Matrix([[1],[3],[2]])))
         [1]
         [3]
@@ -302,7 +302,7 @@ class Matrix():
 
         >>> print(Matrix([[1,2],[3,4],[5,6]]).mul(Matrix([[11,12],[13,14],[15,16]])))
         (None, 'Size mismatch')
-        
+
         >>> print(Matrix([[2,1],[3,4],[5,6]]).mul(Matrix([[1,3,6],[2,4,5]])))
         [4, 10, 17]
         [11, 25, 38]
@@ -327,7 +327,7 @@ class Matrix():
         >>> print(Matrix([[4,-1],[2,-1]]).mul(Matrix([[3,1,0],[2,1,-2]])))
         [10, 3, 2]
         [4, 1, 2]
-        
+
         >>> import matrices, vectors
         >>> mat=matrices.Matrix([[1,2,1,5],[0,3,0,4],[-1,-2,0,0]])
         >>> vec=vectors.Vector([[1],[3],[2],[1]])
@@ -416,7 +416,7 @@ class Matrix():
         >>> Matrix([[2, 2], [3, 3]]).sub(Matrix([[2, 3], [2, 3]])).show()
         [0, -1]
         [1, 0]
-        
+
         """
         if type(other) in [int, float, complex]:
             other = Matrix.fill(self.rows, self.columns, other)
@@ -658,7 +658,7 @@ class Matrix():
         """
         >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).lessthan(5)).find(True))
         [(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (0, 2), (2, 2)]
-        
+
         >>> print(Matrix(Matrix([[-1, 2, -3], [4, -5, 6], [-7, 8, -9]]).morethan(5)).find(True))
         [(2, 1), (1, 2)]
 

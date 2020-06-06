@@ -66,5 +66,3 @@ def print_traced_execution(tracings):
                                      content),
                   end =  '')
             print()
-
-

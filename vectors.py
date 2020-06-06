@@ -86,10 +86,10 @@ class Vector():
         """
         >>> print(Vector([[1],[2.0],[3j]]).verify())
         True
-        
+
         >>> print(Vector([[1],[2],['0']]).verify())
         False
-        
+
         >>> print(Vector([[1],[2,3],[4,5,6]]).verify())
         False
         """

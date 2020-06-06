@@ -74,6 +74,7 @@ ZODIAC_DATES = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
                 'Capricorn': (22, 20), 'Aquarius': (21, 19), 'Pisces': (20, 20)}
 
 DAYS_IN_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+WEEKEND = DAYS_IN_WEEK[-2:]
 
 MONTHS_IN_YEAR = {1: 'January', 2: 'February', 3: 'March',
                   4: 'April', 5: 'May', 6: 'June',
@@ -93,9 +94,17 @@ ZODIAC_SEASONS = {'Spring': ['Aries', 'Tauras', 'Gemini'],
                   'Autumn': ['Libra', 'Scorpio', 'Ophiuchus', 'Sagittarius'],
                   'Winter': ['Caprocorn', 'Aquarius', 'Pisces']}
 
+ZODIAC_INFO = [union for union in zip(list(ZODIAC_DATES.keys()),
+                                  list(ZODIAC_DATES.values()),
+                                  list(ZODIAC_HOUSES.values()))]
+
 KEMET_SEASONS = {'Akhet': ["Djehuty", "Pa-en-Opet", "Hethert", "Ka-her-ka"],
                  'Peret': ["Ta'abet", "Pa-en-mekher", "Pa-en-Amenhotep", "Pa-en-Renenutet"],
                  'Shomu': ["Pa-en-Khonsu", "Pa-en-inet", "Ipip", "Mesut-Ra-Heruakhety"]}
+
+ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch)
+KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
+MATCH_SIGNS = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
 
 STORMS = {'Hurricane': ['North Atlantic', 'South Atlantic', 'Northeast Pacific'],
           'Typhoon': ['Northwest Pacific'],
@@ -137,6 +146,8 @@ SUITS = {'Diamonds': ['\u2662', '\u2666'],
 RANKS = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,
          'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
          'Jack': 10, 'Queen': 10, 'King': 10}
+for rank, value in enumerate(list(RANKS.keys()), 1):
+    print (value, rank)
 
 CARDS = {**SUITS, **RANKS}
 
@@ -432,7 +443,7 @@ def update_screen_size(self, lines, columns):
             # Note, assume ws_xpixel and ws_ypixel are zero.
             tiocswinsz = getattr(termios, 'TIOCSWINSZ', -2146929561)
             size_update = struct.pack('HHHH', lines, columns, 0, 0)
-            fcntl.ioctl(self._master_fd, tiocswinsz, size_update) 
+            fcntl.ioctl(self._master_fd, tiocswinsz, size_update)
 
 #print('Number of columns and Rows: ',idle_terminal_size())
 
@@ -462,7 +473,7 @@ def withprogressbar(func):
     return _func_with_progress
 
 
-        
+
 @withprogressbar
 def wait(seconds):
     start = time.time()
@@ -471,7 +482,7 @@ def wait(seconds):
         time.sleep(step)
         yield i
 
-    
+
 
 def any_colour():
     return web_colours[random.randrange(0, len(web_colours))]
@@ -615,7 +626,7 @@ def fizzbuzzlist(start, stop):
 
 def day_of_week(year, month, day, origin=0):
     """
-    Tomohiko Sakamoto's 
+    Tomohiko Sakamoto's
     >>> day_of_week(1582,10,4,9)
     'Thursday'
     >>> day_of_week(1582,10,15,-1)
@@ -634,7 +645,7 @@ def day_of_week(year, month, day, origin=0):
 
 
 # int dow(int y, int m, int d){
-#  static int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4}; 
+#  static int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 #  y -= m < 3;
 #  return (y + y/4 - y/100 + y/400 + t[m-1] + d + c) % 7;
 # }
@@ -648,14 +659,14 @@ def full_datetime_now(holocene = False):
     """http://strftime.org/"""
     currentDate = datetime.datetime.today().date()
     holoceneYear = int(currentDate.strftime('%Y')) + 10000
-    
+
     print("Today is day {0:s} in week {1:s}, which is"
           .format(currentDate.strftime('%j'), currentDate.strftime('%U')))
     print(f"Today is day {currentDate.strftime('%j')} in week {currentDate.strftime('%U')}, which is")
 
     print(current_day(), currentDate.strftime('the %d of %B in the year %Y'))
     print(f"{current_day()} {currentDate.strftime('the %d of %B in the year %Y')}")
-    
+
     if holocene:
         print("or the year", holoceneYear, "of the human era using the holocene calendar")
         print(f"or the year {holoceneYear} of the human era using the holocene calendar")
@@ -2020,16 +2031,16 @@ if __name__ == '__main__':
 
 
 ##    print (__doc__)
-##    
+##
 ##    print ("\nSTACK class info:")
 ##    print (Stack.__doc__)
 ##    print (help (Stack) )
 ##    info(Stack())
-##    
+##
 ##    print ("\nQUEUE class info:")
 ##    print (Queue.__doc__)
 ##    print (help (Queue) )
-##    info(Queue())		
+##    info(Queue())
 ##
 ##    print ("\nTREE class info:")
 ##    print (Tree.__doc__)

@@ -219,7 +219,7 @@ Authentication
     Swipe card
     Answer question
     Scan iris or fingerprint
-    
+
 Authorisation
     Permissions to resources
     Read
@@ -231,8 +231,8 @@ Accountability
     Logging activity
     Auditing historical logs
     Monitoring activity
-    Alerting 
-    Reporting 
+    Alerting
+    Reporting
 """
 
 

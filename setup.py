@@ -72,7 +72,7 @@ setup (name = 'Py3onic',
        long_description_content_type = "text/markdown",
        install_requires = [
            "maths ~= 1.3",
-            ]       
+            ]
        )
 
 
@@ -89,5 +89,3 @@ python3 setup.py sdist upload
 
 pip3 install -e .
 """
-
-

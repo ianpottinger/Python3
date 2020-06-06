@@ -94,7 +94,7 @@ NUMBERS = [int, float, complex]
 base = 0
 deca = 1000 // 100
 hecto = 1000 // 10
-kilo = 1000 
+kilo = 1000
 mega = 1000 ** 2
 giga = 1000 ** 3
 tera = 1000 ** 4
@@ -134,8 +134,8 @@ ZB = lambda size: size * cycle_power(2, 70)
 YB = lambda size: size * cycle_power(2, 80)
 BB = lambda size: size * cycle_power(2, 90)
 
-#degreesToRadians = lamba degrees: 
-#theta = lamba degreesToRadians: 
+#degreesToRadians = lamba degrees:
+#theta = lamba degreesToRadians:
 
 """
 100 - (100 * (kilo / kibi) ) =              2.34375
@@ -547,11 +547,11 @@ def triangle_hypotenuse(base, height):
 
 
 def triangle_opposite(adjacent, hypotenuse):
-    return 
+    return
 
 
 def triangle_adjacent(opposite, hypotenuse):
-    return 
+    return
 
 
 def is_triangle(first, second, third):
@@ -1318,9 +1318,9 @@ def distance_on_unit_sphere(lat1, long1, lat2, long2):
 
     # Compute spherical distance from spherical coordinates.
 
-    # For two locations in spherical coordinates 
+    # For two locations in spherical coordinates
     # (1, theta, phi) and (1, theta, phi)
-    # cosine( arc length ) = 
+    # cosine( arc length ) =
     #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
     # distance = rho * arc length
 
@@ -1329,7 +1329,7 @@ def distance_on_unit_sphere(lat1, long1, lat2, long2):
            math.cos(phi1) * math.cos(phi2))
     arc = math.acos(cos)
 
-    # Remember to multiply arc by the radius of the earth 
+    # Remember to multiply arc by the radius of the earth
     # in your favorite set of units to get length.
     # http://www.johndcook.com/lat_long_details.html
     return arc
@@ -1817,7 +1817,7 @@ def BEB():
 
 def Statistical_Multiplexing():
     """
-    Binomial probabilities 
+    Binomial probabilities
     """
 
     return
@@ -1969,12 +1969,12 @@ if __name__ == '__main__':
 """
 for i, n in enumerate(islice(narcissists(), 25), 1):
     print(n, end=' ')
-    if i % 5 == 0: print() 
+    if i % 5 == 0: print()
 print()
 
-0 1 2 3 4 
-5 6 7 8 9 
-153 370 371 407 1634 
-8208 9474 54748 92727 93084 
-548834 1741725 4210818 9800817 9926315 
+0 1 2 3 4
+5 6 7 8 9
+153 370 371 407 1634
+8208 9474 54748 92727 93084
+548834 1741725 4210818 9800817 9926315
 """

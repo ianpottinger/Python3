@@ -169,9 +169,9 @@ def metadata(file_path):
     elif file_ext == '.mp3':
         audio_file = MP3(file_path)
         audio_length = audio.info.length()
-        
-    
-    
+
+
+
 
 def SineWave(freq, length, sampleRate=DEFAULT_SAMPLE_RATE):
     """

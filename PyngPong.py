@@ -78,7 +78,7 @@ else:
     joyDeadzone = 2.0
     joy.init()
 keyMove = False
- 
+
 
 # Use background image size as screen size
 background = pygame.image.load("G:\WorkingData\Work @ Home\Humanity\oneMcolours.png")
@@ -105,7 +105,7 @@ HALF_PAD_HEIGHT = PAD_HEIGHT / 2
 pong_pos = [WIDTH / 2, HEIGHT / 2]
 pong_vel = [5, 5]
 pong_tail = []
-left_pos, right_pos = HEIGHT / 2 - HALF_PAD_HEIGHT, HEIGHT / 2 - HALF_PAD_HEIGHT 
+left_pos, right_pos = HEIGHT / 2 - HALF_PAD_HEIGHT, HEIGHT / 2 - HALF_PAD_HEIGHT
 left_vel = right_vel = 5.0
 left_hand = right_hand = 0
 
@@ -222,7 +222,7 @@ class Player(object):
         canvas.blit(self.playerIMG, (self.playerX, self.playerY) )
         pygame.draw.rect(canvas, lines, self.playerHitbox, 1 )
         pygame.draw.circle(canvas, lines, (self.playerXhitbox, self.playerYhitbox), 20)
-        
+
 
 player = Player()
 
@@ -263,7 +263,7 @@ class Projectile(object):
         canvas.blit(self.projectileIMG, (self.projectileX, self.projectileY) )
         pygame.draw.rect(canvas, lines, self.projectileHitbox, 1 )
         pygame.draw.circle(canvas, lines, (self.projectileXhitbox, self.projectileYhitbox), 20)
-                         
+
 bullets = []
 shotsFired = 0
 reloading = 0
@@ -385,7 +385,7 @@ fixture = {}
 def pong_init(right):
     global pong_pos, pong_vel, pong_tail # these are vectors stored as lists
     global moving_right, rally, highest, helping_hand
-    
+
     # Computer serves from centre of court
     pong_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     pong_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
@@ -396,7 +396,7 @@ def pong_init(right):
     rally = 0
     if abs(left_hand - right_hand) >= tag_team:
         helping_hand = True
-    
+
     # Determines the direction pong travels from previous point
     if not right:
         moving_right = False
@@ -406,28 +406,28 @@ def pong_init(right):
 def ping_init(left):
     global ping_pos, ping_vel, ping_tail # these are vectors stored as lists
     global moving_left, flurry, highest, helping_hand
-    
+
     # Core launches from out of nowhere
     ping_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     ping_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
     ping_pos = [WIDTH // 2, random.randrange(HEIGHT // 2)]
     ping_tail = [ping_pos]
     if rally + flurry > highest:
-        highest = flurry + rally 
+        highest = flurry + rally
     flurry = 0
     if abs(left_hand - right_hand) <= tag_team / 2:
         helping_hand = False
-    
+
     # Determines the direction ping travels from previous point
     if not left:
         moving_left = False
     else:
         moving_left = True
-        
-        
+
+
 def resize():
     global fixture
-    
+
     fixture = {'tcl' : [WIDTH / 2, 0],
                'bcl' : [WIDTH / 2, HEIGHT],
                'tlg' : [PAD_WIDTH, 0],
@@ -466,31 +466,31 @@ def resize():
                'hrt' : (WIDTH * (9/16), HEIGHT * (1/16)),
                'dst' : (WIDTH * (9/16), HEIGHT * (15/16)),
                'gdt' : (WIDTH * (5/16), HEIGHT * (15/16)) }
-    
+
 
 # define event handlers weddings, birthdays, parties
 def init():
     global left_pos, right_pos, left_vel, right_vel  # these are floats
     global left_hand, right_hand, rally, highest  # these are ints
     global helping_hand  # these are useful and highly appreciated
-    
+
     #resize()
     pong_init(moving_right)
     ping_init(moving_left)
-    
-    reset_paddle = HEIGHT / 2 - HALF_PAD_HEIGHT 
+
+    reset_paddle = HEIGHT / 2 - HALF_PAD_HEIGHT
     left_pos, right_pos = reset_paddle, reset_paddle
-    
+
     # Reset the paddle velocity to the ball vertical velocity
     left_vel = right_vel = max(pong_vel[1], ping_vel[1])
-    
+
     left_hand, right_hand = 0, 0
     rally, highest = 0, 0
     helping_hand = True   # Surprise entrance
-    
+
 def pause():
     global pong_vel, ping_vel, temp_vel
-    
+
     if temp_vel == []:
         temp_vel.append(pong_vel)
         temp_vel.append(ping_vel)
@@ -500,10 +500,10 @@ def pause():
         pong_vel = temp_vel[0]
         ping_vel = temp_vel[1]
         temp_vel = []
-    
+
 def easier():
     global difficulty
-    
+
     if not difficulty == 1:
         difficulty -= 1
 
@@ -525,7 +525,7 @@ def punch(paddle):
 
 def tracing():
     global tracking
-    
+
     if not tracking:
         tracking = True
     else:
@@ -533,25 +533,25 @@ def tracing():
 
 def football():
     global football_pitch, tennis_court, hockey_field
-    
+
     tennis_court = hockey_field = False
     if not football_pitch:
         football_pitch = True
     else:
         football_pitch = False
-        
+
 def tennis():
     global football_pitch, tennis_court, hockey_field
-    
+
     football_pitch = hockey_field = False
     if not tennis_court:
         tennis_court = True
     else:
         tennis_court = False
-                
+
 def hockey():
     global football_pitch, tennis_court, hockey_field
-    
+
     football_pitch = tennis_court = False
     if not hockey_field:
         hockey_field = True
@@ -561,12 +561,12 @@ def hockey():
 
 def help_left():
     global left_assist
-    
+
     if not left_assist:
         left_assist = True
     else:
         left_assist = False
-        
+
 def help_right():
     global right_assist
 
@@ -574,7 +574,7 @@ def help_right():
         right_assist = True
     else:
         right_assist = False
-        
+
 controls = {'w' : left_up,
             's' : left_down,
             'up' : right_up,
@@ -588,7 +588,7 @@ def keydown(key):
     if key == simplegui.KEY_MAP["s"]:
         left_down = True
         left_vel += 1
-        
+
     if key == simplegui.KEY_MAP["w"]:
         left_up = True
         left_vel += 1
@@ -601,7 +601,7 @@ def keydown(key):
         right_down = True
         right_vel += 1
     """
-    
+
     if key in controls:
         controls[key] = True
 
@@ -610,7 +610,7 @@ def keydown(key):
 
     if right_up or right_down:
         right_vel += 1
-        
+
 def keyup(key):
     global left_vel, right_vel
     global left_down, left_up, right_down, right_up
@@ -618,7 +618,7 @@ def keyup(key):
     """
     if key == simplegui.KEY_MAP["s"]:
         left_down = False
-        
+
     if key == simplegui.KEY_MAP["w"]:
         left_up = False
 
@@ -644,7 +644,7 @@ def collide():
     else:
         moving_right = True
         moving_left = False
-        
+
     if moving_down or moving_up:
         moving_down = False
         moving_up = True
@@ -683,7 +683,7 @@ while game_loop:
 ##        clicks = pygame.mouse.get_pressed()
 ##        if clicks[pygame.MOUSEMOTION]:
 ##            pass
-##        if clicks[pygame.MOUSEBUTTONDOWN]:            
+##        if clicks[pygame.MOUSEBUTTONDOWN]:
 ##            player.playerX, player.playerY = pygame.mouse.get_pos()
 ##            player.playerX -= player.playerWidth // 2
 ##            player.playerY -= player.playerHeight // 2
@@ -694,7 +694,7 @@ while game_loop:
 
         keys = pygame.key.get_pressed()
         for key in keys:
-            
+
             if keys[pygame.K_t]:
                 tennis
             if keys[pygame.K_f]:
@@ -704,10 +704,10 @@ while game_loop:
             if keys[pygame.K_g]:
                 football_pitch = tennis_court = hockey_field = True
 
-            if keys[pygame.K_LEFT]:                
+            if keys[pygame.K_LEFT]:
                 keyMove = True
                 player.playerXrate = -1.1
-                #print (f"Moving LEFT: {player.playerX}") 
+                #print (f"Moving LEFT: {player.playerX}")
             elif keys[pygame.K_RIGHT]:
                 keyMove = True
                 player.playerXrate = 1.1
@@ -720,7 +720,7 @@ while game_loop:
                 if keys[pygame.K_UP]:
                     keyMove = True
                     player.playerYrate = -1.1
-                    #print (f"Moving UP: {player.playerY}") 
+                    #print (f"Moving UP: {player.playerY}")
                 elif keys[pygame.K_DOWN]:
                     keyMove = True
                     player.playerYrate = 1.1
@@ -733,7 +733,7 @@ while game_loop:
                     player.playerJumping = True
                     player.playerYrate = 0
                     #print(player.playerY, player.playerJumping, player.playerJumper)
-                    
+
             if keys[pygame.K_RCTRL]:
                 if enemy.observerwatching == True:
                     enemy.observerwatching = False
@@ -761,21 +761,21 @@ while game_loop:
         # Detect key pressed state
 ##        if event.type == pygame.KEYDOWN:
 ##            #print (f"Key pressed at frame: {frame}")
-##        
+##
 ##            if event.key == pygame.K_LEFT:
 ##                keyMove = True
 ##                player.playerXrate = -1.1
-##                #print (f"Moving LEFT: {player.playerX}") 
+##                #print (f"Moving LEFT: {player.playerX}")
 ##            elif event.key == pygame.K_RIGHT:
 ##                keyMove = True
 ##                player.playerXrate = 1.1
 ##                #print (f"Moving RIGHT: {player.playerX}")
-##        
+##
 ##            if not player.playerJumping:
 ##                if event.key == pygame.K_UP:
 ##                    keyMove = True
 ##                    player.playerYrate = -1.1
-##                    #print (f"Moving UP: {player.playerY}") 
+##                    #print (f"Moving UP: {player.playerY}")
 ##                elif event.key == pygame.K_DOWN:
 ##                    keyMove = True
 ##                    player.playerYrate = 1.1
@@ -785,7 +785,7 @@ while game_loop:
 ##                    player.playerJumping = True
 ##                    player.playerYrate = 0
 ##                    print(player.playerY, player.playerJumping, player.playerJumper)
-##        
+##
 ##            if event.key == pygame.K_RCTRL:
 ##                if enemy.observerwatching == True:
 ##                    enemy.observerwatching = False
@@ -807,7 +807,7 @@ while game_loop:
 ##        # Detect key released state
 ##        if event.type == pygame.KEYUP:
 ##            #print (f"Key released at frame: {frame}")
-##        
+##
 ##            if not player.playerJumping:
 ##                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
 ##                    keyMove = False
@@ -815,7 +815,7 @@ while game_loop:
 ##                    #print (f"Holding vertical: {player.playerY}")
 ##            else:
 ##                player.playerYrate = -1
-##         
+##
 ##            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
 ##                keyMove = False
 ##                player.playerXrate = 0
@@ -859,13 +859,13 @@ while game_loop:
             else:
                 left_up = True
                 left_down = False
-            
+
     if left_down:
         if not left_pos >= HEIGHT - PAD_HEIGHT:
             left_pos += left_vel
         else:
             left_down = False
-            
+
     if left_up:
         if not left_pos <= 0:
             left_pos -= left_vel
@@ -887,19 +887,19 @@ while game_loop:
             else:
                 right_up = True
                 right_down = False
-                        
+
     if right_down:
         if not right_pos >= HEIGHT - PAD_HEIGHT:
             right_pos += right_vel
         else:
             right_down = False
-            
+
     if right_up:
         if not right_pos <= 0:
             right_pos -= right_vel
         else:
             right_up = False
-        
+
 
     # Random fill background
     red = random.randint(0, 255)
@@ -927,7 +927,7 @@ while game_loop:
     pygame.draw.line(screen, Grey, [WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1)
     pygame.draw.line(screen, Brown, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
     pygame.draw.line(screen, Brown, [WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1)
-    
+
     if football_pitch:
         pygame.draw.circle(screen, lines,
                            [int((WIDTH / 100) * 50), int((HEIGHT / 60) *  30) ],
@@ -946,7 +946,7 @@ while game_loop:
                          [(WIDTH / 78) * 60, (HEIGHT / 36) *  31.5], 1)
         pygame.draw.line(screen, lines, [(WIDTH / 78) * 39, (HEIGHT / 36) *  4.5],
                          [(WIDTH / 78) * 39, (HEIGHT / 36) *  31.5], 1)
-        
+
     if hockey_field:
         pygame.draw.line(screen, lines, [(WIDTH / 100) * 25, (HEIGHT / 60) *  0],
                          [(WIDTH / 100) * 25, (HEIGHT / 60) *  60], 1)
@@ -969,8 +969,8 @@ while game_loop:
                 bullets.pop(bullets.index(bullet))
                 shotsFired -= 1
 
-    
-    # Object collision detection and scoring 
+
+    # Object collision detection and scoring
     for opponent in range(opponents):
         opponentXhitbox[opponent] = opponentX[opponent] + opponentXcentre[opponent]
         opponentYhitbox[opponent] = opponentY[opponent] + opponentYcentre[opponent]
@@ -1008,7 +1008,7 @@ while game_loop:
             enemy.observerY = random.randint(0, HEIGHT)
             enemy.observerYrate += random.randint(-3, 3)
             #enemy.observerYstep -= player.playerYstep
-            
+
             #respawn = mixer.Sound("G:\WorkingData\My Music\Portable\Skits\Reloaded.mp3")
             #respawn.play()
 
@@ -1031,7 +1031,7 @@ while game_loop:
                       shotsFired, "1 Birds")
                 shotsFired -= 1
 
-    
+
     if shotsFired > 0:
         for bullet in bullets:
             bullet.projectile_observer = collision(bullet.projectileXhitbox, bullet.projectileYhitbox,
@@ -1106,7 +1106,7 @@ while game_loop:
     if distance_2Dpoints(ping_pos, pong_pos) < BALL_RADIUS * 2:
 #    if math.dist(ping_pos, pong_pos) < BALL_RADIUS * 2:
         collide()
-    
+
     # update pong
     pong_tail.append(tuple(pong_pos))
     if not moving_right:
@@ -1115,38 +1115,38 @@ while game_loop:
         elif pinch(left_pos):
             pong_vel[0] = left_vel + 1
             pong_vel[1] = left_vel + 1
-            moving_right = True    
+            moving_right = True
             rally += 1
             os.system('\a')
         else:
             moving_right = True
             right_hand += 1
             pong_init(moving_right)
-        
+
     if moving_right:
         if pong_pos[0] <= WIDTH - BALL_RADIUS - PAD_WIDTH:
             pong_pos[0] += pong_vel[0]
         elif pinch(right_pos):
             pong_vel[0] = right_vel + 1
             pong_vel[1] = right_vel + 1
-            moving_right = False           
+            moving_right = False
             rally += 1
             os.system('\a')
         else:
             moving_right = False
             left_hand += 1
             pong_init(moving_right)
-        
+
     # Pong velocity increases from paddle strikes
     # Pong velocity decreases from walls bounces
-        
+
     if not moving_down:
         if pong_pos[1] >= BALL_RADIUS:
             pong_pos[1] -= pong_vel[1]
         else:
             pong_vel[1] -= 1
             moving_down = True
-        
+
     if moving_down:
         if pong_pos[1] <= HEIGHT - BALL_RADIUS:
             pong_pos[1] += pong_vel[1]
@@ -1164,38 +1164,38 @@ while game_loop:
             elif punch(left_pos):
                 ping_vel[0] = left_vel + 1
                 ping_vel[1] = left_vel + 1
-                moving_left = True    
+                moving_left = True
                 flurry += 1
                 os.system('\a')
             else:
                 moving_left = True
                 right_hand += 1
                 ping_init(moving_left)
-        
+
         if moving_left:
             if ping_pos[0] <= WIDTH - BALL_RADIUS - PAD_WIDTH:
                 ping_pos[0] += ping_vel[0]
             elif punch(right_pos):
                 ping_vel[0] = right_vel + 1
                 ping_vel[1] = right_vel + 1
-                moving_left = False           
+                moving_left = False
                 flurry += 1
                 os.system('\a')
             else:
                 moving_left = False
                 left_hand += 1
                 ping_init(moving_left)
-        
+
         # Ping velocity increases from paddle strikes
         # Ping velocity decreases from walls bounces
-        
+
         if not moving_up:
             if ping_pos[1] >= BALL_RADIUS:
                 ping_pos[1] -= ping_vel[1]
             else:
                 ping_vel[1] -= 1
                 moving_up = True
-        
+
         if moving_up:
             if ping_pos[1] <= HEIGHT - BALL_RADIUS:
                 ping_pos[1] += ping_vel[1]
@@ -1207,7 +1207,7 @@ while game_loop:
     leader = max(left_hand, right_hand)
     chaser = min(left_hand, right_hand)
     gutter = abs(leader - chaser)
-                    
+
 
     # Draw paddles
     pygame.draw.line(screen, Green, [(PAD_WIDTH / 2) + 1, left_pos],
@@ -1222,11 +1222,11 @@ while game_loop:
     pygame.draw.circle(screen, Red, pong_pos, BALL_RADIUS)
     pygame.draw.circle(screen, Yellow, ping_pos, BALL_RADIUS)
 
-    
+
     # Update score board
     scores = f"Player: {player.playerScore}, Opponents: {opponentScore}, Observer: {enemy.observerScore}"
     score_board = score_font.render(scores, True, (192, 192, 192))
-    screen.blit(score_board, (scoreX, scoreY) )    
+    screen.blit(score_board, (scoreX, scoreY) )
 
 
     # Update positions
@@ -1235,7 +1235,7 @@ while game_loop:
     else:
         positions = "Player: x {:01f} : y {:01f} , Observer: Idle, press Ctrl to invoke".format(player.playerX, player.playerY)
     positions_board = position_font.render(positions, True, (128, 128, 128))
-    screen.blit(positions_board, (scoreX, scoreY * 2) )    
+    screen.blit(positions_board, (scoreX, scoreY * 2) )
 
 
     # Get and display the joystick buttons
@@ -1249,5 +1249,3 @@ while game_loop:
     #pygame.display.update()
     pygame.display.flip()
     frame += 1
-            
-

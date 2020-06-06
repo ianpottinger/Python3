@@ -281,7 +281,7 @@ def spool_temp(tempdata):
 
         temp.seek(0)
         return (temp.read())
-    
+
 
 def release_temp(tempname):
     os.unlink(tempname)

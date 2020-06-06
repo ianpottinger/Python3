@@ -401,7 +401,7 @@ def input_choice(prompt, strings, fails=False):
     """
     selection = ['yes', 'y', 'no', 'n']
     confirm = input_choice("Enter 'Yes' or 'No' to continue: ", selection)
-    
+
     selection = ['male', 'm', 'female', 'f']
     confirm = input_choice("Enter sex as 'Male' or 'Female': ", selection)
     """
@@ -428,7 +428,7 @@ def input_choice(prompt, strings, fails=False):
 def input_IPaddress(prompt, fails=False):
     """
     input_IPaddress("Enter IP address: ", True)
-    
+
     """
     valid_address, valid_mask, valid_port = False, False, False
     invalids = []
@@ -437,7 +437,7 @@ def input_IPaddress(prompt, fails=False):
         octets = address.split(".")[0:4]
         last_octet = octets[-1]
         print(octets)
-        
+
         if "/" in last_octet:
             mask = int(extract_only_digits(last_octet.split("/")[1]) )
             octets[-1] = str(extract_only_digits(last_octet.split("/")[0]) )
@@ -457,7 +457,7 @@ def input_IPaddress(prompt, fails=False):
                              (int(extract_only_digits(octet)) > -1 and
                               int(extract_only_digits(octet)) < 256) ) ]
         print ("Valid Octets: ", valid_octets)
-        
+
         if len(valid_octets) != 4:
             valid_address = False
             invalids.append(address)
@@ -474,7 +474,7 @@ def input_IPaddress(prompt, fails=False):
         return address, invalids
     else:
         return address
-        
+
 
 def romanise(number):
     """
@@ -518,7 +518,7 @@ def numerise(romber):
 
 def morse_code(string):
     return ' '.join(str(MORSE_CODE.get(char.upper()))
-                    for char in string.lower()) 
+                    for char in string.lower())
 
 
 def phonic_code(string):
@@ -646,18 +646,18 @@ class Love(BaseException):
 
 ##def love(mistake):
 ##
-##    
+##
 ##    try:
 ##        mistake / 0
 ##    except IOError:
 ##        print('An error occured trying to read the file.')
-##        
+##
 ##    except ValueError:
 ##        print('Non-numeric data found in the file.')
 ##
 ##    except ImportError:
 ##        print("NO module found")
-##        
+##
 ##    except EOFError:
 ##        print('Why did you do an EOF on me?')
 ##
@@ -938,7 +938,7 @@ def palindrome_reverse(string):
     """ (str) -> bool
 
     Return True if and only if string is a palindrome
-    
+
     >>> palindrome_reverse('level')
     True
     >>> palindrome_reverse('even')
@@ -953,7 +953,7 @@ def palindrome_split(string):
     """ (str) -> bool
 
     Return True if and only if string is a palindrome
-    
+
     >>> palindrome_split('level')
     True
     >>> palindrome_split('even')
@@ -972,7 +972,7 @@ def palindrome_compare(string):
     """ (str) -> bool
 
     Return True if and only if string is a palindrome
-    
+
     >>> palindrome_compare('level')
     True
     >>> palindrome_compare('even')
@@ -994,7 +994,7 @@ def palindrome_loop(string):
     """ (str) -> bool
 
     Return True if and only if string is a palindrome
-    
+
     >>> palindrome_loop('level')
     True
     >>> palindrome_loop('even')
@@ -1030,7 +1030,7 @@ def index_list_items(items, term):
 def count_words(content):
     """
     str or list -> dict {"str" : int}
-    
+
     Returns a dictionary of words and their counts from a list or string
     """
     if type(content) == str:
@@ -1075,7 +1075,7 @@ def reduce_words(content):
 def mapreduce_count_words(content):
     """
     str or list -> dict {"str" : int}
-    
+
     Returns a dictionary of words and their counts from a list or string
     """
     if type(content) == str:
@@ -1095,7 +1095,7 @@ def mapreduce_count_words(content):
 def mapreduce_word_counts(content):
     """
     str or list -> dict {"str" : int}
-    
+
     Returns a dictionary of words and their counts from a list or string
     """
     if type(content) == str:
@@ -1115,7 +1115,7 @@ def mapreduce_word_counts(content):
 def mapreduce_unique_words(content):
     """
     str or list -> dict {"str" : int}
-    
+
     Returns a dictionary of words and their counts from a list or string
     """
     if type(content) == str:
@@ -1135,7 +1135,7 @@ def mapreduce_unique_words(content):
 def mapreduce_solo_words(content):
     """
     str or list -> dict {"str" : int}
-    
+
     Returns a dictionary of words and their counts from a list or string
     """
     if type(content) == str:
@@ -1156,7 +1156,7 @@ def mapreduce_solo_words(content):
 def total_words(word_counts):
     """
     dict {"str" : int} -> int
-    
+
     Returns the total sum of words from a dictionary of words and their counts
     """
 
@@ -1174,7 +1174,7 @@ def total_words(word_counts):
 def common_word(word_counts):
     """
     dict {"str" : int} -> tuple("str", int)
-    
+
     Returns the most common word and its count from a dictionary of words
     and their counts.
     """
@@ -1234,7 +1234,7 @@ not_zero = lambda value : None if not _ == 0 else '0'
 def filter_empty(incomplete):
     return list(filter((not_zero(incomplete)), incomplete))
 
-                
+
 def is_anagram(first, second):
     """ (str, str) -> bool
 
@@ -1405,7 +1405,7 @@ def main():
                                  'from __main__ import pat,allowed_set,%s' %
                                  ','.join(funcs+tests)).timeit(10000)))
         print
-                 
+
 
 if __name__=='__main__': main()
 """

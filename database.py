@@ -81,10 +81,10 @@ def restore_sqlite3_memory(source = 'memory.sl3', destination = ':memory:'):
     """
 #>>> memory, cursor = restore_sqlite3_memory('sqlite.sl3', ':memory:')
     """
-    
+
     def indicator(status, remaining, total):
         print(f'{total - remaining} of {total} pages completed.')
-        
+
     archive = sqlite3.connect(source)
     restore = sqlite3.connect(destination)
     archive.backup(restore, pages = 1, progress = indicator)
@@ -133,7 +133,7 @@ Executing SQL:
 CREATE TABLE IF NOT EXISTS Hash (Pair_Id data_type PRIMARY KEY, Key data_type NOT NULL UNIQUE, Value data_type NOT NULL);
 <BLANKLINE>
     """
-    
+
     statement = f'CREATE TABLE IF NOT EXISTS {table_name} ({table_columns});'
     print(f'Executing SQL:\n{statement}\n')
     cursor.execute(statement)
@@ -189,7 +189,7 @@ def where_group_order(statement, expression = "", ordering = "", grouping = ""):
         modifiers += f"\nORDER BY {ordering}"
     if not(grouping == ""):
         modifiers += f"\nGROUP BY {grouping}"
-    statement += modifiers 
+    statement += modifiers
     return statement
 
 
@@ -489,7 +489,7 @@ SELECT * FROM Hash;
 (4, 'Subject', 'Construct')
 >>> update_column_rows(cursor, 'Hash', 'Value,Value', '"Location","Questionable"', 'Key,Key', '"Username","Subject"', logic = 'OR')
     """
-    
+
     headers = len(columns.split(',')) - 1
     elements = '?'
     for element in range(headers):
@@ -561,7 +561,7 @@ SELECT * FROM Hash;
 (2, 'Longitude', 'Latitude')
 (3, 'Object', 'Physical')
     """
-    
+
     headers = len(searches.split(',')) - 1
     elements = '?'
     for element in range(headers):
@@ -596,7 +596,7 @@ def join_tables(cursor, left_table, right_table, left_column, right_column,
     #if  engine == 'sqlite' and join_type == 'FULL':
     #    print('FULL join unsupported by SQLite3. Returning INNER join only.')
     #    join_type = 'INNER'
-              
+
     statement = f'SELECT {columns}\nFROM {left_table}\n{join_type} {right_table} ON {left_table}.{left_column} = {right_table}.{right_column}'
     statement = where_group_order(statement, expression, ordering, grouping)
     print(f'Executing SQL:\n{statement}\n')
@@ -612,7 +612,7 @@ def create_index(cursor, table_name, index_name, columns):
     print(f'to create an index named {index_name} for table {table_name} using column/s {columns}')
     #cursor.execute(statement)
     return
-    
+
 
 def cross_join():
     return
@@ -686,6 +686,3 @@ print(sqlite3.version, sqlite3.version_info, sqlite3.sqlite_version, sqlite3.sql
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
-
-
-    

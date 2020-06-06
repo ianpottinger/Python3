@@ -83,10 +83,10 @@ for i in range(45):
     ninja.setposition(0, 0)
     ninja.pendown()
     #ninja.circle(100)
-    
+
     ninja.right(8)
 
-    
+
 turtle.done()
 
 
@@ -99,5 +99,3 @@ if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
     polygon(8, 50, 'yellow', 10, 1000)
-
-
