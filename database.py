@@ -16,6 +16,7 @@ import sqlite3
 import psycopg2
 import pymongo
 import mongoengine
+import mariadb
 import keyword
 import unittest
 
