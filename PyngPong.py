@@ -488,6 +488,7 @@ def init():
     rally, highest = 0, 0
     helping_hand = True   # Surprise entrance
 
+
 def pause():
     global pong_vel, ping_vel, temp_vel
 
@@ -501,6 +502,7 @@ def pause():
         ping_vel = temp_vel[1]
         temp_vel = []
 
+
 def easier():
     global difficulty
 
@@ -513,6 +515,7 @@ def harder():
     if not difficulty == 3:
         difficulty += 1
 
+
 def pinch(paddle):
     # Returns true if the position of pong is within the range of the paddle
     paddle = int(paddle)
@@ -523,6 +526,7 @@ def punch(paddle):
     paddle = int(paddle)
     return int(ping_pos[1]) in range(paddle - 2, paddle + PAD_HEIGHT + 2)
 
+
 def tracing():
     global tracking
 
@@ -530,6 +534,7 @@ def tracing():
         tracking = True
     else:
         tracking = False
+
 
 def football():
     global football_pitch, tennis_court, hockey_field
@@ -575,10 +580,12 @@ def help_right():
     else:
         right_assist = False
 
+
 controls = {'w' : left_up,
             's' : left_down,
             'up' : right_up,
             'down' : right_down}
+
 
 def keydown(key):
     global left_vel, right_vel

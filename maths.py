@@ -240,6 +240,8 @@ var = not first > second and first == third * 2 or second != third
 'lowercase' > 'UPPERCASE'
 'do' in "don't"
 
+measurements = ["Time", "Length", "Mass", "Temperature", "Current", "Chemical", "Lumens"]
+
 heart = lambda a, x: ( x * GLOBAL_THIRD * 2 +
                     0.9 * ( 3.3 - x**2 ) / 2 *
                     math.sin(a * GLOBAL_PI * x ) )
