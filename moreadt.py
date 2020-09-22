@@ -54,6 +54,9 @@ from vectors import Vector
 
 from tkinter import *
 
+EFFICIENCY = ['O(1)', 'O(log(N))', 'O(N)', 'O((N)log(N))', 'O(N**2)', 'O(2**N)']
+OPERATIONS = ['Access', 'Search', 'Insert', 'Delete']
+
 SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
@@ -98,9 +101,9 @@ ZODIAC_INFO = [union for union in zip(list(ZODIAC_DATES.keys()),
                                   list(ZODIAC_DATES.values()),
                                   list(ZODIAC_HOUSES.values()))]
 
-KEMET_SEASONS = {'Akhet': ["Djehuty", "Pa-en-Opet", "Hethert", "Ka-her-ka"],
-                 'Peret': ["Ta'abet", "Pa-en-mekher", "Pa-en-Amenhotep", "Pa-en-Renenutet"],
-                 'Shomu': ["Pa-en-Khonsu", "Pa-en-inet", "Ipip", "Mesut-Ra-Heruakhety"]}
+KEMET_SEASONS = {'Akhet': ['Djehuty', 'Pa-en-Opet', 'Hethert', 'Ka-her-ka'],
+                 'Peret': ['Ta'abet', 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
+                 'Shomu': ['Pa-en-Khonsu', 'Pa-en-inet', 'Ipip', 'Mesut-Ra-Heruakhety']}
 
 ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch)
 KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
@@ -174,74 +177,74 @@ east = (0, 1)
 south = (-1, 0)
 west = (0, -1)
 centre = (0, 0)
-CARDINALS = {"North": north,
-             "East": east,
-             "South": south,
-             "West": west,
-             "Centre": centre}
-COLOUDINALS = {"North": Black,
-               "East": Blue,
-               "South": Red,
-               "West": White,
-               "Centre": Green}
-ORDINALS = {"NE": (north + east),
-            "SE": (south + east),
-            "SW": (south + west),
-            "NW": (north + west)}
-ROSINALS = {"NNE": (north + north + east),
-            "ENE": (east + north + east),
-            "ESE": (east + south + east),
-            "SSE": (south + south + east),
-            "SSW": (south + south + west),
-            "WSW": (west + south + west),
-            "WNW": (west + north + west),
-            "NNW": (north + north + west)}
-POSITION = {"Latitude φ": 0,
-            "Longitude λ": 0}
+CARDINALS = {'North': north,
+             'East': east,
+             'South': south,
+             'West': west,
+             'Centre': centre}
+COLOUDINALS = {'North': Black,
+               'East': Blue,
+               'South': Red,
+               'West': White,
+               'Centre': Green}
+ORDINALS = {'NE': (north + east),
+            'SE': (south + east),
+            'SW': (south + west),
+            'NW': (north + west)}
+ROSINALS = {'NNE': (north + north + east),
+            'ENE': (east + north + east),
+            'ESE': (east + south + east),
+            'SSE': (south + south + east),
+            'SSW': (south + south + west),
+            'WSW': (west + south + west),
+            'WNW': (west + north + west),
+            'NNW': (north + north + west)}
+POSITION = {'Latitude φ': 0,
+            'Longitude λ': 0}
 
-web_colours = {"Aqua": Aqua,
-               "Black": Black,
-               "Blue": Blue,
-               "Brown": Brown,
-               "Fuchsia": Fuchsia,
-               "Green": Green,
-               "Grey": Grey,
-               "Lime": Lime,
-               "Navy": Navy,
-               "Olive": Olive,
-               "Purple": Purple,
-               "Red": Red,
-               "Silver": Silver,
-               "Teal": Teal,
-               "White": White,
-               "Yellow": Yellow}
+web_colours = {'Aqua': Aqua,
+               'Black': Black,
+               'Blue': Blue,
+               'Brown': Brown,
+               'Fuchsia': Fuchsia,
+               'Green': Green,
+               'Grey': Grey,
+               'Lime': Lime,
+               'Navy': Navy,
+               'Olive': Olive,
+               'Purple': Purple,
+               'Red': Red,
+               'Silver': Silver,
+               'Teal': Teal,
+               'White': White,
+               'Yellow': Yellow}
 
-text_fore = {"Black": 30,
-             "Red": 31,
-             "Green": 32,
-             "Yellow": 33,
-             "Blue": 34,
-             "Purple": 35,
-             "Cyan": 36,
-             "White": 37}
+text_fore = {'Black': 30,
+             'Red': 31,
+             'Green': 32,
+             'Yellow': 33,
+             'Blue': 34,
+             'Purple': 35,
+             'Cyan': 36,
+             'White': 37}
 
-text_back = {"Black": 40,
-             "Red": 41,
-             "Green": 42,
-             "Yellow": 43,
-             "Blue": 44,
-             "Purple": 45,
-             "Cyan": 46,
-             "White": 47}
+text_back = {'Black': 40,
+             'Red': 41,
+             'Green': 42,
+             'Yellow': 43,
+             'Blue': 44,
+             'Purple': 45,
+             'Cyan': 46,
+             'White': 47}
 
-text_style = {"Normal": 0,
-              "Bright": 1,
-              "Underline": 2,
-              "Negative1": 3,
-              "Negative2": 5}
+text_style = {'Normal': 0,
+              'Bright': 1,
+              'Underline': 2,
+              'Negative1': 3,
+              'Negative2': 5}
 
 
-def colour_print(string, fore="Black", back="White", style="Normal"):
+def colour_print(string, fore='Black', back='White', style='Normal'):
     if type(fore) == str:
         fore = text_fore[fore]
     if type(back) == str:
@@ -293,6 +296,7 @@ def colour_print(string, fore="Black", back="White", style="Normal"):
 RGB_light = ("Red", "Green", "Blue", "White")
 CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
 RYB_paint = ("Red", "Yellow", "Blue", "Grey")
+atomic_spectra = ("Lyman", "Balmer", "Paschen")
 colours = RGB_light + CMY_kemet
 
 Colour_HEX_codes = {"Black": "000000",
