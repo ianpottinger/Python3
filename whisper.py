@@ -12,14 +12,19 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import binascii
+import cryptography
 import hashlib
 import bcrypt
 import doctest
 import keyword
 import math
+import openpgp
 import os
+import pynacl
+import pyopenssl
 import random
 import sys
+import rsa
 import unittest
 import uuid
 
