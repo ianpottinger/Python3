@@ -24,6 +24,8 @@ import doctest
 import keyword
 import random
 import re
+import json
+import yaml
 import queue
 import heapq
 import unittest
@@ -336,6 +338,18 @@ DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z
 DNA_BASES = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
              'Cytosine': Red, 'dNaM': Aqua, 'dTPT3': Fuchsia, 'd5SICS': Teal}
 
+BRAIN_HORMONES = ['Cortisol', 'Adrenaline', 'Dehydroepiandrosterone',
+                  'Dopamine', 'Serotonin', 'Oxytocin'] # DHEA
+                 
+BODY_HORMONES = ['Estrogen', 'Progesterone', 'Testosterone']
+                 
+HORMONE_SIGNALING = ['Endocrine', 'Paracrine', 'Autocrine', 'Intracrine']
+                 
+HORMONE_TYPES = ['Peptide', 'Amino Acid', 'Steroid', 'Eicosanoid']
+                 
+HORMONE_STEPS = ['Biosynthesis', 'Secretion', 'Transport',
+                 'Recognition', 'Response', 'Breakdown']
+
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
 #          distance of orbit in miles 10^6, miles diameter]
@@ -451,6 +465,18 @@ def update_screen_size(self, lines, columns):
 
 #print('Number of columns and Rows: ',idle_terminal_size())
 
+
+def json2yaml(yamal, jason):
+#    OUT=open('output.yaml','w')
+    OUT=open(yamal,'w')
+    IN=open(jason, 'r')
+#    IN=open(sys.argv[1], 'r')
+
+    JSON = json.load(IN)
+    IN.close()
+    yaml.dump(JSON, OUT)
+    OUT.close()
+    
 
 def withprogressbar(func):
     def _func_with_progress(*args, **kwargs):
