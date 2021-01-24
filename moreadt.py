@@ -338,6 +338,14 @@ DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z
 DNA_BASES = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
              'Cytosine': Red, 'dNaM': Aqua, 'dTPT3': Fuchsia, 'd5SICS': Teal}
 
+BRAIN_WAVE_Hz = {'lambda': [96, 192],
+                 'gamma': [36, 96],
+                 'beta': [12, 36],
+                 'alpha': [8, 12],
+                 'theta': [4, 8],
+                 'delta': [.5, 4],
+                 'epsilon': [0.025, .5]}
+                  
 BRAIN_HORMONES = ['Cortisol', 'Adrenaline', 'Dehydroepiandrosterone',
                   'Dopamine', 'Serotonin', 'Oxytocin'] # DHEA
                  
