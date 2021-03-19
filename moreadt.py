@@ -29,6 +29,7 @@ import yaml
 import queue
 import heapq
 import unittest
+import colorama
 import win32gui
 #import analytics
 
@@ -54,6 +55,7 @@ KEYWORDS = keyword.kwlist
 from maths import triangle_hypotenuse
 from vectors import Vector
 
+from colorama import Fore, Back, Style
 from tkinter import *
 
 EFFICIENCY = ['O(1)', 'O(log(N))', 'O(N)', 'O((N)log(N))', 'O(N**2)', 'O(2**N)']
@@ -103,6 +105,9 @@ ZODIAC_INFO = [union for union in zip(list(ZODIAC_DATES.keys()),
                                   list(ZODIAC_DATES.values()),
                                   list(ZODIAC_HOUSES.values()))]
 
+EQUINOX = ['Spring', 'Autumn']
+SOLSTICE = ['Summer', 'Winter']
+
 KEMET_SEASONS = {'Akhet': ['Djehuty', 'Pa-en-Opet', 'Hethert', 'Ka-her-ka'],
                  'Peret': ['Ta'abet', 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
                  'Shomu': ['Pa-en-Khonsu', 'Pa-en-inet', 'Ipip', 'Mesut-Ra-Heruakhety']}
@@ -111,6 +116,31 @@ ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch
 KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
 MATCH_SIGNS = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
 
+Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
+# Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
+#          distance of orbit in miles 10^6, miles diameter]
+# http://nssdc.gsfc.nasa.gov/planetary/factsheet/
+PLANETS = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516),
+           'Venus': (35.0214, 78350, 8.872, 422.5, 3761),
+           'Earth': (29.7859, 66630, 9.8067, 584, 3959),
+           'Mars': (24.1309, 54000, 3.728, 888, 2460),
+           'Jupiter': (13.0697, 29240, 25.93, 3037, 43441),
+           'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184),
+           'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759),
+           'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299),
+           'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186)}
+
+DATA_SCIENCE_QUESTIONS = ["Descriptive", "Exploratory", "Inferential",
+                          "Predictive", "Casual", "Mechanistic"]
+
+CONTINENTS_AREA = {"Asia": (17139445, 4055000000),
+                   "Africa": (11677239, 1108500000),
+                   "North America": (9361791, 522807432),
+                   "South America": (6880706, 379919602),
+                   "Antarctica": (5500000, 4000),
+                   "Europe": (3997929, 729871042),
+                   "Australia": (2967909, 20434176)}
+
 STORMS = {'Hurricane': ['North Atlantic', 'South Atlantic', 'Northeast Pacific'],
           'Typhoon': ['Northwest Pacific'],
           'Cyclone': ['South Pacific', 'Indian Ocean']}
@@ -118,9 +148,6 @@ STORMS = {'Hurricane': ['North Atlantic', 'South Atlantic', 'Northeast Pacific']
 MOTIONS = ['Translational', 'Rotational', 'Periodic']
 
 GRIEF_STAGES = ['Denial', 'Anger', 'Bargaining', 'Depression', 'Acceptance']
-
-EQUINOX = ['Spring', 'Autumn']
-SOLSTICE = ['Summer', 'Winter']
 
 # STARS = ['Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Sun']
 
@@ -156,24 +183,6 @@ for rank, value in enumerate(list(RANKS.keys()), 1):
 
 CARDS = {**SUITS, **RANKS}
 
-Black = (0, 0, 0)
-Brown = (128, 0, 0)
-Green = (0, 128, 0)
-Navy = (0, 0, 128)
-Red = (255, 0, 0)
-Lime = (0, 255, 0)
-Blue = (0, 0, 255)
-Olive = (128, 128, 0)
-Purple = (128, 0, 128)
-Teal = (0, 128, 128)
-Grey = (128, 128, 128)
-Yellow = (255, 255, 0)
-Fuchsia = (255, 0, 255)
-Aqua = (0, 255, 255)
-Silver = (192, 192, 192)
-White = (255, 255, 255)
-
-
 north = (1, 0)
 east = (0, 1)
 south = (-1, 0)
@@ -204,6 +213,47 @@ ROSINALS = {'NNE': (north + north + east),
 POSITION = {'Latitude φ': 0,
             'Longitude λ': 0}
 
+biological_Domains = ["Bacteria","Archaea","Eukarya"]
+
+biological_Kingdoms = ["Animals","Plants","Fungus"]
+
+biological_Phyla = ["Animals": 35, "Plants": 14, "Fungus": 8]
+
+biological_Claases = []
+
+biological_Order = []
+
+biological_Family = []
+
+biological_Genus = []
+
+biological_Species = []
+
+# https://simple.wikipedia.org/wiki/List_of_animal_phyla
+Animal_Phyla = [35]
+
+Plant_Phyla = [14]
+
+Fungus_Phyla = [8]
+
+
+Black = (0, 0, 0)
+Brown = (128, 0, 0)
+Green = (0, 128, 0)
+Navy = (0, 0, 128)
+Red = (255, 0, 0)
+Lime = (0, 255, 0)
+Blue = (0, 0, 255)
+Olive = (128, 128, 0)
+Purple = (128, 0, 128)
+Teal = (0, 128, 128)
+Grey = (128, 128, 128)
+Yellow = (255, 255, 0)
+Fuchsia = (255, 0, 255)
+Aqua = (0, 255, 255)
+Silver = (192, 192, 192)
+White = (255, 255, 255)
+
 web_colours = {'Aqua': Aqua,
                'Black': Black,
                'Blue': Blue,
@@ -220,86 +270,6 @@ web_colours = {'Aqua': Aqua,
                'Teal': Teal,
                'White': White,
                'Yellow': Yellow}
-
-text_fore = {'Black': 30,
-             'Red': 31,
-             'Green': 32,
-             'Yellow': 33,
-             'Blue': 34,
-             'Purple': 35,
-             'Cyan': 36,
-             'White': 37}
-
-text_back = {'Black': 40,
-             'Red': 41,
-             'Green': 42,
-             'Yellow': 43,
-             'Blue': 44,
-             'Purple': 45,
-             'Cyan': 46,
-             'White': 47}
-
-text_style = {'Normal': 0,
-              'Bright': 1,
-              'Underline': 2,
-              'Negative1': 3,
-              'Negative2': 5}
-
-
-def colour_print(string, fore='Black', back='White', style='Normal'):
-    if type(fore) == str:
-        fore = text_fore[fore]
-    if type(back) == str:
-        back = text_back[back]
-    if type(style) == str:
-        style = text_style[style]
-    output = "\033[" + str(style) + ";" + str(fore) + ";" + str(back) + "m "
-    print(output + string)
-
-
-##def print_format_table():
-##    """
-##    prints table of formatted text format options
-##    """
-##    for style in range(8):
-##        for fg in range(30,38):
-##            s1 = ''
-##            for bg in range(40,48):
-##                format = ';'.join([str(style), str(fg), str(bg)])
-##                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
-##            print(s1)
-##        print('\n')
-##
-##print_format_table()
-
-##from colorama import Fore, Style
-##import sys
-##
-##class Highlight:
-##  def __init__(self, clazz, color):
-##    self.color = color
-##    self.clazz = clazz
-##  def __enter__(self):
-##    print(self.color, end="")
-##  def __exit__(self, type, value, traceback):
-##    if self.clazz == Fore:
-##      print(Fore.RESET, end="")
-##    else:
-##      assert self.clazz == Style
-##      print(Style.RESET_ALL, end="")
-##    sys.stdout.flush()
-##
-##with Highlight(Fore, Fore.GREEN):
-##  print("this is highlighted")
-##print("this is not")
-
-
-
-RGB_light = ("Red", "Green", "Blue", "White")
-CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
-RYB_paint = ("Red", "Yellow", "Blue", "Grey")
-atomic_spectra = ("Lyman", "Balmer", "Paschen")
-colours = RGB_light + CMY_kemet
 
 Colour_HEX_codes = {"Black": "000000",
                     "Red": "FF0000",
@@ -333,6 +303,116 @@ Khemet_HEX_codes = {"Onyx": "0F0F0F",
                     "Rose": "FF007F",
                     "Ivory": "FFFFF0"}
 
+text_fore = {'Black': 30,
+             'Red': 31,
+             'Green': 32,
+             'Yellow': 33,
+             'Blue': 34,
+             'Magenta': 35,
+             'Cyan': 36,
+             'Light Gray': 37,
+             'Dark Gray': 90,
+             'Bright Red': 91,
+             'Bright Green': 92,
+             'Bright Yellow': 93,
+             'Bright Blue': 94,
+             'Bright Purple': 95,
+             'Bright Cyan': 96,
+             'White': 97}
+
+text_back = {'Black': 40,
+             'Red': 41,
+             'Green': 42,
+             'Yellow': 43,
+             'Blue': 44,
+             'Magenta': 45,
+             'Cyan': 46,
+             'Light Gray': 47,
+             'Dark Gray': 100,
+             'Bright Red': 101,
+             'Bright Green': 102,
+             'Bright Yellow': 103,
+             'Bright Blue': 104,
+             'Bright Purple': 105,
+             'Bright Cyan': 106,
+             'White': 107}
+
+text_style = {'Normal': 0,
+              'Bold': 1,
+              'Faint': 2,
+              'Italic': 3,
+              'Underline': 4,
+              'Overline': 5,
+              'Italic': 6,
+              'Inverse': 7,
+              'Italic': 8,
+              'Strikethrough': 7}
+
+
+Normal = 0
+Bright = 1
+Underline = 2
+Negative1 = 3
+Negative2 = 5
+
+
+def colour_print(string, fore='Black', back='White', style='Normal'):
+    if type(fore) == str:
+        fore = text_fore[fore]
+    if type(back) == str:
+        back = text_back[back]
+    if type(style) == str:
+        style = text_style[style]
+    output = "\033[" + str(style) + ";" + str(fore) + ";" + str(back) + "m "
+    print(output + string + '\033[39m')
+
+colour_print ("hello", fore='Black', back='White', style='Normal')
+
+colorama.init(autoreset=True)
+
+
+##def print_format_table():
+##    """
+##    prints table of formatted text format options
+##    """
+##    for style in range(8):
+##        for fg in range(30,38):
+##            s1 = ''
+##            for bg in range(40,48):
+##                format = ';'.join([str(style), str(fg), str(bg)])
+##                s1 += '\x1b[%sm %s \x1b[0m' % (format, format)
+##            print(s1)
+##        print('\n')
+##
+##print_format_table()
+
+##
+##class Highlight:
+##  def __init__(self, clazz, color):
+##    self.color = color
+##    self.clazz = clazz
+##  def __enter__(self):
+##    print(self.color, end="")
+##  def __exit__(self, type, value, traceback):
+##    if self.clazz == Fore:
+##      print(Fore.RESET, end="")
+##    else:
+##      assert self.clazz == Style
+##      print(Style.RESET_ALL, end="")
+##    sys.stdout.flush()
+##
+##with Highlight(Fore, Fore.GREEN):
+##  print("this is highlighted")
+##print("this is not")
+
+
+
+RGB_light = ("Red", "Green", "Blue", "White")
+CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
+RYB_paint = ("Red", "Yellow", "Blue", "Grey")
+atomic_spectra = ("Lyman", "Balmer", "Paschen")
+colours = RGB_light + CMY_kemet
+
 DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
 
 DNA_BASES = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
@@ -345,43 +425,18 @@ BRAIN_WAVE_Hz = {'lambda': [96, 192],
                  'theta': [4, 8],
                  'delta': [.5, 4],
                  'epsilon': [0.025, .5]}
-                  
+
 BRAIN_HORMONES = ['Cortisol', 'Adrenaline', 'Dehydroepiandrosterone',
                   'Dopamine', 'Serotonin', 'Oxytocin'] # DHEA
-                 
+
 BODY_HORMONES = ['Estrogen', 'Progesterone', 'Testosterone']
-                 
+
 HORMONE_SIGNALING = ['Endocrine', 'Paracrine', 'Autocrine', 'Intracrine']
-                 
+
 HORMONE_TYPES = ['Peptide', 'Amino Acid', 'Steroid', 'Eicosanoid']
-                 
+
 HORMONE_STEPS = ['Biosynthesis', 'Secretion', 'Transport',
                  'Recognition', 'Response', 'Breakdown']
-
-Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
-# Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
-#          distance of orbit in miles 10^6, miles diameter]
-# http://nssdc.gsfc.nasa.gov/planetary/factsheet/
-PLANETS = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516),
-           'Venus': (35.0214, 78350, 8.872, 422.5, 3761),
-           'Earth': (29.7859, 66630, 9.8067, 584, 3959),
-           'Mars': (24.1309, 54000, 3.728, 888, 2460),
-           'Jupiter': (13.0697, 29240, 25.93, 3037, 43441),
-           'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184),
-           'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759),
-           'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299),
-           'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186)}
-
-DATA_SCIENCE_QUESTIONS = ["Descriptive", "Exploratory", "Inferential",
-                          "Predictive", "Casual", "Mechanistic"]
-
-CONTINENTS_AREA = {"Asia": (17139445, 4055000000),
-                   "Africa": (11677239, 1108500000),
-                   "North America": (9361791, 522807432),
-                   "South America": (6880706, 379919602),
-                   "Antarctica": (5500000, 4000),
-                   "Europe": (3997929, 729871042),
-                   "Australia": (2967909, 20434176)}
 
 
 path = []
@@ -484,7 +539,7 @@ def json2yaml(yamal, jason):
     IN.close()
     yaml.dump(JSON, OUT)
     OUT.close()
-    
+
 
 def withprogressbar(func):
     def _func_with_progress(*args, **kwargs):
