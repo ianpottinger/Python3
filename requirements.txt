@@ -67,6 +67,7 @@ pyttsx
 # timezone dates
 
 pytz
+dateutils
 python-dateutil
 jdcal
 
@@ -175,11 +176,11 @@ visions
 phik
 scikit-learn
 absl-py
-#tensorboard-plugin-wit
-#tensorboard
-#tensorflow-estimator
-#tensorflow
-#tensorflow-gpu
+tensorboard-plugin-wit
+tensorboard
+tensorflow-estimator
+tensorflow
+tensorflow-gpu
 opencv-python
 opt-einsum
 keras-preprocessing

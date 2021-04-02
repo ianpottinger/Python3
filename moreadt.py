@@ -1,5 +1,6 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -31,7 +32,7 @@ import heapq
 import unittest
 import colorama
 import win32gui
-#import analytics
+import analytics
 
 DEBUG_MODE = True
 if DEBUG_MODE:
@@ -109,7 +110,7 @@ EQUINOX = ['Spring', 'Autumn']
 SOLSTICE = ['Summer', 'Winter']
 
 KEMET_SEASONS = {'Akhet': ['Djehuty', 'Pa-en-Opet', 'Hethert', 'Ka-her-ka'],
-                 'Peret': ['Ta'abet', 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
+                 'Peret': ["Ta'abet", 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
                  'Shomu': ['Pa-en-Khonsu', 'Pa-en-inet', 'Ipip', 'Mesut-Ra-Heruakhety']}
 
 ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch)
@@ -183,47 +184,19 @@ for rank, value in enumerate(list(RANKS.keys()), 1):
 
 CARDS = {**SUITS, **RANKS}
 
-north = (1, 0)
-east = (0, 1)
-south = (-1, 0)
-west = (0, -1)
-centre = (0, 0)
-CARDINALS = {'North': north,
-             'East': east,
-             'South': south,
-             'West': west,
-             'Centre': centre}
-COLOUDINALS = {'North': Black,
-               'East': Blue,
-               'South': Red,
-               'West': White,
-               'Centre': Green}
-ORDINALS = {'NE': (north + east),
-            'SE': (south + east),
-            'SW': (south + west),
-            'NW': (north + west)}
-ROSINALS = {'NNE': (north + north + east),
-            'ENE': (east + north + east),
-            'ESE': (east + south + east),
-            'SSE': (south + south + east),
-            'SSW': (south + south + west),
-            'WSW': (west + south + west),
-            'WNW': (west + north + west),
-            'NNW': (north + north + west)}
-POSITION = {'Latitude φ': 0,
-            'Longitude λ': 0}
-
 biological_Domains = ["Bacteria","Archaea","Eukarya"]
 
 biological_Kingdoms = ["Animals","Plants","Fungus"]
 
-biological_Phyla = ["Animals": 35, "Plants": 14, "Fungus": 8]
+biological_Phyla = {"Animals": 35, "Plants": 14, "Fungus": 8}
 
 biological_Claases = []
 
 biological_Order = []
 
 biological_Family = []
+
+biological_Tribe = []
 
 biological_Genus = []
 
@@ -354,6 +327,37 @@ Bright = 1
 Underline = 2
 Negative1 = 3
 Negative2 = 5
+
+north = (1, 0)
+east = (0, 1)
+south = (-1, 0)
+west = (0, -1)
+centre = (0, 0)
+
+CARDINALS = {'North': north,
+             'East': east,
+             'South': south,
+             'West': west,
+             'Centre': centre}
+COLOUDINALS = {'North': Black,
+               'East': Blue,
+               'South': Red,
+               'West': White,
+               'Centre': Green}
+ORDINALS = {'NE': (north + east),
+            'SE': (south + east),
+            'SW': (south + west),
+            'NW': (north + west)}
+ROSINALS = {'NNE': (north + north + east),
+            'ENE': (east + north + east),
+            'ESE': (east + south + east),
+            'SSE': (south + south + east),
+            'SSW': (south + south + west),
+            'WSW': (west + south + west),
+            'WNW': (west + north + west),
+            'NNW': (north + north + west)}
+POSITION = {'Latitude φ': 0,
+            'Longitude λ': 0}
 
 
 def colour_print(string, fore='Black', back='White', style='Normal'):

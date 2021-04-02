@@ -1,5 +1,7 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
+
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -47,7 +49,7 @@ class BlockEntry():
             self.previousEntryID = None
         else:
             self.previousEntryHash = previousEntryHash
-            
+
 
 
 class Transaction(BlockEntry):
@@ -61,7 +63,7 @@ class Transaction(BlockEntry):
             self.previousTransactionID = None
         else:
             self.previousTransactionHash = previousTransactionHash
-            
+
 
 class Block():
     blockID = -1
@@ -147,7 +149,7 @@ class BlockChain():
 
     def blockChainSize(self):
         return len(self.blockList)
-    
+
     def calculatePreviousBlockHash(self):
         previousBlockID = self.blockChainSize() - 1
         previousBlockHash = hashlib.sha512()
@@ -157,7 +159,7 @@ class BlockChain():
     def addBlock(self):
         nextBlockID = self.blockChainSize()
         self.blockList[nextBlockID] = Block(self.calculatePreviousBlockHash(), genesis = False)
-        
+
 
 class ExchangeChain(BlockChain):
     ExchangeChainName = BlockChain.blockChainName
@@ -171,7 +173,7 @@ class ExchangeChain(BlockChain):
 
     def blockChainSize(self):
         return len(self.exchangeBlockList)
-    
+
     def calculatePreviousBlockHash(self):
         previousBlockID = self.blockChainSize() - 1
         previousBlockHash = hashlib.sha512()
@@ -180,7 +182,4 @@ class ExchangeChain(BlockChain):
 
     def addBlock(self):
         nextBlockID = self.blockChainSize()
-        self.exchangeBlockList[nextBlockID] = ExchangeBlock(self.calculatePreviousBlockHash(), genesis = False)    
-        
-
-        
+        self.exchangeBlockList[nextBlockID] = ExchangeBlock(self.calculatePreviousBlockHash(), genesis = False)

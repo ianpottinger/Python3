@@ -1,5 +1,6 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -31,6 +32,7 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
+
 
 from setuptools import setup
 import wheel

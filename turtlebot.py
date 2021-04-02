@@ -1,4 +1,4 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
 
 __author__ = "Ian Pottinger"

@@ -1,5 +1,6 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
+#GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -29,7 +30,7 @@ from moreadt import *
 
 # initialize globals - pos and vel encode vertical info for paddles
 WIDTH = 960
-HEIGHT = 540       
+HEIGHT = 540
 BALL_RADIUS = 20
 PAD_WIDTH = 8
 PAD_HEIGHT = 80
@@ -41,7 +42,7 @@ HALF_PAD_HEIGHT = PAD_HEIGHT / 2
 pong_pos = [WIDTH / 2, HEIGHT / 2]
 pong_vel = [5, 5]
 pong_tail = []
-left_pos, right_pos = HEIGHT / 2 - HALF_PAD_HEIGHT, HEIGHT / 2 - HALF_PAD_HEIGHT 
+left_pos, right_pos = HEIGHT / 2 - HALF_PAD_HEIGHT, HEIGHT / 2 - HALF_PAD_HEIGHT
 left_vel = right_vel = 5.0
 left_hand = right_hand = 0
 
@@ -74,7 +75,7 @@ fixture = {}
 def pong_init(right):
     global pong_pos, pong_vel, pong_tail # these are vectors stored as lists
     global moving_right, rally, highest, helping_hand
-    
+
     # Computer serves from centre of court
     pong_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     pong_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
@@ -85,7 +86,7 @@ def pong_init(right):
     rally = 0
     if abs(left_hand - right_hand) >= tag_team:
         helping_hand = True
-    
+
     # Determines the direction pong travels from previous point
     if not right:
         moving_right = False
@@ -95,27 +96,27 @@ def pong_init(right):
 def ping_init(left):
     global ping_pos, ping_vel, ping_tail # these are vectors stored as lists
     global moving_left, flurry, highest, helping_hand
-    
+
     # Core launches from out of nowhere
     ping_vel[0] = random.randrange(difficulty + 1, difficulty * 3)
     ping_vel[1] = random.randrange(difficulty + 1, difficulty * 3)
     ping_pos = [WIDTH / 2, random.randrange(HEIGHT / 2)]
     ping_tail = [ping_pos]
     if rally + flurry > highest:
-        highest = flurry + rally 
+        highest = flurry + rally
     flurry = 0
     if abs(left_hand - right_hand) <= tag_team / 2:
         helping_hand = False
-    
+
     # Determines the direction ping travels from previous point
     if not left:
         moving_left = False
     else:
         moving_left = True
-        
+
 def resize():
     global fixture
-    
+
     fixture = {'tcl' : [WIDTH / 2, 0],
                'bcl' : [WIDTH / 2, HEIGHT],
                'tlg' : [PAD_WIDTH, 0],
@@ -154,30 +155,30 @@ def resize():
                'hrt' : (WIDTH * (9/16), HEIGHT * (1/16)),
                'dst' : (WIDTH * (9/16), HEIGHT * (15/16)),
                'gdt' : (WIDTH * (5/16), HEIGHT * (15/16)) }
-    
+
 # define event handlers weddings, birthdays, parties
 def init():
     global left_pos, right_pos, left_vel, right_vel  # these are floats
     global left_hand, right_hand, rally, highest  # these are ints
     global helping_hand  # these are useful and highly appreciated
-    
+
     #resize()
     pong_init(moving_right)
     ping_init(moving_left)
-    
-    reset_paddle = HEIGHT / 2 - HALF_PAD_HEIGHT 
+
+    reset_paddle = HEIGHT / 2 - HALF_PAD_HEIGHT
     left_pos, right_pos = reset_paddle, reset_paddle
-    
+
     # Reset the paddle velocity to the ball vertical velocity
     left_vel = right_vel = max(pong_vel[1], ping_vel[1])
-    
+
     left_hand, right_hand = 0, 0
     rally, highest = 0, 0
     helping_hand = True   # Surprise entrance
-    
+
 def pause():
     global pong_vel, ping_vel, temp_vel
-    
+
     if temp_vel == []:
         temp_vel.append(pong_vel)
         temp_vel.append(ping_vel)
@@ -187,10 +188,10 @@ def pause():
         pong_vel = temp_vel[0]
         ping_vel = temp_vel[1]
         temp_vel = []
-    
+
 def easier():
     global difficulty
-    
+
     if not difficulty == 1:
         difficulty -= 1
 
@@ -216,7 +217,7 @@ def distance_between_points(vector1, vector2):
 
 def tracing():
     global tracking
-    
+
     if not tracking:
         tracking = True
     else:
@@ -224,25 +225,25 @@ def tracing():
 
 def football():
     global football_pitch, tennis_court, hockey_field
-    
+
     tennis_court = hockey_field = False
     if not football_pitch:
         football_pitch = True
     else:
         football_pitch = False
-        
+
 def tennis():
     global football_pitch, tennis_court, hockey_field
-    
+
     football_pitch = hockey_field = False
     if not tennis_court:
         tennis_court = True
     else:
         tennis_court = False
-                
+
 def hockey():
     global football_pitch, tennis_court, hockey_field
-    
+
     football_pitch = tennis_court = False
     if not hockey_field:
         hockey_field = True
@@ -251,12 +252,12 @@ def hockey():
 
 def help_left():
     global left_assist
-    
+
     if not left_assist:
         left_assist = True
     else:
         left_assist = False
-        
+
 def help_right():
     global right_assist
 
@@ -264,7 +265,7 @@ def help_right():
         right_assist = True
     else:
         right_assist = False
-        
+
 def collide():
     global moving_right, moving_left, moving_down, moving_up
     if moving_right and moving_left:
@@ -273,7 +274,7 @@ def collide():
     else:
         moving_right = True
         moving_left = True
-        
+
     if moving_down and moving_up:
         moving_down = False
         moving_up = False
@@ -307,13 +308,13 @@ def drawing(crayon):
             else:
                 left_up = True
                 left_down = False
-            
+
     if left_down:
         if not left_pos >= HEIGHT - PAD_HEIGHT:
             left_pos += left_vel
         else:
             left_down = False
-            
+
     if left_up:
         if not left_pos <= 0:
             left_pos -= left_vel
@@ -335,24 +336,24 @@ def drawing(crayon):
             else:
                 right_up = True
                 right_down = False
-                        
+
     if right_down:
         if not right_pos >= HEIGHT - PAD_HEIGHT:
             right_pos += right_vel
         else:
             right_down = False
-            
+
     if right_up:
         if not right_pos <= 0:
             right_pos -= right_vel
         else:
             right_up = False
-        
+
     # draw mid line and gutters
     pygame.draw.line(crayon, Grey, [WIDTH / 2, 0],[WIDTH / 2, HEIGHT], 1)
     pygame.draw.line(crayon, Brown, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
     pygame.draw.line(crayon, Brown, [WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1)
-    
+
     if football_pitch:
         pygame.draw.circle(crayon, lines,
                            [int((WIDTH / 100) * 50), int((HEIGHT / 60) *  30) ],
@@ -365,7 +366,7 @@ def drawing(crayon):
         pygame.draw.line(crayon, lines, [(WIDTH / 78) * 18, (HEIGHT / 36) *  4.5], [(WIDTH / 78) * 18, (HEIGHT / 36) *  31.5], 1)
         pygame.draw.line(crayon, lines, [(WIDTH / 78) * 60, (HEIGHT / 36) *  4.5], [(WIDTH / 78) * 60, (HEIGHT / 36) *  31.5], 1)
         pygame.draw.line(crayon, lines, [(WIDTH / 78) * 39, (HEIGHT / 36) *  4.5], [(WIDTH / 78) * 39, (HEIGHT / 36) *  31.5], 1)
-        
+
     if hockey_field:
         pygame.draw.line(crayon, lines, [(WIDTH / 100) * 25, (HEIGHT / 60) *  0], [(WIDTH / 100) * 25, (HEIGHT / 60) *  60], 1)
         pygame.draw.line(crayon, lines, [(WIDTH / 100) * 50, (HEIGHT / 60) *  0], [(WIDTH / 100) * 50, (HEIGHT / 60) *  60], 1)
@@ -374,14 +375,14 @@ def drawing(crayon):
                            [int((WIDTH / 100) * 50), int((HEIGHT / 60) *  30)],
                            int((WIDTH / 100) * 5), 1)
 
-        
+
     # draw paddles
     pygame.draw.line(crayon, Green, [(PAD_WIDTH / 2) + 1, left_pos],[(PAD_WIDTH / 2) + 1, left_pos + PAD_HEIGHT], PAD_WIDTH)
     pygame.draw.line(crayon, Blue, [WIDTH - (PAD_WIDTH / 2) - 1, right_pos],[WIDTH - (PAD_WIDTH / 2) - 1, right_pos + PAD_HEIGHT], PAD_WIDTH)
-    
+
 #    if distance_between_points(ping_pos, pong_pos) < BALL_RADIUS * 2:
 #        collide()
-    
+
     # update pong
     pong_tail.append(tuple(pong_pos))
     if not moving_right:
@@ -390,45 +391,45 @@ def drawing(crayon):
         elif pinch(left_pos):
             pong_vel[0] = left_vel + 1
             pong_vel[1] = left_vel + 1
-            moving_right = True    
+            moving_right = True
             rally += 1
             os.system('\a')
         else:
             moving_right = True
             right_hand += 1
             pong_init(moving_right)
-        
+
     if moving_right:
         if pong_pos[0] <= WIDTH - BALL_RADIUS - PAD_WIDTH:
             pong_pos[0] += pong_vel[0]
         elif pinch(right_pos):
             pong_vel[0] = right_vel + 1
             pong_vel[1] = right_vel + 1
-            moving_right = False           
+            moving_right = False
             rally += 1
             os.system('\a')
         else:
             moving_right = False
             left_hand += 1
             pong_init(moving_right)
-        
+
     # Pong velocity increases from paddle strikes
     # Pong velocity decreases from walls bounces
-        
+
     if not moving_down:
         if pong_pos[1] >= BALL_RADIUS:
             pong_pos[1] -= pong_vel[1]
         else:
             pong_vel[1] -= 1
             moving_down = True
-        
+
     if moving_down:
         if pong_pos[1] <= HEIGHT - BALL_RADIUS:
             pong_pos[1] += pong_vel[1]
         else:
             pong_vel[1] -= 1
             moving_down = False
-            
+
     # update ping
     if helping_hand:
         ping_tail.append(tuple(ping_pos))
@@ -438,38 +439,38 @@ def drawing(crayon):
             elif punch(left_pos):
                 ping_vel[0] = left_vel + 1
                 ping_vel[1] = left_vel + 1
-                moving_left = True    
+                moving_left = True
                 flurry += 1
                 os.system('\a')
             else:
                 moving_left = True
                 right_hand += 1
                 ping_init(moving_left)
-        
+
         if moving_left:
             if ping_pos[0] <= WIDTH - BALL_RADIUS - PAD_WIDTH:
                 ping_pos[0] += ping_vel[0]
             elif punch(right_pos):
                 ping_vel[0] = right_vel + 1
                 ping_vel[1] = right_vel + 1
-                moving_left = False           
+                moving_left = False
                 flurry += 1
                 os.system('\a')
             else:
                 moving_left = False
                 left_hand += 1
                 ping_init(moving_left)
-        
+
         # Ping velocity increases from paddle strikes
         # Ping velocity decreases from walls bounces
-        
+
         if not moving_up:
             if ping_pos[1] >= BALL_RADIUS:
                 ping_pos[1] -= ping_vel[1]
             else:
                 ping_vel[1] -= 1
                 moving_up = True
-        
+
         if moving_up:
             if ping_pos[1] <= HEIGHT - BALL_RADIUS:
                 ping_pos[1] += ping_vel[1]
@@ -481,7 +482,7 @@ def drawing(crayon):
     leader = max(left_hand, right_hand)
     chaser = min(left_hand, right_hand)
     gutter = abs(leader - chaser)
-                    
+
     # draw TT&T
     if tracking:
         if len(pong_tail) > 1:
@@ -558,7 +559,7 @@ def keydown(key):
     if key == simplegui.KEY_MAP["s"]:
         left_down = True
         left_vel += 1
-        
+
     if key == simplegui.KEY_MAP["w"]:
         left_up = True
         left_vel += 1
@@ -571,7 +572,7 @@ def keydown(key):
         right_down = True
         right_vel += 1
     """
-    
+
     if key in controls:
         controls[key] = True
 
@@ -580,7 +581,7 @@ def keydown(key):
 
     if right_up or right_down:
         right_vel += 1
-        
+
 def keyup(key):
     global left_vel, right_vel
     global left_down, left_up, right_down, right_up
@@ -588,7 +589,7 @@ def keyup(key):
     """
     if key == simplegui.KEY_MAP["s"]:
         left_down = False
-        
+
     if key == simplegui.KEY_MAP["w"]:
         left_up = False
 

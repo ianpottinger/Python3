@@ -1,6 +1,7 @@
-#! /usr/bin/env python		#Allow Unix shell to execute as a Python script
+#! /usr/bin/env python3		#Allow Unix shell to execute as a Python script
 # _*_ coding: UTF-8 _*_		#Enable unicode encoding
 #GMT+0BST-1,M3.5.0/01:00:00,M10.5.0/02:00:00
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 __author__ = "Ian Pottinger"
 __date__ = "20/12/2012"
@@ -13,7 +14,6 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import pandas
 import sklearn

