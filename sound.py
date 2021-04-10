@@ -13,6 +13,7 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 import builtins, keyword, os, sys, time
+import multiprocessing, concurrent, threading, asyncio
 import queue, collections, threading, pickle, concurrent
 import numbers, operator, math, cmath, decimal, fractions, random, itertools
 import string, re, unicodedata, locale, uuid, hashlib, binascii, zlib

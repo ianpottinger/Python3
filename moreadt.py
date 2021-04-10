@@ -18,6 +18,10 @@ import ctypes
 import struct
 import shutil
 import time
+import multiprocessing
+import concurrent
+import threading
+import asyncio
 import datetime
 import hashlib
 import itertools
@@ -32,7 +36,7 @@ import heapq
 import unittest
 import colorama
 import win32gui
-import analytics
+#import analytics
 
 DEBUG_MODE = True
 if DEBUG_MODE:

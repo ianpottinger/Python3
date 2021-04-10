@@ -54,8 +54,11 @@ mutagen
 
 # encryption
 
+pynacl
+cryptography
 rsa
 bcrypt
+pgpy
 imagehash
 
 # speech

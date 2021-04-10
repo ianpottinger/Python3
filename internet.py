@@ -12,7 +12,11 @@ __license__ = "Whatever Potts Decides"
 __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
+
+import multiprocessing
 import concurrent
+import threading
+import asyncio
 import html
 import keyword
 import pdb

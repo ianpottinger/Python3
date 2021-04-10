@@ -9,13 +9,14 @@ __version__ = "1.3.5"
 __metadata__ = [__author__, __date__, __contact__, __version__]
 
 import builtins, keyword, os, sys, time
+import multiprocessing, concurrent, threading, asyncio
 import queue, collections, threading, pickle, concurrent
 import numbers, operator, math, decimal, fractions, random, itertools
 import string, re, unicodedata, locale, uuid, hashlib
 import doctest, unittest, cProfile, timeit, logging, traceback, datetime
 import ftplib, poplib, nntplib, smtplib, telnetlib, email
 import argparse, calendar, pprint
-#import ipaddress, tkinter, dateutil
+import ipaddress, tkinter, dateutil
 import maths, ropes, moreadt, whisper, pygame
 
 

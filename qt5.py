@@ -15,6 +15,10 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 import sys
 import keyword
 import random
+import multiprocessing
+import concurrent
+import threading
+import asyncio
 
 DEBUG_MODE = True
 if DEBUG_MODE:

@@ -19,15 +19,19 @@ import bcrypt
 import doctest
 import keyword
 import math
-import openpgp
+import pgpy
 import os
-import pynacl
-import pyopenssl
+import nacl
+import ssl
 import random
 import sys
 import rsa
 import unittest
 import uuid
+import multiprocessing
+import concurrent
+import threading
+import asyncio
 
 DEBUG_MODE = True
 if DEBUG_MODE:

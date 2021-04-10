@@ -14,7 +14,10 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
-
+import multiprocessing
+import concurrent
+import threading
+import asyncio
 import pandas
 import sklearn
 import tensorflow as tf
@@ -22,6 +25,27 @@ from tensorflow import keras
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
+
+
+DEBUG_MODE = True
+if DEBUG_MODE:
+    import pdb
+    #pdb.set_trace()
+    import logging
+    FORMAT = '%(asctime)s - %(levelname)s - %(funcName)s - %(message)s'
+    logging.basicConfig(level = logging.INFO, format = FORMAT)
+    #logging.basicConfig(level = logging.WARNING, format = FORMAT)
+    #logging.basicConfig(level = logging.DEBUG, format = FORMAT)
+    #logging.basicConfig(level = logging.ERROR, format = FORMAT)
+    #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
+
+RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+            'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
+            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+            'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
+            'raise', 'return', 'try', 'while', 'with', 'yield']
+KEYWORDS = keyword.kwlist
+
 
 print(tf.__version__)
 import cv2
