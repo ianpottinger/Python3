@@ -41,7 +41,7 @@ if DEBUG_MODE:
     #logging.basicConfig(level = logging.ERROR, format = FORMAT)
     #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
-RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+RESERVED:list = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
             'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
@@ -94,7 +94,7 @@ WATER_FREEZING = -0.0001
 ABSOLUTE_ZERO = 273.15
 LTUAE = 42
 NINE9S = 99.9999999
-NUMBERS = [int, float, complex]
+NUMBERS:list = [int, float, complex]
 
 base = 0
 deca = 1000 // 100
@@ -198,11 +198,11 @@ Add = lambda augend, addend: augend + addend
 # Subtraction
 Subtract = lambda minuend, subtrahend: minuend - subtrahend
 # Group
-Group = {'Add': Add, 'Subtract': Subtract}
+Group:dict = {'Add': Add, 'Subtract': Subtract}
 # Ring
-Ring = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply}
+Ring:dict = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply}
 # Field
-Field = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply, 'Division': Division}
+Field:dict = {'Add': Add, 'Subtract': Subtract, 'Multiply': Multiply, 'Division': Division}
 # Less than
 Less = lambda term, compare: term < compare
 # More than
@@ -228,7 +228,7 @@ Com = lambda value: ~ value
 # Bitwise XOR
 XOR = lambda term, compare: term ^ compare
 
-operators = {'**': Power, '*': Multiply,
+operators:dict = {'**': Power, '*': Multiply,
              '/': Divide, '÷': Division, '//': Roundown, '%': Remainder,
              '+': Add, '-': Subtract,
              '<': Less, '>': More, '=': Equal,
@@ -245,7 +245,7 @@ var = not first > second and first == third * 2 or second != third
 'lowercase' > 'UPPERCASE'
 'do' in "don't"
 
-measurements = ["Time", "Length", "Mass", "Temperature", "Current", "Chemical", "Lumens"]
+measurements:list = ["Time", "Length", "Mass", "Temperature", "Current", "Chemical", "Lumens"]
 
 heart = lambda a, x: ( x * GLOBAL_THIRD * 2 +
                     0.9 * ( 3.3 - x**2 ) / 2 *
@@ -258,7 +258,7 @@ heart2 = lambda a, x: ( ( x * (GLOBAL_THIRD * 2) ) +
 vector1 = array('d', [1.0, 4.0, 7.0])
 vector2 = array('d', [2.0, 5.0, 8.0])
 vector3 = array('d', [3.0, 6.0, 9.0])
-matrix0 = [vector1, vector2, vector3]
+matrix0:list = [vector1, vector2, vector3]
 
 #Type code	Python Data Type	Byte size
 #i	int	2
@@ -271,8 +271,8 @@ matrix0 = [vector1, vector2, vector3]
 #f	float	4
 #d	float	8
 
-FREQ_RANGES = ('ELF', 'SLF', 'ULF', 'VLF', 'LF', 'MF',
-               'HF', 'VHF', 'UHF', 'SHF', 'EHF', 'THF')
+FREQ_RANGES:tuple = ('ELF', 'SLF', 'ULF', 'VLF', 'LF', 'MF',
+                    'HF', 'VHF', 'UHF', 'SHF', 'EHF', 'THF')
 freq_start = 3.0
 max_m = 100000000.0
 Freq_Ranges = dict()
@@ -303,7 +303,7 @@ def which_distance_reach(metres):
 
 
 def memoise(function):
-    cache = {}
+    cache:dict = {}
 
     def memoised(*args):
         if args not in cache:
@@ -757,7 +757,7 @@ def range_divisors(number, start, finish):
     >>> range_divisors (-10, 6, -6)
     [5, 2, 1, -1, -2, -5]
     """
-    collector = []
+    collector:list = []
     if number == 0:
         return collector
     for divisor in range(max(start, finish), min(start, finish), -1):
@@ -803,7 +803,7 @@ def acceleration():
 
 
 def displacement(time, initial=None, final=None, acceleration=None):
-    values = [initial, final, acceleration]
+    values:list = [initial, final, acceleration]
     nuns = values.count(None)
 
     if nuns > 1:
@@ -864,7 +864,7 @@ def regex_prime(number):
 
 
 def is_prime(number):
-    low_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
+    low_primes:list = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
                   103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
                   211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
                   331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443,
@@ -918,7 +918,7 @@ def lucas_lehmer(number: int) -> bool:
 def return_primes(number):  # Max 168
     check = 2
     hits = 0
-    primes = []
+    primes:list = []
     while hits != number:
         if is_prime(check):
             primes.append(check)
@@ -1161,7 +1161,7 @@ def round_golden_powers(iterations, last=False):
     elif last:
         return round(cycle_power(GOLDEN_RATIO, iterations))
     else:
-        chain = []
+        chain:list = []
         if not last:
             for link in range(abs(iterations)):
                 chain.append(round(cycle_power(GOLDEN_RATIO, link)))
@@ -1200,8 +1200,8 @@ def randmatstat(t)
         b = randn(n,n)
         c = randn(n,n)
         d = randn(n,n)
-        P = [a b c d]
-        Q = [a b; c d]
+        P:list = [a b c d]
+        Q:list = [a b; c d]
         v[i] = trace((P.'*P)^4)
         w[i] = trace((Q.'*Q)^4)
     end
@@ -1344,7 +1344,7 @@ def distance_on_unit_sphere(lat1, long1, lat2, long2):
 
 def find_closest_distance(coordinates):
     """
-    >> coordinates = [[random.random() for long in range(10)] for lat in range(4)]
+    >> coordinates:list = [[random.random() for long in range(10)] for lat in range(4)]
     >> find_closest_distance(coordinates)
     >> find_furthest_distance(coordinates)
     """
@@ -1357,7 +1357,7 @@ def find_closest_distance(coordinates):
 
 def find_furthest_distance(coordinates):
     """
-    >> coordinates = [[random.random() for long in range(10)] for lat in range(4)]
+    >> coordinates:list = [[random.random() for long in range(10)] for lat in range(4)]
     >> find_closest_distance(coordinates)
     >> find_furthest_distance(coordinates)
     """
@@ -1429,7 +1429,7 @@ def fast_exp(b, n):
 
 def fast_fourier_transform(sequence):
     """
-    >>> sample = [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
+    >>> sample:list = [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0]
     >>> print( ' '.join("%5.3f" % abs(f) for f in fast_fourier_transform(sample)) )
     4.000 2.613 0.000 1.082 0.000 1.082 0.000 2.613
     """
@@ -1457,12 +1457,12 @@ def collatz_conjecture(start):
 
 
 def sum_triangle_rows(rows, show=False):
-    triangle = []
+    triangle:list = []
     counter = 0
     result = 0
 
     for row in range(rows):
-        line = []
+        line:list = []
         for block in range(row):
             counter += 1
             line.append(counter)
@@ -1476,11 +1476,11 @@ def sum_triangle_rows(rows, show=False):
 
 
 def sum_pascal_rows(rows, show=False):
-    triangle = []
+    triangle:list = []
     result = 0
 
     for row in range(rows):
-        line = []
+        line:list = []
         counter = 0
         for block in range(row):
             counter += 1
@@ -1505,7 +1505,7 @@ triangular = lambda number: sum(range(number))
 def pascal_triangle(rows):
     for rownum in range(rows):
         newValue = 1
-        PrintingList = [newValue]
+        PrintingList:list = [newValue]
         for iteration in range(rownum):
             newValue = newValue * (rownum - iteration) * 1 / (iteration + 1)
             PrintingList.append(int(newValue))
@@ -1684,7 +1684,7 @@ def dx(f, x):
 
 def newtons_method(f, df, x0, e):
     """
->>> x0s = [0, .5, 1]
+>>> x0s:list = [0, .5, 1]
 >>> for x0 in x0s: newtons_method(f, df, x0, 1e-5)
 Root is at:  0
 f(x) at root is:  0
@@ -1889,7 +1889,7 @@ def channel_capacity(bandwidth, signal, noise):
 
 def narcissists():
     for digits in count(0):
-        digitpowers = [i ** digits for i in range(10)]
+        digitpowers:list = [i ** digits for i in range(10)]
         for n in range(int(10 ** (digits - 1)), 10 ** digits):
             div, digitpsum = n, 0
             while div:

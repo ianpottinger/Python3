@@ -50,7 +50,7 @@ if DEBUG_MODE:
     #logging.basicConfig(level = logging.ERROR, format = FORMAT)
     #logging.basicConfig(level = logging.CRITICAL, format = FORMAT)
 
-RESERVED = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
+RESERVED:list = ['False', 'None', 'True', 'and', 'as', 'assert', 'break',
             'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec',
             'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
             'lambda', 'nonlocal', 'not', 'or', 'pass', 'print',
@@ -63,175 +63,175 @@ from vectors import Vector
 from colorama import Fore, Back, Style
 from tkinter import *
 
-EFFICIENCY = ['O(1)', 'O(log(N))', 'O(N)', 'O((N)log(N))', 'O(N**2)', 'O(2**N)']
-OPERATIONS = ['Access', 'Search', 'Insert', 'Delete']
+EFFICIENCY:list = ['O(1)', 'O(log(N))', 'O(N)', 'O((N)log(N))', 'O(N**2)', 'O(2**N)']
+OPERATIONS:list = ['Access', 'Search', 'Insert', 'Delete']
 
-SUFFIXES = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
+SUFFIXES:dict = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
-ZODIAC_HOUSES = {'Aries': '♈', 'Tauras': '♉', 'Gemini': '♊',
-                 'Cancer': '♋', 'Leo': '♌', 'Virgo': '♍', 'Libra': '♎',
-                 'Scorpio': '♏', 'Ophiuchus': '⛎', 'Sagittarius': '♐',
-                 'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'}
+ZODIAC_HOUSES:dict = {'Aries': '♈', 'Tauras': '♉', 'Gemini': '♊',
+                     'Cancer': '♋', 'Leo': '♌', 'Virgo': '♍', 'Libra': '♎',
+                     'Scorpio': '♏', 'Ophiuchus': '⛎', 'Sagittarius': '♐',
+                     'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'}
 
-CONSTELLATIONS = {'Aries': (18, 13), 'Tauras': (13, 21), 'Gemini': (21, 20),
-                  'Cancer': (20, 10), 'Leo': (10, 16), 'Virgo': (16, 30),
-                  'Libra': (30, 23), 'Scorpio': (23, 29), 'Ophiuchus': (29, 17),
-                  'Sagittarius': (17, 20), 'Capricorn': (20, 16), 'Aquarius': (16, 11),
-                  'Pisces': (11, 18)}
+CONSTELLATIONS:dict = {'Aries': (18, 13), 'Tauras': (13, 21), 'Gemini': (21, 20),
+                      'Cancer': (20, 10), 'Leo': (10, 16), 'Virgo': (16, 30),
+                      'Libra': (30, 23), 'Scorpio': (23, 29), 'Ophiuchus': (29, 17),
+                      'Sagittarius': (17, 20), 'Capricorn': (20, 16), 'Aquarius': (16, 11),
+                      'Pisces': (11, 18)}
 
-ZODIAC_DATES = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
-                'Cancer': (22, 22), 'Leo': (23, 22), 'Virgo': (23, 22),
-                'Libra': (23, 22), 'Scorpio': (23, 22), 'Sagittarius': (23, 21),
-                'Capricorn': (22, 20), 'Aquarius': (21, 19), 'Pisces': (20, 20)}
+ZODIAC_DATES:dict = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
+                    'Cancer': (22, 22), 'Leo': (23, 22), 'Virgo': (23, 22),
+                    'Libra': (23, 22), 'Scorpio': (23, 22), 'Sagittarius': (23, 21),
+                    'Capricorn': (22, 20), 'Aquarius': (21, 19), 'Pisces': (20, 20)}
 
-DAYS_IN_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+DAYS_IN_WEEK:list = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 WEEKEND = DAYS_IN_WEEK[-2:]
 
-MONTHS_IN_YEAR = {1: 'January', 2: 'February', 3: 'March',
-                  4: 'April', 5: 'May', 6: 'June',
-                  7: 'July', 8: 'August', 9: 'September',
-                  10: 'October', 11: 'November', 12: 'December'}
+MONTHS_IN_YEAR:dict = {1: 'January', 2: 'February', 3: 'March',
+                      4: 'April', 5: 'May', 6: 'June',
+                      7: 'July', 8: 'August', 9: 'September',
+                      10: 'October', 11: 'November', 12: 'December'}
 
-DAYS_IN_MONTH = {'January': 31, 'February': 28, 'March': 31, 'April': 30,
-                 'May': 31, 'June': 30, 'July': 31, 'August': 31,
-                 'September': 30, 'October': 31, 'November': 30, 'December': 31}
+DAYS_IN_MONTH:dict = {'January': 31, 'February': 28, 'March': 31, 'April': 30,
+                     'May': 31, 'June': 30, 'July': 31, 'August': 31,
+                     'September': 30, 'October': 31, 'November': 30, 'December': 31}
 
-SHORT_MONTHS = [month[0:3] for month in MONTHS_IN_YEAR.values()]
+SHORT_MONTHS:list = [month[0:3] for month in MONTHS_IN_YEAR.values()]
 
 FULL_MONTHS = list(MONTHS_IN_YEAR.values() )
 
-ZODIAC_SEASONS = {'Spring': ['Aries', 'Tauras', 'Gemini'],
-                  'Summer': ['Cancer', 'Leo', 'Virgo'],
-                  'Autumn': ['Libra', 'Scorpio', 'Ophiuchus', 'Sagittarius'],
-                  'Winter': ['Caprocorn', 'Aquarius', 'Pisces']}
+ZODIAC_SEASONS:dict = {'Spring': ['Aries', 'Tauras', 'Gemini'],
+                      'Summer': ['Cancer', 'Leo', 'Virgo'],
+                      'Autumn': ['Libra', 'Scorpio', 'Ophiuchus', 'Sagittarius'],
+                      'Winter': ['Caprocorn', 'Aquarius', 'Pisces']}
 
-ZODIAC_INFO = [union for union in zip(list(ZODIAC_DATES.keys()),
+ZODIAC_INFO:list = [union for union in zip(list(ZODIAC_DATES.keys()),
                                   list(ZODIAC_DATES.values()),
                                   list(ZODIAC_HOUSES.values()))]
 
-EQUINOX = ['Spring', 'Autumn']
-SOLSTICE = ['Summer', 'Winter']
+EQUINOX:list = ['Spring', 'Autumn']
+SOLSTICE:list = ['Summer', 'Winter']
 
-KEMET_SEASONS = {'Akhet': ['Djehuty', 'Pa-en-Opet', 'Hethert', 'Ka-her-ka'],
-                 'Peret': ["Ta'abet", 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
-                 'Shomu': ['Pa-en-Khonsu', 'Pa-en-inet', 'Ipip', 'Mesut-Ra-Heruakhety']}
+KEMET_SEASONS:dict = {'Akhet': ['Djehuty', 'Pa-en-Opet', 'Hethert', 'Ka-her-ka'],
+                     'Peret': ["Ta'abet", 'Pa-en-mekher', 'Pa-en-Amenhotep', 'Pa-en-Renenutet'],
+                     'Shomu': ['Pa-en-Khonsu', 'Pa-en-inet', 'Ipip', 'Mesut-Ra-Heruakhety']}
 
 ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch)
 KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
-MATCH_SIGNS = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
+MATCH_SIGNS:list = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
 
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
 #          distance of orbit in miles 10^6, miles diameter]
 # http://nssdc.gsfc.nasa.gov/planetary/factsheet/
-PLANETS = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516),
-           'Venus': (35.0214, 78350, 8.872, 422.5, 3761),
-           'Earth': (29.7859, 66630, 9.8067, 584, 3959),
-           'Mars': (24.1309, 54000, 3.728, 888, 2460),
-           'Jupiter': (13.0697, 29240, 25.93, 3037, 43441),
-           'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184),
-           'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759),
-           'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299),
-           'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186)}
+PLANETS:dict = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516),
+               'Venus': (35.0214, 78350, 8.872, 422.5, 3761),
+               'Earth': (29.7859, 66630, 9.8067, 584, 3959),
+               'Mars': (24.1309, 54000, 3.728, 888, 2460),
+               'Jupiter': (13.0697, 29240, 25.93, 3037, 43441),
+               'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184),
+               'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759),
+               'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299),
+               'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186)}
 
-DATA_SCIENCE_QUESTIONS = ["Descriptive", "Exploratory", "Inferential",
+DATA_SCIENCE_QUESTIONS:list = ["Descriptive", "Exploratory", "Inferential",
                           "Predictive", "Casual", "Mechanistic"]
 
-CONTINENTS_AREA = {"Asia": (17139445, 4055000000),
-                   "Africa": (11677239, 1108500000),
-                   "North America": (9361791, 522807432),
-                   "South America": (6880706, 379919602),
-                   "Antarctica": (5500000, 4000),
-                   "Europe": (3997929, 729871042),
-                   "Australia": (2967909, 20434176)}
+CONTINENTS_AREA:dict = {"Asia": (17139445, 4055000000),
+                       "Africa": (11677239, 1108500000),
+                       "North America": (9361791, 522807432),
+                       "South America": (6880706, 379919602),
+                       "Antarctica": (5500000, 4000),
+                       "Europe": (3997929, 729871042),
+                       "Australia": (2967909, 20434176)}
 
-STORMS = {'Hurricane': ['North Atlantic', 'South Atlantic', 'Northeast Pacific'],
-          'Typhoon': ['Northwest Pacific'],
-          'Cyclone': ['South Pacific', 'Indian Ocean']}
+STORMS:dict = {'Hurricane': ['North Atlantic', 'South Atlantic', 'Northeast Pacific'],
+              'Typhoon': ['Northwest Pacific'],
+              'Cyclone': ['South Pacific', 'Indian Ocean']}
 
-MOTIONS = ['Translational', 'Rotational', 'Periodic']
+MOTIONS:list = ['Translational', 'Rotational', 'Periodic']
 
-GRIEF_STAGES = ['Denial', 'Anger', 'Bargaining', 'Depression', 'Acceptance']
+GRIEF_STAGES:list = ['Denial', 'Anger', 'Bargaining', 'Depression', 'Acceptance']
 
-# STARS = ['Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Sun']
+# STARS:list = ['Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Sun']
 
-EVERYKIND = {'Universe': ['Nebulae', 'Clusters', 'Galaxies', 'Blazars', 'Quasars', 'DarkMatter','DarkEnergy'],
-             'Galaxies': ['SolarSystems', 'BlackHoles', 'SuperNova', 'NeutronStars', 'Giants', 'Stars', 'BrownDwarfs'],
-             'SolarSystems': ['Suns', 'Planets', 'Moons', 'Asteroids','Comets', 'CosmicDust']}
+EVERYKIND:dict = {'Universe': ['Nebulae', 'Clusters', 'Galaxies', 'Blazars', 'Quasars', 'DarkMatter','DarkEnergy'],
+                 'Galaxies': ['SolarSystems', 'BlackHoles', 'SuperNova', 'NeutronStars', 'Giants', 'Stars', 'BrownDwarfs'],
+                 'SolarSystems': ['Suns', 'Planets', 'Moons', 'Asteroids','Comets', 'CosmicDust']}
 
-DRAUGHTS_BW = {'Man': ('\u26C2', '\u26C0'), 'King': ('\u26C3', '\u26C1')}
+DRAUGHTS_BW:dict = {'Man': ('\u26C2', '\u26C0'), 'King': ('\u26C3', '\u26C1')}
 
-CHESS_BW = {'King': ('\u265A', '\u2654'), 'Queen': ('\u265B', '\u2655'),
-            'Rook': ('\u265C', '\u2656'), 'Bishop': ('\u265D', '\u2657'),
-            'Knight': ('\u265E', '\u2658'), 'Pawn': ('\u265F', '\u2659')}
+CHESS_BW:dict = {'King': ('\u265A', '\u2654'), 'Queen': ('\u265B', '\u2655'),
+                'Rook': ('\u265C', '\u2656'), 'Bishop': ('\u265D', '\u2657'),
+                'Knight': ('\u265E', '\u2658'), 'Pawn': ('\u265F', '\u2659')}
 
-QUEENS = ((0, 0, 0, 1, 0, 0, 0, 0),
-          (0, 0, 0, 0, 0, 0, 1, 0),
-          (0, 0, 1, 0, 0, 0, 0, 0),
-          (0, 0, 0, 0, 0, 0, 0, 1),
-          (0, 1, 0, 0, 0, 0, 0, 0),
-          (0, 0, 0, 0, 1, 0, 0, 0),
-          (1, 0, 0, 0, 0, 0, 0, 0),
-          (0, 0, 0, 0, 0, 1, 0, 0))
+QUEENS:tuple = ((0, 0, 0, 1, 0, 0, 0, 0),
+              (0, 0, 0, 0, 0, 0, 1, 0),
+              (0, 0, 1, 0, 0, 0, 0, 0),
+              (0, 0, 0, 0, 0, 0, 0, 1),
+              (0, 1, 0, 0, 0, 0, 0, 0),
+              (0, 0, 0, 0, 1, 0, 0, 0),
+              (1, 0, 0, 0, 0, 0, 0, 0),
+              (0, 0, 0, 0, 0, 1, 0, 0))
 
-SUITS = {'Diamonds': ['\u2662', '\u2666'],
-         'Clubs': ['\u2663', '\u2667'],
-         'Hearts': ['\u2661', '\u2665'],
-         'Spades': ['\u2660', '\u2664']}
+SUITS:dict = {'Diamonds': ['\u2662', '\u2666'],
+             'Clubs': ['\u2663', '\u2667'],
+             'Hearts': ['\u2661', '\u2665'],
+             'Spades': ['\u2660', '\u2664']}
 
-RANKS = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,
-         'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
-         'Jack': 10, 'Queen': 10, 'King': 10}
+RANKS:dict = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,
+             'Six': 6, 'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10,
+             'Jack': 10, 'Queen': 10, 'King': 10}
 for rank, value in enumerate(list(RANKS.keys()), 1):
     print (value, rank)
 
-CARDS = {**SUITS, **RANKS}
+CARDS:dict = {**SUITS, **RANKS}
 
-biological_Domains = ["Bacteria","Archaea","Eukarya"]
+biological_Domains:list = ["Bacteria","Archaea","Eukarya"]
 
-biological_Kingdoms = ["Animals","Plants","Fungus"]
+biological_Kingdoms:list = ["Animals","Plants","Fungus"]
 
-biological_Phyla = {"Animals": 35, "Plants": 14, "Fungus": 8}
+biological_Phyla:dict = {"Animals": 35, "Plants": 14, "Fungus": 8}
 
-biological_Claases = []
+biological_Claases:list = []
 
-biological_Order = []
+biological_Order:list = []
 
-biological_Family = []
+biological_Family:list = []
 
-biological_Tribe = []
+biological_Tribe:list = []
 
-biological_Genus = []
+biological_Genus:list = []
 
-biological_Species = []
+biological_Species:list = []
 
 # https://simple.wikipedia.org/wiki/List_of_animal_phyla
-Animal_Phyla = [35]
+Animal_Phyla:list = [35]
 
-Plant_Phyla = [14]
+Plant_Phyla:list = [14]
 
-Fungus_Phyla = [8]
+Fungus_Phyla:list = [8]
 
 
-Black = (0, 0, 0)
-Brown = (128, 0, 0)
-Green = (0, 128, 0)
-Navy = (0, 0, 128)
-Red = (255, 0, 0)
-Lime = (0, 255, 0)
-Blue = (0, 0, 255)
-Olive = (128, 128, 0)
-Purple = (128, 0, 128)
-Teal = (0, 128, 128)
-Grey = (128, 128, 128)
-Yellow = (255, 255, 0)
-Fuchsia = (255, 0, 255)
-Aqua = (0, 255, 255)
-Silver = (192, 192, 192)
-White = (255, 255, 255)
+Black:tuple = (0, 0, 0)
+Brown:tuple = (128, 0, 0)
+Green:tuple = (0, 128, 0)
+Navy:tuple = (0, 0, 128)
+Red:tuple = (255, 0, 0)
+Lime:tuple = (0, 255, 0)
+Blue:tuple = (0, 0, 255)
+Olive:tuple = (128, 128, 0)
+Purple:tuple = (128, 0, 128)
+Teal:tuple = (0, 128, 128)
+Grey:tuple = (128, 128, 128)
+Yellow:tuple = (255, 255, 0)
+Fuchsia:tuple = (255, 0, 255)
+Aqua:tuple = (0, 255, 255)
+Silver:tuple = (192, 192, 192)
+White:tuple = (255, 255, 255)
 
-web_colours = {'Aqua': Aqua,
+web_colours:dict = {'Aqua': Aqua,
                'Black': Black,
                'Blue': Blue,
                'Brown': Brown,
@@ -248,7 +248,7 @@ web_colours = {'Aqua': Aqua,
                'White': White,
                'Yellow': Yellow}
 
-Colour_HEX_codes = {"Black": "000000",
+Colour_HEX_codes:dict = {"Black": "000000",
                     "Red": "FF0000",
                     "Orange": "FF7F00",
                     "Yellow": "FFFF00",
@@ -264,7 +264,7 @@ Colour_HEX_codes = {"Black": "000000",
                     "Pink": "FFC0CB",
                     "White": "FFFFFF"}
 
-Khemet_HEX_codes = {"Onyx": "0F0F0F",
+Khemet_HEX_codes:dict = {"Onyx": "0F0F0F",
                     "Jasper": "660000",
                     "Gold": "FFD700",
                     "Golden": "FFDF00",
@@ -280,7 +280,7 @@ Khemet_HEX_codes = {"Onyx": "0F0F0F",
                     "Rose": "FF007F",
                     "Ivory": "FFFFF0"}
 
-text_fore = {'Black': 30,
+text_fore:dict = {'Black': 30,
              'Red': 31,
              'Green': 32,
              'Yellow': 33,
@@ -297,7 +297,7 @@ text_fore = {'Black': 30,
              'Bright Cyan': 96,
              'White': 97}
 
-text_back = {'Black': 40,
+text_back:dict = {'Black': 40,
              'Red': 41,
              'Green': 42,
              'Yellow': 43,
@@ -314,7 +314,7 @@ text_back = {'Black': 40,
              'Bright Cyan': 106,
              'White': 107}
 
-text_style = {'Normal': 0,
+text_style:dict = {'Normal': 0,
               'Bold': 1,
               'Faint': 2,
               'Italic': 3,
@@ -332,27 +332,27 @@ Underline = 2
 Negative1 = 3
 Negative2 = 5
 
-north = (1, 0)
-east = (0, 1)
-south = (-1, 0)
-west = (0, -1)
-centre = (0, 0)
+north:tuple = (1, 0)
+east:tuple = (0, 1)
+south:tuple = (-1, 0)
+west:tuple = (0, -1)
+centre:tuple = (0, 0)
 
-CARDINALS = {'North': north,
+CARDINALS:dict = {'North': north,
              'East': east,
              'South': south,
              'West': west,
              'Centre': centre}
-COLOUDINALS = {'North': Black,
+COLOUDINALS:dict = {'North': Black,
                'East': Blue,
                'South': Red,
                'West': White,
                'Centre': Green}
-ORDINALS = {'NE': (north + east),
+ORDINALS:dict = {'NE': (north + east),
             'SE': (south + east),
             'SW': (south + west),
             'NW': (north + west)}
-ROSINALS = {'NNE': (north + north + east),
+ROSINALS:dict = {'NNE': (north + north + east),
             'ENE': (east + north + east),
             'ESE': (east + south + east),
             'SSE': (south + south + east),
@@ -360,7 +360,7 @@ ROSINALS = {'NNE': (north + north + east),
             'WSW': (west + south + west),
             'WNW': (west + north + west),
             'NNW': (north + north + west)}
-POSITION = {'Latitude φ': 0,
+POSITION:dict = {'Latitude φ': 0,
             'Longitude λ': 0}
 
 
@@ -415,18 +415,18 @@ colorama.init(autoreset=True)
 
 
 
-RGB_light = ("Red", "Green", "Blue", "White")
-CMY_kemet = ("Cyan", "Magenta", "Yellow", "Black")
-RYB_paint = ("Red", "Yellow", "Blue", "Grey")
-atomic_spectra = ("Lyman", "Balmer", "Paschen")
+RGB_light:tuple = ("Red", "Green", "Blue", "White")
+CMY_kemet:tuple = ("Cyan", "Magenta", "Yellow", "Black")
+RYB_paint:tuple = ("Red", "Yellow", "Blue", "Grey")
+atomic_spectra:tuple = ("Lyman", "Balmer", "Paschen")
 colours = RGB_light + CMY_kemet
 
-DNA = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
+DNA:dict = {'A': Blue, 'T': Yellow, 'G': Green, 'C': Red, 'X': Aqua, 'Y': Fuchsia, 'Z': Teal}
 
-DNA_BASES = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
+DNA_BASES:dict = {'Adenine': Blue, 'Thymine': Yellow, 'Guanine': Green,
              'Cytosine': Red, 'dNaM': Aqua, 'dTPT3': Fuchsia, 'd5SICS': Teal}
 
-BRAIN_WAVE_Hz = {'lambda': [96, 192],
+BRAIN_WAVE_Hz:dict = {'lambda': [96, 192],
                  'gamma': [36, 96],
                  'beta': [12, 36],
                  'alpha': [8, 12],
@@ -434,20 +434,20 @@ BRAIN_WAVE_Hz = {'lambda': [96, 192],
                  'delta': [.5, 4],
                  'epsilon': [0.025, .5]}
 
-BRAIN_HORMONES = ['Cortisol', 'Adrenaline', 'Dehydroepiandrosterone',
+BRAIN_HORMONES:list = ['Cortisol', 'Adrenaline', 'Dehydroepiandrosterone',
                   'Dopamine', 'Serotonin', 'Oxytocin'] # DHEA
 
-BODY_HORMONES = ['Estrogen', 'Progesterone', 'Testosterone']
+BODY_HORMONES:list = ['Estrogen', 'Progesterone', 'Testosterone']
 
-HORMONE_SIGNALING = ['Endocrine', 'Paracrine', 'Autocrine', 'Intracrine']
+HORMONE_SIGNALING:list = ['Endocrine', 'Paracrine', 'Autocrine', 'Intracrine']
 
-HORMONE_TYPES = ['Peptide', 'Amino Acid', 'Steroid', 'Eicosanoid']
+HORMONE_TYPES:list = ['Peptide', 'Amino Acid', 'Steroid', 'Eicosanoid']
 
-HORMONE_STEPS = ['Biosynthesis', 'Secretion', 'Transport',
+HORMONE_STEPS:list = ['Biosynthesis', 'Secretion', 'Transport',
                  'Recognition', 'Response', 'Breakdown']
 
 
-path = []
+path:list = []
 for step in range(360):
     latitude, longitude = random.choice(list(CARDINALS.values()))
     POSITION["Latitude φ"] += latitude
@@ -589,7 +589,7 @@ def any_colour():
     return web_colours[random.randrange(0, len(web_colours))]
 
 
-DICEFACE = {1: '\u2680', 2: '\u2681', 3: '\u2682',
+DICEFACE:dict = {1: '\u2680', 2: '\u2681', 3: '\u2682',
             4: '\u2683', 5: '\u2684', 6: '\u2685'}
 
 
@@ -610,7 +610,7 @@ def face_values(rolls):
     Returns a dictionary histogram of dice roll frequencies from a list of dice rolls
     face_values(multi_roll(46656) )
     """
-    values = {}
+    values:dict = {}
     for roll in rolls:
         values[roll] = values.get(roll, 0) + 1
     return values
@@ -630,7 +630,7 @@ def rate_faces(values):
     rate_faces(face_values(multi_roll(46656) ) )
     """
     ratings = float(len(values))
-    pmf = {}
+    pmf:dict = {}
     for face, frequency in values.items():
         pmf[face] = frequency / ratings
     return pmf
@@ -675,7 +675,7 @@ def dice_rolls(rolls=6):
     return [DICEFACE[roll_dice(6)] for roll in range(rolls)]
 
 
-COINSIDE = {1: 'Heads', 2: 'Tails'}
+COINSIDE:dict = {1: 'Heads', 2: 'Tails'}
 
 
 def flip_coin():
@@ -692,7 +692,7 @@ def coin_flips(flips=3):
 def flip_best_of(maximum):
     lead = 0
     reach = maximum // 2 + 1
-    track = {}
+    track:dict = {}
     if maximum == 0:
         return track
     while lead != reach:
@@ -737,7 +737,7 @@ def day_of_week(year, month, day, origin=0):
     >>> day_of_week(1752,9,14)
     'Thursday'
     """
-    days2shift = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
+    days2shift:list = [0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4]
     day = day % 7
     month = month % 12
     year -= month < 3
@@ -794,7 +794,7 @@ def time_to_seconds(time_str):
 
 
 # outcomes = set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-outcomes = {"Red", "Green", "Blue"}
+outcomes:dict = {"Red", "Green", "Blue"}
 
 
 # outcomes = set(["Sunday", "Mondy", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
@@ -822,10 +822,10 @@ def gen_permutations(elements):
     Compute all permuations of elements.
     """
     stack = list(elements)
-    results = [[stack.pop()]]
+    results:list = [[stack.pop()]]
     while len(stack) != 0:
         item = stack.pop()
-        new_results = []
+        new_results:list = []
         for perm in results:
             for i in range(len(perm) + 1):
                 new_results.append(perm[:i] + [item] + perm[i:])
@@ -838,7 +838,7 @@ def gen_sorted_sequences(outcomes, length=3):
     Function that creates all sorted sequences via gen_all_sequences
     """
     all_sequences = gen_all_sequences(outcomes, length)
-    sorted_sequences = [tuple(sorted(sequence)) for sequence in all_sequences]
+    sorted_sequences:list = [tuple(sorted(sequence)) for sequence in all_sequences]
     return set(sorted_sequences)
 
 
@@ -848,7 +848,7 @@ def gen_sorted_sequences(outcomes, length=3):
 
 
 
-currency = {"AFN": "Afghanistan Afghani",
+currency:dict = {"AFN": "Afghanistan Afghani",
             "ALL": "Albania Lek",
             "DZD": "Algeria Dinar",
             "AOA": "Angola Kwanza",
@@ -1015,7 +1015,7 @@ currency = {"AFN": "Afghanistan Afghani",
             "ZMK": "Zambia Kwacha",
             "ZWD": "Zimbabwe Dollar"}
 
-TLDs = {".ac": "Ascension Island (United Kingdom)",
+TLDs:dict = {".ac": "Ascension Island (United Kingdom)",
         ".ad": "Andorra",
         ".ae": "United Arab Emirates",
         ".af": "Afghanistan",
@@ -1262,7 +1262,7 @@ TLDs = {".ac": "Ascension Island (United Kingdom)",
         ".zm": "Zambia",
         ".zw": "Zimbabwe"}
 
-ISO_IBAN = {"AL": 28, "AD": 24, "AT": 20, "AZ": 28, "BE": 16, "BH": 22,
+ISO_IBAN:dict = {"AL": 28, "AD": 24, "AT": 20, "AZ": 28, "BE": 16, "BH": 22,
             "BA": 20, "BR": 29, "BG": 22, "CR": 21, "HR": 21, "CY": 28,
             "CZ": 24, "DK": 18, "DO": 28, "EE": 20, "FO": 18, "FI": 18,
             "FR": 27, "GE": 22, "DE": 22, "GI": 23, "GR": 27, "GL": 18,
@@ -1276,7 +1276,7 @@ ISO_IBAN = {"AL": 28, "AD": 24, "AT": 20, "AZ": 28, "BE": 16, "BH": 22,
 
 
 def memoise(function):
-    cache = {}
+    cache:dict = {}
 
     def memoised(*args):
         if args not in cache:
@@ -1299,7 +1299,7 @@ def gather_every_nth(L, n):
     ['a', 'c', 'e', 'g', 'i']
     '''
 
-    result = []
+    result:list = []
     i = 0
     while i < len(L):
         result.append(L[i])
@@ -1313,7 +1313,7 @@ def union_lists(list_one, list_two):
     Returns the ordered union of two lists as a list
     list(set(list_one) | set(list_two)) would remove the order
     """
-    items = []
+    items:list = []
     return [items.append(first) for first in list_one
             for second in list_two
             if second not in items]
@@ -1330,7 +1330,7 @@ def intersect_lists(list_one, list_two):
 
 
 def remove_duplicates_from_list(the_list):
-    dictionary = {}
+    dictionary:dict = {}
     for item in the_list:
         print(dictionary, item)
         dictionary[item] = dictionary.has_key(item)
@@ -1343,7 +1343,7 @@ def compare_values_of_list(the_list, the_item=0):
         return [-1]
     if list_length == 0:
         return [None]
-    result_list = []
+    result_list:list = []
     for check_item in range(0, list_length):
         if the_item == check_item:
             result_list.append(-1)
@@ -1375,7 +1375,7 @@ def get_keys(L, d):
     [1, 'a']
     '''
 
-    result = []
+    result:list = []
     for k in L:
         if k in d:
             result += [k]
@@ -1417,7 +1417,7 @@ def flatten(root):
 
 def linear_search(items, find):
     """
-    >>> items = ['a', 'b', 'c', 'd', 'e', 'f']
+    >>> items:list = ['a', 'b', 'c', 'd', 'e', 'f']
     >>> find = 'c'
     >>> linear_search (items, find)
     (True, 2)
@@ -1434,7 +1434,7 @@ def linear_search(items, find):
 
 def binary_search(items, find):
     """
-    >>> items = ['a', 'b', 'c', 'd', 'e', 'f']
+    >>> items:list = ['a', 'b', 'c', 'd', 'e', 'f']
     >>> find = 'c'
     >>> binary_search (items, find)
     (True, 2)
@@ -1546,7 +1546,7 @@ def duplicate_search(items):
 
 def bubblesort(array):
     """
-    >>> items = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
+    >>> items:list = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
     >>> bubblesort (items)
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
@@ -1560,7 +1560,7 @@ def bubblesort(array):
 
 def bubble_sort(array):
     """
-    >>> items = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
+    >>> items:list = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
     >>> bubble_sort (items)
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
@@ -1575,7 +1575,7 @@ def bubble_sort(array):
 
 def selection_sort(array):
     """
-    >>> items = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
+    >>> items:list = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
     >>> selection_sort (items)
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
@@ -1598,7 +1598,7 @@ def selection_sort(array):
 
 def insertsort(array):
     """
-    >>> items = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
+    >>> items:list = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
     >>> insertsort (items)
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
@@ -1615,7 +1615,7 @@ def insertsort(array):
 
 def insert_sort(array):
     """
-    >>> items = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
+    >>> items:list = ['g', 'a', 'b', 'c', 'h', 'd', 'e', 'f']
     >>> insert_sort (items)
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
@@ -1636,7 +1636,7 @@ def insert_sort(array):
 
 
 def merge(left, right):
-    result = []
+    result:list = []
     i, j = 0, 0
     while i < len(left) and j < len(right):
         if left[i] <= right[j]:
@@ -1783,7 +1783,7 @@ print(glider)
 
 def valid_iban(iban):
     """
-    >>> iban_tests = ["GB82 WEST 1234 5698 7654 32", "GB82 TEST 1234 5698 7654 32"]
+    >>> iban_tests:list = ["GB82 WEST 1234 5698 7654 32", "GB82 TEST 1234 5698 7654 32"]
     >>> for account in iban_tests: print('%s validation is: %s' % (account, valid_iban(account)))
     GB82 WEST 1234 5698 7654 32 validation is: True
     GB82 TEST 1234 5698 7654 32 validation is: False
@@ -1982,8 +1982,8 @@ def count_entries(tree):
 class Trie:
 
     def __init__(self):
-        self.__final = False
-        self.__nodes = {}
+        self.__final:bool = False
+        self.__nodes:dict = {}
 
     def __repr__(self):
         return 'Trie<len={}, final={}>'.format(len(self), self.__final)
