@@ -13,6 +13,7 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
                 __credits__, __copyright__, __license__]
 
 
+import string
 import datetime
 import itertools
 import doctest
@@ -343,17 +344,17 @@ def input_string(prompt, low=0, high=0):
         limits:str = ""
     while not valid:
         try:
-            string = input(str(prompt + limits))
+            text = input(str(prompt + limits))
         except ValueError:
             continue
         except SyntaxError:
             continue
         else:
             if not high == 0:
-                valid = len(string) in range(low, high + 1)
+                valid = len(text) in range(low, high + 1)
             else:
                 valid: bool = True
-    return string
+    return text
 
 
 def input_date(prompt, example, expect):

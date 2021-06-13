@@ -15,6 +15,7 @@ __metadata__ = [__author__, __date__, __contact__, __version__,
 
 import sys
 import ctypes
+import string
 import struct
 import shutil
 import time

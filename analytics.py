@@ -40,13 +40,19 @@ import multiprocessing
 import concurrent
 import threading
 import asyncio
+
 import pandas
 import sklearn
 import tensorflow as tf
 from tensorflow import keras
+
+import cv2
 import numpy as np
 import scipy as sp
+
 import matplotlib.pyplot as plt
+%matplotlib inline
+from IPython.display import Image
 
 
 DEBUG_MODE = True
