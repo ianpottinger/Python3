@@ -176,6 +176,7 @@ BB = lambda size: size * cycle_power(2, 90)
 """
 
 # GLOBAL_PI = 22/7		# Assigning PI using a float division expression
+# GLOBAL_PI = 355/113		# Assigning PI using a float division expression
 POINT_ONE + POINT_TWO == POINT_THREE
 
 ##if not GLOBAL_PI == math.pi:
