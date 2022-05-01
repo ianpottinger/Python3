@@ -41,16 +41,19 @@ KEYWORDS = keyword.kwlist
 # Google
 from gtts import gTTS
 import os
+#import pyaudio
 tts = gTTS(text='GAME OVER', lang='en')
 tts.save("GAME OVER.mp3")
 os.system("GAME OVER.mp3")
 
+import speech_recognition as sr
+for index, name in enumerate(sr.Microphone.list_microphone_names()):
+    print("Microphone with name \"{1}\" found for `Microphone(device_index={0})`".format(index, name))
 
 # Microsoft
 import win32com.client as wincl
 speak = wincl.Dispatch("SAPI.SpVoice")
 speak.Speak("Game Over")
-
 
 # Python
 import pyttsx

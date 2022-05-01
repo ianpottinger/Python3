@@ -41,6 +41,7 @@ werkzeug
 
 # windows
 
+windows-ncurses
 pywin32
 pywinpty
 
@@ -51,6 +52,7 @@ pygame
 # audio
 
 mutagen
+pyaudio
 
 # encryption
 
@@ -66,6 +68,7 @@ imagehash
 gtts-token
 gtts
 pyttsx
+SpeechRecognition
 
 # timezone dates
 

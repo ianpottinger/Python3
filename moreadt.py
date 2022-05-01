@@ -125,19 +125,37 @@ ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch
 KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
 MATCH_SIGNS:list = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
 
+Black:tuple = (0, 0, 0)
+Brown:tuple = (128, 0, 0)
+Green:tuple = (0, 128, 0)
+Navy:tuple = (0, 0, 128)
+Red:tuple = (255, 0, 0)
+Lime:tuple = (0, 255, 0)
+Blue:tuple = (0, 0, 255)
+Olive:tuple = (128, 128, 0)
+Purple:tuple = (128, 0, 128)
+Teal:tuple = (0, 128, 128)
+Grey:tuple = (128, 128, 128)
+Yellow:tuple = (255, 255, 0)
+Fuchsia:tuple = (255, 0, 255)
+Aqua:tuple = (0, 255, 255)
+Silver:tuple = (192, 192, 192)
+White:tuple = (255, 255, 255)
+
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
-#          distance of orbit in miles 10^6, miles diameter]
+#          distance of orbit in miles 10^6, miles diameter, colour]
 # http://nssdc.gsfc.nasa.gov/planetary/factsheet/
-PLANETS:dict = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516),
-               'Venus': (35.0214, 78350, 8.872, 422.5, 3761),
-               'Earth': (29.7859, 66630, 9.8067, 584, 3959),
-               'Mars': (24.1309, 54000, 3.728, 888, 2460),
-               'Jupiter': (13.0697, 29240, 25.93, 3037, 43441),
-               'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184),
-               'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759),
-               'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299),
-               'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186)}
+PLANETS:dict = {'Mercury': (47.8725, 107082, 3.703, 233.7, 1516, Grey),
+               'Venus': (35.0214, 78350, 8.872, 422.5, 3761, Brown),
+               'Earth': (29.7859, 66630, 9.8067, 584, 3959, Aqua),
+               'Mars': (24.1309, 54000, 3.728, 888, 2460, Red),
+               'Jupiter': (13.0697, 29240, 25.93, 3037, 43441, Yellow),
+               'Saturn': (9.6724, 21640, 11.9, 5565.9, 36184, Silver),
+               'Uranus': (6.8352, 15290, 9.01, 11201.3, 15759, Teal),
+               'Neptune': (5.4778, 12250, 11.28, 17562.3, 15299, Blue),
+               'Pluto': (4.783328, 10700, 0.610, 22695.7, 1186, Blue)}
+
 
 DATA_SCIENCE_QUESTIONS:list = ["Descriptive", "Exploratory", "Inferential",
                           "Predictive", "Casual", "Mechanistic"]
@@ -216,24 +234,6 @@ Animal_Phyla:list = [35]
 Plant_Phyla:list = [14]
 
 Fungus_Phyla:list = [8]
-
-
-Black:tuple = (0, 0, 0)
-Brown:tuple = (128, 0, 0)
-Green:tuple = (0, 128, 0)
-Navy:tuple = (0, 0, 128)
-Red:tuple = (255, 0, 0)
-Lime:tuple = (0, 255, 0)
-Blue:tuple = (0, 0, 255)
-Olive:tuple = (128, 128, 0)
-Purple:tuple = (128, 0, 128)
-Teal:tuple = (0, 128, 128)
-Grey:tuple = (128, 128, 128)
-Yellow:tuple = (255, 255, 0)
-Fuchsia:tuple = (255, 0, 255)
-Aqua:tuple = (0, 255, 255)
-Silver:tuple = (192, 192, 192)
-White:tuple = (255, 255, 255)
 
 web_colours:dict = {'Aqua': Aqua,
                'Black': Black,
