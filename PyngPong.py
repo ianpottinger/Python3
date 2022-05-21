@@ -1259,3 +1259,4 @@ while game_loop:
     #pygame.display.update()
     pygame.display.flip()
     frame += 1
+
