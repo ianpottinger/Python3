@@ -918,7 +918,7 @@ while game_loop:
     # Display player state
     screen.blit(playerIMG, (playerX, playerY) )
 
-    if distance_between_points(ping_pos, pong_pos) < BALL_RADIUS * 2:
+    if distance_2Dpoints(ping_pos, pong_pos) < BALL_RADIUS * 2:
         collide()
 
     # update pong

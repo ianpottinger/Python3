@@ -49,6 +49,7 @@ pywinpty
 
 pygame
 freegames
+pymunk
 
 # audio
 

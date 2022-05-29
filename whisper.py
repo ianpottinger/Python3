@@ -160,7 +160,7 @@ def memoise(function):
 
 
 def load_dictionary():
-    dictionary_file = open(r"""G:\WorkingData\Work @ Home\Python\Python Examples\dictionary.txt""")
+    dictionary_file = open(r"""G:\WorkingData\Work @ Home\Python3\Python Examples\dictionary.txt""")
     english_words = {}
     for word in dictionary_file.read().split('\n'):
         english_words[word] = None
