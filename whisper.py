@@ -147,6 +147,23 @@ CEASAR = {0: tuple([chr(character) for character in range (65, 91)])}
 
 ROT13_SHIFT = CEASAR_CIPHER['13']
 
+# Windows NT 5 Service Pack 5 NSA key
+nsa_key = """
+ -----BEGIN PGP PUBLIC KEY BLOCK-----
+ Version: 2.6.3i
+
+ mQCPAzfTdH0AAAEEALqOFf7jzRYPtHz5PitNhCYVryPwZZJk2B7cNaJ9OqRQiQoi
+ e1YdpAH/OQh3HSQ/butPnjUZdukPB/0izQmczXHoW5f1Q5rbFy0y1xy2bCbFsYij
+ 4ReQ7QHrMb8nvGZ7OW/YKDCX2LOGnMdRGjSW6CmjK7rW0veqfoypgF1RaC0fABEB
+ AAG0LU5TQSdzIE1pY3Jvc29mdCBDQVBJIGtleSA8cG9zdG1hc3RlckBuc2EuZ292
+ PokBFQMFEDfTdJE+e8qoKLJFUQEBHnsH/ihUe7oq6DhU1dJjvXWcYw6p1iW+0euR
+ YfZjwpzPotQ8m5rC7FrJDUbgqQjoFDr++zN9kD9bjNPVUx/ZjCvSFTNu/5X1qn1r
+ it7IHU/6Aem1h4Bs6KE5MPpjKRxRkqQjbW4f0cgXg6+LV+V9cNMylZHRef3PZCQa
+ 5DOI5crQ0IWyjQCt9br07BL9C3X5WHNNRsRIr9WiVfPK8eyxhNYl/NiH2GzXYbNe
+ UWjaS2KuJNVvozjxGymcnNTwJltZK4RLZxo05FW2InJbtEfMc+m823vVltm9l/f+
+ n2iYBAaDs6I/0v2AcVKNy19Cjncc3wQZkaiIYqfPZL19kT8vDNGi9uE=
+ =PhHT
+ -----END PGP PUBLIC KEY BLOCK-----"""
 
 def memoise(function):
     cache = {}

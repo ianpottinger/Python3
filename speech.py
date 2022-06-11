@@ -39,6 +39,7 @@ KEYWORDS = keyword.kwlist
 
 
 # Google
+import googletrans
 from gtts import gTTS
 import os
 #import pyaudio
@@ -56,6 +57,7 @@ speak = wincl.Dispatch("SAPI.SpVoice")
 speak.Speak("Game Over")
 
 # Python
+import translate
 import pyttsx
 engine = pyttsx.init()
 engine.say('Good morning.')
