@@ -193,6 +193,10 @@ tensorflow-estimator
 tensorflow
 tensorflow-gpu
 opencv-python
+openai
+openai-gym
+openai-research
+openai-baselines
 opt-einsum
 keras-preprocessing
 pandas-profiling
@@ -202,4 +206,4 @@ google-pasta
 
 threadpoolctl
 
-# wheel, pyparsing, six, packaging, urllib3, chardet, idna, certifi, requests, oauthlib, requests-oauthlib, pyasn1, pyasn1-modules, cachetools, rsa, google-auth, google-auth-oauthlib, webencodings, pyyaml, confuse, soupsieve, beautifulsoup4, htmlmin, markdown, MarkupSafe, jinja2, pyrsistent, attrs, jsonschema, tornado, parso, jedi, pygments, mistune, bleach, pandocfilters, defusedxml, et-xmlfile, werkzeug, pywin32, pywinpty, pygame, mutagen, pycparser, cffi, bcrypt, numpy, scipy, Pillow, PyWavelets, imagehash, gtts-token, click, gtts, pyttsx, pytz, python-dateutil, jdcal, pymongo, mongoengine, psycopg2, pickleshare, cycler, kiwisolver, matplotlib, matplotlib-venn, cairocffi, tinycss2, cssselect2, cairosvg, pandas, seaborn, missingno, backcall, tqdm, colorama, termcolor, tangled-up-in-unicode, wcwidth, prompt-toolkit, ipython-genutils, decorator, traitlets, jupyter-core, pyzmq, jupyter-client, prometheus-client, Send2Trash, nbformat, ipython, ipykernel, terminado, testpath, entrypoints, nbconvert, notebook, widgetsnbextension, ipywidgets, pivottablejs, joblib, wrapt, protobuf, grpcio, mpmath, sympy, astunparse, llvmlite, numba, gast, openpyxl, xlsxwriter, h5py, networkx, visions, phik, threadpoolctl, scikit-learn, absl-py, tensorboard-plugin-wit, tensorboard, tensorflow-estimator, keras-preprocessing, opt-einsum, google-pasta, tensorflow, opencv-python
+# wheel, pyparsing, six, packaging, urllib3, chardet, idna, certifi, requests, oauthlib, requests-oauthlib, pyasn1, pyasn1-modules, cachetools, rsa, google-auth, google-auth-oauthlib, webencodings, pyyaml, confuse, soupsieve, beautifulsoup4, htmlmin, markdown, MarkupSafe, jinja2, pyrsistent, attrs, jsonschema, tornado, parso, jedi, pygments, mistune, bleach, pandocfilters, defusedxml, et-xmlfile, werkzeug, pywin32, pywinpty, pygame, mutagen, pycparser, cffi, bcrypt, numpy, scipy, Pillow, PyWavelets, imagehash, gtts-token, click, gtts, pyttsx, pytz, python-dateutil, jdcal, pymongo, mongoengine, psycopg2, pickleshare, cycler, kiwisolver, matplotlib, matplotlib-venn, cairocffi, tinycss2, cssselect2, cairosvg, pandas, seaborn, missingno, backcall, tqdm, colorama, termcolor, tangled-up-in-unicode, wcwidth, prompt-toolkit, ipython-genutils, decorator, traitlets, jupyter-core, pyzmq, jupyter-client, prometheus-client, Send2Trash, nbformat, ipython, ipykernel, terminado, testpath, entrypoints, nbconvert, notebook, widgetsnbextension, ipywidgets, pivottablejs, joblib, wrapt, protobuf, grpcio, mpmath, sympy, astunparse, llvmlite, numba, gast, openpyxl, xlsxwriter, h5py, networkx, visions, phik, threadpoolctl, scikit-learn, absl-py, tensorboard-plugin-wit, tensorboard, tensorflow-estimator, keras-preprocessing, opt-einsum, google-pasta, tensorflow, opencv-python, openai, openai-gym, openai-research, openai-baselines
