@@ -70,10 +70,34 @@ OPERATIONS:list = ['Access', 'Search', 'Insert', 'Delete']
 SUFFIXES:dict = {1000: ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
                 1024: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']}
 
-ZODIAC_HOUSES:dict = {'Aries': '♈', 'Tauras': '♉', 'Gemini': '♊',
-                     'Cancer': '♋', 'Leo': '♌', 'Virgo': '♍', 'Libra': '♎',
-                     'Scorpio': '♏', 'Ophiuchus': '⛎', 'Sagittarius': '♐',
-                     'Capricorn': '♑', 'Aquarius': '♒', 'Pisces': '♓'}
+Black:tuple = (0, 0, 0) 
+Brown:tuple = (128, 0, 0) #(165, 42, 42)
+Green:tuple = (0, 128, 0) 
+Navy:tuple = (0, 0, 128) 
+Red:tuple = (255, 0, 0)
+Orange:tuple = (255, 165, 0) 
+Lime:tuple = (0, 255, 0)  #(50, 205, 50)
+Blue:tuple = (0, 0, 255)  #(0, 0, 128)
+Olive:tuple = (128, 128, 0)  #(210, 180, 140)
+Purple:tuple = (128, 0, 128)  
+Teal:tuple = (0, 128, 128)  
+Grey:tuple = (128, 128, 128)  #(211, 211, 211)
+Yellow:tuple = (255, 255, 0)  
+Fuchsia:tuple = (255, 0, 255)  
+Aqua:tuple = (0, 255, 255)  
+Cyan:tuple = (0, 255, 255)
+Turquoise:tuple = (0, 255, 255)
+Silver:tuple = (192, 192, 192)  
+White:tuple = (255, 255, 255)  
+Pink:tuple = (255, 192, 203)   #(255, 182, 193)
+Magenta:tuple = (255, 182, 193)
+
+
+ZODIAC_HOUSES:dict = {'Virgo': ('♍', Blue), 'Libra': ('♎', Pink), 'Aries': ('♈', Red), 
+                     'Tauras': ('♉', Green), 'Gemini': ('♊', Yellow), 'Cancer': ('♋', White), 
+                     'Leo': ('♌', Orange), 'Scorpio': ('♏', Purple), 'Sagittarius': ('♐', Brown),
+                     'Capricorn': ('♑', Grey), 'Aquarius': ('♒', Turquoise), 
+                     'Pisces': ('♓', Black), 'Ophiuchus': ('⛎', Aqua)}
 
 CONSTELLATIONS:dict = {'Aries': (18, 13), 'Tauras': (13, 21), 'Gemini': (21, 20),
                       'Cancer': (20, 10), 'Leo': (10, 16), 'Virgo': (16, 30),
@@ -125,22 +149,6 @@ ZODIAC_MONTHS = list(sign for bunch in ZODIAC_SEASONS.values() for sign in bunch
 KEMET_MONTHS = list(sign for bunch in KEMET_SEASONS.values() for sign in bunch)
 MATCH_SIGNS:list = [match for match in zip(ZODIAC_MONTHS, KEMET_MONTHS)]
 
-Black:tuple = (0, 0, 0)
-Brown:tuple = (128, 0, 0)
-Green:tuple = (0, 128, 0)
-Navy:tuple = (0, 0, 128)
-Red:tuple = (255, 0, 0)
-Lime:tuple = (0, 255, 0)
-Blue:tuple = (0, 0, 255)
-Olive:tuple = (128, 128, 0)
-Purple:tuple = (128, 0, 128)
-Teal:tuple = (0, 128, 128)
-Grey:tuple = (128, 128, 128)
-Yellow:tuple = (255, 255, 0)
-Fuchsia:tuple = (255, 0, 255)
-Aqua:tuple = (0, 255, 255)
-Silver:tuple = (192, 192, 192)
-White:tuple = (255, 255, 255)
 
 Remember_planet_order = "My Very Easy Method Just Simplifies Us Naming Planets"
 # Planet: [orbit speed km/sec, orbit speed mph, gravity m/s^2,
@@ -777,6 +785,8 @@ def full_datetime_now(holocene = False):
     if holocene:
         print("or the year", holoceneYear, "of the human era using the holocene calendar")
         print(f"or the year {holoceneYear} of the human era using the holocene calendar")
+    # Holocene Coptic Ethiopian Byzantine Gregorian Julian Roman Persian
+    #  Muslim  Islamic Aztec Mayan Inca Thai Vietnamese Buddhist Chinese Jewish
 
     currentTime = datetime.datetime.now().time()
     print(currentTime.strftime("and the time before you read this a moment ago was %H:%M:%S.%f"))

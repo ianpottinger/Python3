@@ -415,7 +415,7 @@ def input_choice(prompt, strings, fails=False):
     selection: list = ['yes', 'y', 'no', 'n']
     confirm = input_choice("Enter 'Yes' or 'No' to continue: ", selection)
 
-    selection: list = ['male', 'm', 'female', 'f']
+    selection: list = ['male', 'm', 'female', 'f', 'xy', 'xx']
     confirm = input_choice("Enter sex as 'Male' or 'Female': ", selection)
     """
     valid: bool = False

@@ -42,9 +42,14 @@ RESERVED = ["and", "del", "from", "not", "while", "as", "elif",
 
 from pygame import mixer
 from pygame.mixer import music
+import wave
 import winsound, maths, wave, fileman, ropes
 
 # [w,s,v]=svd((repmat(sum(x.*x,1),size(x,1),1).*x)*x^1)
+
+file = wave.open("GAME OVER.wav", "rb")
+data = file.readframes(file.getnframes())
+file.close()
 
 PIANO_KEYS = {'C8': 108, 'B7': 107, 'A♯7': 106, 'A7': 105,
               'G♯7': 104, 'G7': 103, 'F♯7': 102, 'F7': 101,
