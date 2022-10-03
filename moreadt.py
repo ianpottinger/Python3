@@ -111,12 +111,23 @@ ZODIAC_DATES:dict = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
                     'Capricorn': (22, 20), 'Aquarius': (21, 19), 'Pisces': (20, 20)}
 
 DAYS_IN_WEEK:list = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+GENESIS_DAYS:list = ['ום א', 'ום ב', 'ום ג', 'ום ד', 'ום ה', 'ום ו', 'ום ש']
 WEEKEND = DAYS_IN_WEEK[-2:]
 
 MONTHS_IN_YEAR:dict = {1: 'January', 2: 'February', 3: 'March',
                       4: 'April', 5: 'May', 6: 'June',
                       7: 'July', 8: 'August', 9: 'September',
                       10: 'October', 11: 'November', 12: 'December'}
+
+BABYLONIAN_YEAR:dict = {1: 'Nisanu', 2: 'Ayaru', 3: 'Simanu',
+                      4: 'Dumuzu', 5: 'Abu', 6: 'Ululu',
+                      7: 'Tashritu', 8: 'Arakhsamna', 9: 'Kislimu',
+                      10: 'Tebetu', 11: 'Shabatu', 12: 'Adaru'}
+
+HEBREW_YEAR:dict = {1: 'Nīsān', 2: 'ʼIyyār', 3: 'Sīwān',
+                      4: 'Tammūz', 5: 'ʼĀḇ', 6: 'ʼĔlūl',
+                      7: 'Tišrī', 8: 'Marḥešwān', 9: 'Kislēw',
+                      10: 'Ṭēḇēṯ', 11: 'Šəḇāṭ	', 12: 'ʼĂḏār'}
 
 DAYS_IN_MONTH:dict = {'January': 31, 'February': 28, 'March': 31, 'April': 30,
                      'May': 31, 'June': 30, 'July': 31, 'August': 31,
