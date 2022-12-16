@@ -177,13 +177,12 @@ def memoise(function):
 
 
 def load_dictionary():
-    dictionary_file = open(r"""G:\WorkingData\Work @ Home\Python3\Python Examples\dictionary.txt""")
+    dictionary_file = open(r"""G:\WorkingData\Work @ Home\GitHub\Python3\dictionary.txt""")
     english_words = {}
     for word in dictionary_file.read().split('\n'):
         english_words[word] = None
     dictionary_file.close()
     return english_words
-
 
 ENGLISH_WORDS = load_dictionary()
 
@@ -685,9 +684,81 @@ def hash_complex(z):
     return hash_
 
 
+# Python program to implement Baconian cipher
+
+'''This script uses a dictionary instead of 'chr()' & 'ord()' function'''
+
+'''
+Dictionary to map plaintext with ciphertext
+(key:value) => (plaintext:ciphertext)cd
+This script uses the 26 letter baconian cipher
+in which I, J & U, V have distinct patterns
+'''
+lookup = {'A': 'aaaaa', 'B': 'aaaab', 'C': 'aaaba', 'D': 'aaabb', 'E': 'aabaa',
+		'F': 'aabab', 'G': 'aabba', 'H': 'aabbb', 'I': 'abaaa', 'J': 'abaab',
+		'K': 'ababa', 'L': 'ababb', 'M': 'abbaa', 'N': 'abbab', 'O': 'abbba',
+		'P': 'abbbb', 'Q': 'baaaa', 'R': 'baaab', 'S': 'baaba', 'T': 'baabb',
+		'U': 'babaa', 'V': 'babab', 'W': 'babba', 'X': 'babbb', 'Y': 'bbaaa', 'Z': 'bbaab'}
+
+# Function to encrypt the string according to the cipher provided
+
+
+def encrypt(message):
+	cipher = ''
+	for letter in message:
+		# checks for space
+		if(letter != ' '):
+			# adds the ciphertext corresponding to the
+			# plaintext from the dictionary
+			cipher += lookup[letter]
+		else:
+			# adds space
+			cipher += ' '
+
+	return cipher
+
+# Function to decrypt the string
+# according to the cipher provided
+
+
+def decrypt(message):
+	decipher = ''
+	i = 0
+
+	# emulating a do-while loop
+	while True:
+		# condition to run decryption till
+		# the last set of ciphertext
+		if(i < len(message)-4):
+			# extracting a set of ciphertext
+			# from the message
+			substr = message[i:i + 5]
+			# checking for space as the first
+			# character of the substring
+			if(substr[0] != ' '):
+				'''
+				This statement gets us the key(plaintext) using the values(ciphertext)
+				Just the reverse of what we were doing in encrypt function
+				'''
+				decipher += list(lookup.keys()
+								)[list(lookup.values()).index(substr)]
+				i += 5 # to get the next set of ciphertext
+
+			else:
+				# adds space
+				decipher += ' '
+				i += 1 # index next to the space
+		else:
+			break # emulating a do-while loop
+
+	return decipher
+
+
+
 # If this module is being run as a stand-alone program
 import doctest
 
+# Executes the main function
 if __name__ == '__main__':
     doctest.testmod()
     unittest.main(exit=False)
@@ -695,3 +766,11 @@ if __name__ == '__main__':
     import this
 
     print(digitally_sign(rotate_thirteen(this.s), str(this.c), "sha512"))
+
+    message = "Geeks for Geeks"
+    result = encrypt(message.upper())
+    print(result)
+
+    message = "AABAAABBABABAABABBBABBAAA"
+    result = decrypt(message.lower())
+    print(result)

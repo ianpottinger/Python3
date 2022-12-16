@@ -112,6 +112,7 @@ ZODIAC_DATES:dict = {'Aries': (21, 20), 'Tauras': (21, 21), 'Gemini': (22, 21),
 
 DAYS_IN_WEEK:list = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 GENESIS_DAYS:list = ['ום א', 'ום ב', 'ום ג', 'ום ד', 'ום ה', 'ום ו', 'ום ש']
+GODS_IN_WEEK:list = ['Gilamesh', 'Tiw', 'Odin', 'Thor', 'Frig', 'Saturn', 'Sathbath']
 WEEKEND = DAYS_IN_WEEK[-2:]
 
 MONTHS_IN_YEAR:dict = {1: 'January', 2: 'February', 3: 'March',

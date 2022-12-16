@@ -63,7 +63,7 @@ GLOBAL_HILL_ENG:str = "The summit where Tamatea, the man with the big knees, the
 GLOBAL_TOWN:str = "Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch"
 GLOBAL_TOWN_ENG:str = "The church of St. Mary in a hollow of white hazel near the rapid whirlpool and St. Tysilio's church of the red cave."
 GLOBAL_LAKE:str = "Chargoggagoggmanchauggagoggchaubunagungamaugg"
-GLOBAL_LAAKE_ENG:str = "Fishing Place at the Boundaries -- Neutral Meeting Grounds"
+GLOBAL_LAKE_ENG:str = "Fishing Place at the Boundaries -- Neutral Meeting Grounds"
 GLOBAL_FARM:str = "Tweebuffelsmeteenskootmorsdoodgeskietfontein"
 GLOBAL_FARM_ENG:str = "The spring where two buffaloes were cleanly killed with a single shot"
 
