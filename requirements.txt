@@ -54,6 +54,8 @@ pymunk
 
 # audio
 
+forex-python 
+scapy
 wave
 mutagen
 pyaudio
@@ -97,6 +99,7 @@ pickleshare
 # graphics
 
 cycler
+local
 matplotlib
 matplotlib-venn
 Pillow

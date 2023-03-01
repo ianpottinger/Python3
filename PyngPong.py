@@ -85,8 +85,10 @@ keyMove = False
 
 # Use background image size as screen size
 background = pygame.image.load("G:\WorkingData\Work @ Home\Humanity\oneMcolours.png")
-WIDTH = background.get_width()
+WIDTH = background.get_width() 
 HEIGHT = background.get_height()
+WIDTH = 1200
+HEIGHT = 600
 frame = 0
 
 

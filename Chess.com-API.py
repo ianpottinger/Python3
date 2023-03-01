@@ -1,7 +1,10 @@
 from chessdotcom import get_leaderboards, get_player_stats, get_player_game_archives
 import pprint
 import requests
+import chess
+import chess.engine
 
+	
 printer = pprint.PrettyPrinter()
 
 def print_leaderboards():
@@ -29,5 +32,13 @@ def get_most_recent_game(username):
 	games = requests.get(url).json()
 	game = games['games'][-1]
 	printer.pprint(game)
+
+def get_best_move(board):
+    # Use a chess engine to evaluate the board position and suggest a move
+    engine = chess.engine.SimpleEngine.popen_uci("/path/to/stockfish")
+    result = engine.play(board, chess.engine.Limit(time=2.0))
+    engine.quit()
+
+    return result.move
 
 get_most_recent_game('timruscica')
