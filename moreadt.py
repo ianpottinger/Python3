@@ -288,6 +288,12 @@ Colour_HEX_codes:dict = {"Black": "000000",
                     "Pink": "FFC0CB",
                     "White": "FFFFFF"}
 
+Snooker_order = ["Red", "Yellow", "Green", "Brown", "Blue", "Pink", "Black"]
+
+pool_ball_order = ["solid yellow", "solid blue", "solid red", "solid purple", "solid orange",
+                "solid green", "solid maroon", "solid black", "striped yellow", "striped blue",
+                "striped red", "striped purple", "striped orange", "striped green", "striped maroon"]
+
 Khemet_HEX_codes:dict = {"Onyx": "0F0F0F",
                     "Jasper": "660000",
                     "Gold": "FFD700",
