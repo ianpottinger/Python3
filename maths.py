@@ -1264,6 +1264,60 @@ def project_to_distance(point_x, point_y, distance):
     return point_x * scale, point_y * scale
 
 
+import numpy as np
+
+
+def coriolis_force(mass, velocity, latitude, rotation_rate):
+    """
+    Fc = 2mω x v
+    This function takes four inputs:
+
+    mass: the mass of the object in kilograms
+    velocity: the velocity of the object in meters per second, as a 3-element NumPy array representing the x, y, and z components of the velocity vector
+    latitude: the latitude of the object's location on Earth in degrees
+    rotation_rate: the rotation rate of the Earth in radians per second (typically taken as 7.2921159 × 10^-5 radians per second)
+    The function first converts the latitude to radians and then calculates the Coriolis parameter f using the formula f = 2 * rotation_rate * sin(latitude). Finally, it calculates the Coriolis force using the formula coriolis = 2 * mass * f * np.cross([0, 0, 1], velocity) and returns the result as a 3-element NumPy array representing the x, y, and z components of the force vector.
+    """
+    # Convert latitude to radians
+    lat_r = np.radians(latitude)
+    
+    # Calculate the Coriolis parameter
+    f = 2 * rotation_rate * np.sin(lat_r)
+    
+    # Calculate the Coriolis force
+    coriolis = 2 * mass * f * np.cross([0, 0, 1], velocity)
+    
+    return coriolis
+
+
+def earth_curvature(lat1, lon1, lat2, lon2):
+    """
+    curvature = (2 * earth_radius) / (1 + np.cos(np.radians(angle_difference)))
+    This function takes four inputs:
+
+    lat1: the latitude of the first point in degrees
+    lon1: the longitude of the first point in degrees
+    lat2: the latitude of the second point in degrees
+    lon2: the longitude of the second point in degrees
+    The function first converts the latitude and longitude values to radians. It then calculates the angular difference between the two points as the absolute difference between their longitudes. Finally, it uses the formula above to calculate the Earth's curvature and returns the result in meters.
+
+    Note that this function assumes that the Earth is a perfect sphere, which is not entirely accurate. However, it provides a good approximation for most applications.
+    """
+    # Constants
+    earth_radius = 6371000  # meters
+    
+    # Convert degrees to radians
+    lat1, lon1, lat2, lon2 = np.radians([lat1, lon1, lat2, lon2])
+    
+    # Calculate angle difference
+    angle_difference = np.abs(lon2 - lon1)
+    
+    # Calculate curvature
+    curvature = (2 * earth_radius) / (1 + np.cos(angle_difference))
+    
+    return curvature
+
+
 def distance_2Dpoints(vector1, vector2):
     return math.sqrt((vector2[0] - vector1[0]) ** 2 +
                      (vector2[1] - vector1[1]) ** 2)
